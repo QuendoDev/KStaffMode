@@ -1,0 +1,51 @@
+#################################################################################################################
+reloadMessage: "&aSuccessfully reloaded"
+playerNotOnline: "&cThat player is not online!"
+noPerms: "&cYou can't do that"
+enabledStaffMode: "&bYou have enabled staffmode"
+disabledStaffMode: "&bYou have disabled staffmode"
+enabledVanish: "&bYou are now vanished"
+disabledVanish: "&cYou are now visible!"
+enabledFly: "&bYou now can fly!"
+disabledFly: "&cYou now can't fly!"
+enabledStaffChat: "&bYou are now talking in private chat!"
+disabledStaffChat: "&cYou are now talking in public chat!"
+#################################################################################################################
+#When you execute /s <player> and player is online, you get this message
+teleported: "&b<player> has been teleported to your position."
+#################################################################################################################
+staffchat:
+  prefix: "&c[&bS&eC&c]&a "
+  separator: " &b>>&6 "
+#################################################################################################################
+#When the server doesn't have enough players to do the random teleport
+errorRandomTp: "&cThe server hasn't got enough players to do this."
+#When you do the random teleport
+teleportedTo: "&aYou have been teleported to <player>."
+#################################################################################################################
+#When a player executes the gm and change his gamemode this is sent to him.
+gm-survival: "&aYou are now playing on survival gamemode!"
+gm-creative: "&aYou are now playing on creative gamemode!"
+gm-adventure: "&aYou are now playing on adventure gamemode!"
+gm-spectator: "&aYou are now playing on spectator gamemode!"
+#When a player executes the gm and change his gamemode this is sent to all people with the permission to see it.
+gm-survival-all: "&a<player> is now playing on survival gamemode!"
+gm-creative-all: "&a<player> is now playing on creative gamemode!"
+gm-adventure-all: "&a<player> is now playing on adventure gamemode!"
+gm-spectator-all: "&a<player> is now playing on spectator gamemode!"
+#When a player changes the gamemode of another one, this is sent to the person who executed the command.
+gm-survival-other: "&aYou changed <player>'s gamemode to survival!"
+gm-creative-other: "&aYou changed <player>'s gamemode to creative!"
+gm-adventure-other: "&aYou changed <player>'s gamemode to adventure!"
+gm-spectator-other: "&aYou changed <player>'s gamemode to spectator!"
+#This is sent to the person whose gamemode was changed.
+gm-survival-other1: "&aYour gamemode was changed to survival by <player>"
+gm-creative-other1: "&aYour gamemode was changed to creative by <player>"
+gm-adventure-other1: "&aYour gamemode was changed to adventure by <player>"
+gm-spectator-other1: "&aYour gamemode was changed to spectator by <player>"
+#This is sent to all people with permission to see it when someone changes another player's gamemode.
+gm-survival-other-all: "&a<sender> changed <player>'s gamemode to survival!"
+gm-creative-other-all: "&a<sender> changed <player>'s gamemode to creative!"
+gm-adventure-other-all: "&a<sender> changed <player>'s gamemode to adventure!"
+gm-spectator-other-all: "&a<sender> changed <player>'s gamemode to spectator!"
+#################################################################################################################
