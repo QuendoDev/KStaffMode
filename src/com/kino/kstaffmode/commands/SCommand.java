@@ -33,7 +33,6 @@ public class SCommand implements CommandExecutor {
                 if (t != null && t.isOnline()) {
                     t.teleport(p);
                     MessageUtils.sendMessage(p,  messages.getString("teleported").replace("<player>", t.getName()));
-                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', messages.getString("teleported").replace("<player>", t.getName())));
                     return true;
                 } else {
                     MessageUtils.sendMessage(sender, plugin.getMessages().getString("playerNotOnline"));
