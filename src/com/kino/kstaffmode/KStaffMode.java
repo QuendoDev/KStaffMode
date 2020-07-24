@@ -13,6 +13,7 @@ import com.kino.kstaffmode.listener.sm.ItemsInteractListener;
 import com.kino.kstaffmode.listener.sm.StaffModeBasicListener;
 import com.kino.kstaffmode.managers.files.DataManager;
 import com.kino.kstaffmode.managers.files.PlayerDataManager;
+import com.kino.kstaffmode.managers.menus.MenuManager;
 import com.kino.kstaffmode.managers.sm.StaffModeManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -25,11 +26,12 @@ public class KStaffMode extends JavaPlugin {
     private static KStaffMode instance;
 
     private StaffModeManager staffModeManager;
+    private MenuManager menuManager;
     private DataManager dataManager;
     private PlayerDataManager playerDataManager;
 
     private BasicFilesManager basicFilesManager;
-    YMLFile dataFile;
+    private YMLFile dataFile;
 
     @Override
     public void onEnable() {
@@ -82,6 +84,7 @@ public class KStaffMode extends JavaPlugin {
 
     private void registerClasses(){
         this.staffModeManager = new StaffModeManager(this);
+        this.menuManager = new MenuManager(this);
         this.dataManager = new DataManager(this);
         dataManager.startManager();
         this.playerDataManager = new PlayerDataManager(this);
@@ -125,5 +128,9 @@ public class KStaffMode extends JavaPlugin {
 
     public void saveData() {
         dataFile.save();
+    }
+
+    public MenuManager getMenuManager() {
+        return menuManager;
     }
 }

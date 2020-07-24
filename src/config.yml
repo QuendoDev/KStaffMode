@@ -80,7 +80,7 @@ staffItems:
     data: 0
     name: "&eFly"
     lore:
-      - "Toggle fly"
+      - "&aToggle fly"
   randomtp:
     slot: 8
     enabled: true
@@ -91,3 +91,42 @@ staffItems:
     name: "&4Random &aTeleport"
     lore:
       - "Teleport to a random player"
+stafflist:
+  main:
+    title: "&aStaff List &eMenu"
+    size: 27
+    inStaffMode:
+      enabled: true
+      id: 271
+      amount: 1
+      #If your item doesn't have data, set this to "0"
+      data: 0
+      name: "&cAvailable Staff"
+      lore:
+        - "&eAll players in staff mode"
+      slot: 11
+    withoutStaffMode:
+      enabled: true
+      id: 152
+      amount: 1
+      #If your item doesn't have data, set this to "0"
+      data: 0
+      name: "&cStaff Playing"
+      lore:
+        - "&eAll players without staff mode"
+      slot: 15
+  inStaffModMenu:
+    title: "&aAvailable Staff &eMenu"
+    size: 54
+    decoration:
+      enabled: true
+      id: 160
+      amount: 1
+      #If your item doesn't have data, set this to "0"
+      data: 7
+      name: ""
+      lore:
+        - ""
+  staffPlaying:
+    title: "&aStaff Playing &eMenu"
+    size: 54

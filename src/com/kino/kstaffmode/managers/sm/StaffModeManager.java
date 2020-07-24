@@ -70,6 +70,13 @@ public class StaffModeManager {
             if(!this.inStaffMode.contains(p.getUniqueId())){
                 this.inStaffMode.add(p.getUniqueId());
                 this.vanished.add(p.getUniqueId());
+                for(Player player : Bukkit.getOnlinePlayers()){
+                    if(player.hasPermission("kstaffmode.bypassvanish")){
+                        player.showPlayer(p);
+                    }else{
+                        player.hidePlayer(p);
+                    }
+                }
                 this.fly.add(p.getUniqueId());
                 p.setAllowFlight(true);
                 p.setFlying(true);
@@ -78,6 +85,9 @@ public class StaffModeManager {
             }else{
                 this.inStaffMode.remove(p.getUniqueId());
                 this.vanished.remove(p.getUniqueId());
+                for(Player player : Bukkit.getOnlinePlayers()){
+                    player.showPlayer(p);
+                }
                 this.fly.remove(p.getUniqueId());
                 p.setAllowFlight(false);
                 p.setFlying(false);

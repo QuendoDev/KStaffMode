@@ -2,9 +2,7 @@ package com.kino.kstaffmode.listener.sm;
 
 import com.kino.kore.utils.messages.MessageUtils;
 import com.kino.kstaffmode.KStaffMode;
-import com.kino.kstaffmode.events.items.FlyInteractEvent;
-import com.kino.kstaffmode.events.items.NavigatorInteractEvent;
-import com.kino.kstaffmode.events.items.RandomTpInteractEvent;
+import com.kino.kstaffmode.events.items.*;
 import com.kino.kstaffmode.events.util.ActionType;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -48,6 +46,25 @@ public class ItemsInteractListener implements Listener {
                                 plugin.getServer().getPluginManager().callEvent(new NavigatorInteractEvent(p, ActionType.RIGHT_CLICK, block.getLocation()));
                             }
                         }
+                    }
+                    e.setCancelled(true);
+                }
+
+                ////////////******STAFFLIST******/////////////
+                if (p.getItemInHand().getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.staffList.id"))
+                        && p.hasPermission("kstaffmode.items.stafflist")) {
+                    if(e.getAction() !=null ) {
+                        plugin.getServer().getPluginManager().callEvent(new StaffListInteractEvent(p));
+                    }
+                    e.setCancelled(true);
+                }
+
+                ////////////******VANISH******/////////////
+                if (p.getItemInHand().getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.vanish.visible.id"))
+                        || p.getItemInHand().getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.vanish.vanished.id"))
+                        && p.hasPermission("kstaffmode.items.vanish")) {
+                    if(e.getAction() !=null ) {
+                        plugin.getServer().getPluginManager().callEvent(new VanishInteractEvent(p));
                     }
                     e.setCancelled(true);
                 }
@@ -100,6 +117,20 @@ public class ItemsInteractListener implements Listener {
     public void randomTpInteract (RandomTpInteractEvent e) {
         if(e.getPlayer().hasPermission("kstaffmode.items.randomtp")) {
             plugin.getStaffModeManager().teleportToRandomplayer(e.getPlayer(), plugin.getConfig().getBoolean("randomTpMultiworld"));
+        }
+    }
+
+    @EventHandler
+    public void randomTpInteract (VanishInteractEvent e) {
+        if(e.getPlayer().hasPermission("kstaffmode.items.vanish")) {
+            plugin.getStaffModeManager().toogleVanish(e.getPlayer());
+        }
+    }
+
+    @EventHandler
+    public void randomTpInteract (StaffListInteractEvent e) {
+        if(e.getPlayer().hasPermission("kstaffmode.items.stafflist")) {
+            plugin.getMenuManager().getStaffListMainMenu().open(e.getPlayer());
         }
     }
 }

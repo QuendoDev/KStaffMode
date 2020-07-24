@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.UUID;
 
+@SuppressWarnings("deprecation")
 public class JoinListener implements Listener {
 
     private KStaffMode plugin;
