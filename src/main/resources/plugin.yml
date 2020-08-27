@@ -26,3 +26,6 @@ commands:
     description: Teleports someone to your position.
   invsee:
     description: See the inventory of a player
+  freeze:
+    description: Freeze a player
+    aliases: [ss, freeze]

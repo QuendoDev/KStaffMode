@@ -13,7 +13,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
-@SuppressWarnings("deprecation")
 public class StaffModeBasicListener implements Listener {
 
     private KStaffMode plugin;
@@ -25,10 +24,10 @@ public class StaffModeBasicListener implements Listener {
     public void onAttack(EntityDamageByEntityEvent e){
         if(e.getEntity() !=null) {
             if(e.getEntity() instanceof Player) {
-                if (plugin.getStaffModeManager().getInStaffMode().contains(e.getDamager().getUniqueId())) {
+                if (plugin.getStaffModeManager().getInStaffMode().contains(e.getDamager().getUniqueId()) || plugin.getStaffModeManager().isFrozen((Player) e.getDamager())) {
                     e.setCancelled(true);
                 }
-                if (plugin.getStaffModeManager().getInStaffMode().contains(e.getEntity().getUniqueId())) {
+                if (plugin.getStaffModeManager().getInStaffMode().contains(e.getEntity().getUniqueId()) || plugin.getStaffModeManager().isFrozen((Player) e.getEntity())) {
                     e.setCancelled(true);
                 }
             }
@@ -37,21 +36,21 @@ public class StaffModeBasicListener implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
-        if (plugin.getStaffModeManager().getInStaffMode().contains(e.getPlayer().getUniqueId())) {
+        if (plugin.getStaffModeManager().getInStaffMode().contains(e.getPlayer().getUniqueId()) || plugin.getStaffModeManager().isFrozen(e.getPlayer())) {
             e.setCancelled(true);
         }
     }
 
     @EventHandler
     public void onBlockBreak (BlockBreakEvent e) {
-        if (plugin.getStaffModeManager().getInStaffMode().contains(e.getPlayer().getUniqueId())) {
+        if (plugin.getStaffModeManager().getInStaffMode().contains(e.getPlayer().getUniqueId()) || plugin.getStaffModeManager().isFrozen(e.getPlayer())) {
             e.setCancelled(true);
         }
     }
 
     @EventHandler
     public void onItemPickUp(PlayerPickupItemEvent e) {
-        if (plugin.getStaffModeManager().getInStaffMode().contains(e.getPlayer().getUniqueId())) {
+        if (plugin.getStaffModeManager().getInStaffMode().contains(e.getPlayer().getUniqueId()) || plugin.getStaffModeManager().isFrozen(e.getPlayer())) {
             e.setCancelled(true);
         }
     }
@@ -67,7 +66,7 @@ public class StaffModeBasicListener implements Listener {
     public void onDamage(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
-            if (plugin.getStaffModeManager().getInStaffMode().contains(p.getUniqueId())) {
+            if (plugin.getStaffModeManager().getInStaffMode().contains(p.getUniqueId()) || plugin.getStaffModeManager().isFrozen(p)) {
                 e.setCancelled(true);
             }
         }

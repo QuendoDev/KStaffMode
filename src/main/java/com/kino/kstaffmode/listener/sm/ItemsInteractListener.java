@@ -18,7 +18,7 @@ import org.bukkit.util.Vector;
 
 import java.util.HashSet;
 import java.util.Set;
-@SuppressWarnings("deprecation")
+@SuppressWarnings("all")
 public class ItemsInteractListener implements Listener {
 
     private KStaffMode plugin;
@@ -33,11 +33,20 @@ public class ItemsInteractListener implements Listener {
             Player clicked = (Player) e.getRightClicked();
             if (plugin.getStaffModeManager().getInStaffMode().contains(p.getUniqueId())) {
                 if (p.hasPermission("kstaffmode.useitems")) {
-
                     ////////////******INSPECT******/////////////
                     if (p.getItemInHand().getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.inspect.id")) && p.hasPermission("kstaffmode.items.inspect")) {
+
                         if (!clicked.hasPermission("kstaffmode.bypass.inspect")) {
                             plugin.getServer().getPluginManager().callEvent(new InspectInteractEvent(p, clicked));
+                        } else {
+                            MessageUtils.sendMessage(p, plugin.getMessages().getString("noPerms"));
+                        }
+                    }
+
+                    ////////////******FREEZE******/////////////
+                    if (p.getItemInHand().getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.freeze.id")) && p.hasPermission("kstaffmode.items.freeze")) {
+                        if (!clicked.hasPermission("kstaffmode.bypass.freeze")) {
+                            plugin.getServer().getPluginManager().callEvent(new FreezeInteractEvent(p, clicked));
                         } else {
                             MessageUtils.sendMessage(p, plugin.getMessages().getString("noPerms"));
                         }
@@ -161,6 +170,13 @@ public class ItemsInteractListener implements Listener {
     public void inspectInteract (InspectInteractEvent e) {
         if(e.getPlayer().hasPermission("kstaffmode.items.inspect") && !e.getPlayerClicked().hasPermission("kstaffmode.bypass.inspect")) {
             plugin.getMenuManager().getInspectMenu().open(e.getPlayer(), e.getPlayerClicked());
+        }
+    }
+
+    @EventHandler
+    public void freezeInteract (FreezeInteractEvent e) {
+        if(e.getPlayer().hasPermission("kstaffmode.items.inspect") && !e.getPlayerFrozen().hasPermission("kstaffmode.bypass.inspect")) {
+            plugin.getStaffModeManager().toogleFreeze(e.getPlayer(), e.getPlayerFrozen());
         }
     }
 }

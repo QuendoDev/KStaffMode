@@ -1,6 +1,8 @@
 navigatorImpulse: 3
 #THIS WILL LET A PLAYER USE THE RANDOMTP ITEM, AND TELEPORT TO A PLAYER THAT IS IN ANOTHER WORLD.
 randomTpMultiworld: true
+#THIS IS A COMMAND WITHOUT THE "/" THAT WILL BE EXECUTED WHEN A PLAYER DISCONNECTS WHILE FROZEN
+frozenDisconnect: "say <player> disconnected frozen!"
 staffItems:
   navigator:
     enabled: true

@@ -23,6 +23,14 @@ errorRandomTp: "&cThe server hasn't got enough players to do this."
 #When you do the random teleport
 teleportedTo: "&aYou have been teleported to <player>."
 #################################################################################################################
+frozen: "&cYou were frozen by <player>"
+freeze: "&aYou have frozen <player>"
+unfrozen: "&cYou were unfrozen by <player>"
+unfreeze: "&aYou have unfrozen <player>"
+moveWhileFrozen: "&cYou are frozen, you can't move"
+frozenDisconnect: "&c<player> disconnected while frozen!"
+#################################################################################################################
+#SORRY FOR THIS METHOD OF MESSAGES; I WILL CHANGE IT!!
 #When a player executes the gm and change his gamemode this is sent to him.
 gm-survival: "&aYou are now playing on survival gamemode!"
 gm-creative: "&aYou are now playing on creative gamemode!"

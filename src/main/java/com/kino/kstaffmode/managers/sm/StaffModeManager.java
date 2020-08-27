@@ -17,6 +17,7 @@ public class StaffModeManager {
     private List<UUID> vanished;
     private List<UUID> inStaffChat;
     private List<UUID> fly;
+    private List<UUID> frozen;
     private Map<UUID, ItemStack[]> armorItems;
     private Map<UUID, ItemStack[]> inventoryItems;
     private Map<ItemStack, Integer> staffModeItems;
@@ -30,6 +31,7 @@ public class StaffModeManager {
         this.vanished = new ArrayList<>();
         this.inStaffChat = new ArrayList<>();
         this.fly = new ArrayList<>();
+        this.frozen = new ArrayList<>();
         this.armorItems = new HashMap<>();
         this.inventoryItems = new HashMap<>();
         this.staffModeItems = new HashMap<>();
@@ -63,6 +65,22 @@ public class StaffModeManager {
         p.getInventory().setArmorContents(this.armorItems.get(p.getUniqueId()));
         this.inventoryItems.remove(p.getUniqueId());
         this.armorItems.remove(p.getUniqueId());
+    }
+
+    public void toogleFreeze (Player staff, Player p) {
+        if(frozen.contains(p.getUniqueId())) {
+            frozen.remove(p.getUniqueId());
+            MessageUtils.sendMessage(p, plugin.getMessages().getString("unfrozen").replace("<player>", staff.getName()));
+            MessageUtils.sendMessage(staff, plugin.getMessages().getString("unfreeze").replace("<player>", p.getName()));
+        } else {
+            if (!p.hasPermission("kstaffmode.bypass.freeze")) {
+                frozen.add(p.getUniqueId());
+                MessageUtils.sendMessage(p, plugin.getMessages().getString("frozen").replace("<player>", staff.getName()));
+                MessageUtils.sendMessage(staff, plugin.getMessages().getString("freeze").replace("<player>", p.getName()));
+            } else {
+                MessageUtils.sendMessage(staff, plugin.getMessages().getString("noPerms"));
+            }
+        }
     }
 
     public void toogleStaffMode(Player p){
@@ -196,6 +214,14 @@ public class StaffModeManager {
 
     public boolean canFly(Player p){
         return fly.contains(p.getUniqueId());
+    }
+
+    public List<UUID> getFrozen() {
+        return frozen;
+    }
+
+    public boolean isFrozen(Player p){
+        return frozen.contains(p.getUniqueId());
     }
 
     public List<UUID> getInStaffMode() {

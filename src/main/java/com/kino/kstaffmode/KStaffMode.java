@@ -9,6 +9,7 @@ import com.kino.kstaffmode.commands.kstaffmode.KStaffModeExecutor;
 import com.kino.kstaffmode.listener.ChatListener;
 import com.kino.kstaffmode.listener.JoinListener;
 import com.kino.kstaffmode.listener.LeaveListener;
+import com.kino.kstaffmode.listener.MoveListener;
 import com.kino.kstaffmode.listener.sm.InventoryListener;
 import com.kino.kstaffmode.listener.sm.ItemsInteractListener;
 import com.kino.kstaffmode.listener.sm.StaffModeBasicListener;
@@ -67,6 +68,7 @@ public class KStaffMode extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(new StaffModeBasicListener(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(new ItemsInteractListener(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(new InventoryListener(this), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new MoveListener(this), this);
     }
 
     private void registerCommands(){
@@ -78,6 +80,7 @@ public class KStaffMode extends JavaPlugin {
         getCommand("staffchat").setExecutor(new StaffChatCommand(this));
         getCommand("s").setExecutor(new SCommand(this));
         getCommand("invsee").setExecutor(new InvSeeCommand(this));
+        getCommand("freeze").setExecutor(new FreezeCommand(this));
     }
 
     private void registerClasses(){
