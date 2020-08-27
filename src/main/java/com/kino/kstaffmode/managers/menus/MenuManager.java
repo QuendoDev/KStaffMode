@@ -1,6 +1,7 @@
 package com.kino.kstaffmode.managers.menus;
 
 import com.kino.kstaffmode.KStaffMode;
+import com.kino.kstaffmode.menus.InspectMenu;
 import com.kino.kstaffmode.menus.StaffListMainMenu;
 import com.kino.kstaffmode.menus.StaffListPlayingMenu;
 import com.kino.kstaffmode.menus.StaffListSmMenu;
@@ -15,6 +16,7 @@ public class MenuManager {
     private StaffListMainMenu staffListMainMenu;
     private StaffListPlayingMenu staffListPlayingMenu;
     private StaffListSmMenu staffListSmMenu;
+    private InspectMenu inspectMenu;
 
     private List<PlayerInventory> playerInventories;
 
@@ -24,6 +26,7 @@ public class MenuManager {
         this.staffListMainMenu = new StaffListMainMenu(plugin);
         this.staffListPlayingMenu = new StaffListPlayingMenu(plugin);
         this.staffListSmMenu = new StaffListSmMenu(plugin);
+        this.inspectMenu = new InspectMenu(plugin);
     }
 
     public StaffListMainMenu getStaffListMainMenu() {
@@ -61,5 +64,9 @@ public class MenuManager {
 
     public List<PlayerInventory> getPlayerInventories() {
         return playerInventories;
+    }
+
+    public InspectMenu getInspectMenu() {
+        return inspectMenu;
     }
 }

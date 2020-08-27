@@ -12,12 +12,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.Vector;
 
 import java.util.HashSet;
 import java.util.Set;
-
+@SuppressWarnings("deprecation")
 public class ItemsInteractListener implements Listener {
 
     private KStaffMode plugin;
@@ -25,7 +26,28 @@ public class ItemsInteractListener implements Listener {
         this.plugin = plugin;
     }
 
-    @SuppressWarnings("deprecation")
+    @EventHandler
+    public void interactEntity (PlayerInteractEntityEvent e) {
+        Player p = e.getPlayer();
+        if(e.getRightClicked() instanceof Player) {
+            Player clicked = (Player) e.getRightClicked();
+            if (plugin.getStaffModeManager().getInStaffMode().contains(p.getUniqueId())) {
+                if (p.hasPermission("kstaffmode.useitems")) {
+
+                    ////////////******INSPECT******/////////////
+                    if (p.getItemInHand().getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.inspect.id")) && p.hasPermission("kstaffmode.items.inspect")) {
+                        if (!clicked.hasPermission("kstaffmode.bypass.inspect")) {
+                            plugin.getServer().getPluginManager().callEvent(new InspectInteractEvent(p, clicked));
+                        } else {
+                            MessageUtils.sendMessage(p, plugin.getMessages().getString("noPerms"));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
     @EventHandler
     public void onAction(PlayerInteractEvent e) {
 
@@ -132,6 +154,13 @@ public class ItemsInteractListener implements Listener {
     public void stafflistInteract (StaffListInteractEvent e) {
         if(e.getPlayer().hasPermission("kstaffmode.items.stafflist")) {
             plugin.getMenuManager().getStaffListMainMenu().open(e.getPlayer());
+        }
+    }
+
+    @EventHandler
+    public void inspectInteract (InspectInteractEvent e) {
+        if(e.getPlayer().hasPermission("kstaffmode.items.inspect") && !e.getPlayerClicked().hasPermission("kstaffmode.bypass.inspect")) {
+            plugin.getMenuManager().getInspectMenu().open(e.getPlayer(), e.getPlayerClicked());
         }
     }
 }

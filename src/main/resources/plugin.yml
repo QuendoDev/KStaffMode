@@ -24,3 +24,5 @@ commands:
     aliases: [sc, privatechat, modchat, adminchat]
   s:
     description: Teleports someone to your position.
+  invsee:
+    description: See the inventory of a player

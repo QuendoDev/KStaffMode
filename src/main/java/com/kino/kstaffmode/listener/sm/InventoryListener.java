@@ -24,112 +24,119 @@ public class InventoryListener implements Listener {
 
     @EventHandler
     public void onClick (InventoryClickEvent e) {
-        String invName = e.getClickedInventory().getName();
+        if(e.getClickedInventory() !=null) {
+            String invName = e.getClickedInventory().getName();
 
-        //////////////////MAIN MENU////////////////////////
-        if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("stafflist.main.title"))).equals(ChatColor.stripColor(invName))) {
+            //////////////////MAIN MENU////////////////////////
+            if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("stafflist.main.title"))).equals(ChatColor.stripColor(invName))) {
 
-            if(checks(e)) {
-                e.setCancelled(true);
-            } else {
-                Player p = (Player) e.getWhoClicked();
-                e.setCancelled(true);
-                if(e.getClickedInventory().equals(p.getOpenInventory().getTopInventory())) {
+                if (checks(e)) {
+                    e.setCancelled(true);
+                } else {
+                    Player p = (Player) e.getWhoClicked();
+                    e.setCancelled(true);
+                    if (e.getClickedInventory().equals(p.getOpenInventory().getTopInventory())) {
 
-                    if(e.getCurrentItem().getType().equals(Material.getMaterial(plugin.getConfig().getInt("stafflist.main.inStaffMode.id")))) {
-                        if(p.hasPermission("kstaffmode.menus.main.open.instaffmode")) {
-                            plugin.getMenuManager().getStaffListSmMenu().open(p, 1);
-                        }
-                    }
-
-                    if(e.getCurrentItem().getType().equals(Material.getMaterial(plugin.getConfig().getInt("stafflist.main.withoutStaffMode.id")))) {
-                        if(p.hasPermission("kstaffmode.menus.main.open.playing")) {
-                            plugin.getMenuManager().getStaffListPlayingMenu().open(p, 1);
-                        }
-                    }
-                }
-            }
-
-        }
-
-        //////////////////STAFF MENU////////////////////////
-        if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("stafflist.inStaffModeMenu.title"))).equals(ChatColor.stripColor(invName))) {
-
-            if(checks(e)) {
-                e.setCancelled(true);
-            } else {
-                Player p = (Player) e.getWhoClicked();
-                e.setCancelled(true);
-                if(e.getClickedInventory().equals(p.getOpenInventory().getTopInventory())) {
-                    PlayerInventory playerInventory = plugin.getMenuManager().getPlayerInventory(p.getName());
-
-                    if(playerInventory !=null) {
-                        int page = playerInventory.getPage();
-                        int slot = e.getSlot();
-
-                        if(slot == 53 && e.getCurrentItem().getType().equals(Material.getMaterial(plugin.getConfig().getInt("stafflist.inStaffModeMenu.nextPage.id")))) {
-                            int newPage = page + 1;
-
-                            plugin.getMenuManager().getStaffListSmMenu().open(p, newPage);
+                        if (e.getCurrentItem().getType().equals(Material.getMaterial(plugin.getConfig().getInt("stafflist.main.inStaffMode.id")))) {
+                            if (p.hasPermission("kstaffmode.menus.main.open.instaffmode")) {
+                                plugin.getMenuManager().getStaffListSmMenu().open(p, 1);
+                            }
                         }
 
-                        if(slot == 45 && e.getCurrentItem().getType().equals(Material.getMaterial(plugin.getConfig().getInt("stafflist.inStaffModeMenu.previousPage.id")))) {
-                            int newPage = page - 1;
-
-                            plugin.getMenuManager().getStaffListSmMenu().open(p, newPage);
-                        }
-
-                        if(e.getCurrentItem().getType().equals(Material.getMaterial(397))) {
-                            if(p.hasPermission("kstaffmode.menus.instaffmode.teleport")) {
-                                ItemStack i = e.getCurrentItem();
-                                SkullMeta m = (SkullMeta) i.getItemMeta();
-                                p.teleport(Bukkit.getPlayer(m.getOwner()));
+                        if (e.getCurrentItem().getType().equals(Material.getMaterial(plugin.getConfig().getInt("stafflist.main.withoutStaffMode.id")))) {
+                            if (p.hasPermission("kstaffmode.menus.main.open.playing")) {
+                                plugin.getMenuManager().getStaffListPlayingMenu().open(p, 1);
                             }
                         }
                     }
                 }
+
             }
 
-        }
+            //////////////////STAFF MENU////////////////////////
+            if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("stafflist.inStaffModeMenu.title"))).equals(ChatColor.stripColor(invName))) {
 
-        //////////////////STAFFPLAYING MENU////////////////////////
-        if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("stafflist.staffPlaying.title"))).equals(ChatColor.stripColor(invName))) {
+                if (checks(e)) {
+                    e.setCancelled(true);
+                } else {
+                    Player p = (Player) e.getWhoClicked();
+                    e.setCancelled(true);
+                    if (e.getClickedInventory().equals(p.getOpenInventory().getTopInventory())) {
+                        PlayerInventory playerInventory = plugin.getMenuManager().getPlayerInventory(p.getName());
 
-            if(checks(e)) {
-                e.setCancelled(true);
-            } else {
-                Player p = (Player) e.getWhoClicked();
-                e.setCancelled(true);
-                if(e.getClickedInventory().equals(p.getOpenInventory().getTopInventory())) {
-                    PlayerInventory playerInventory = plugin.getMenuManager().getPlayerInventory(p.getName());
+                        if (playerInventory != null) {
+                            int page = playerInventory.getPage();
+                            int slot = e.getSlot();
 
-                    if(playerInventory !=null) {
-                        int page = playerInventory.getPage();
-                        int slot = e.getSlot();
+                            if (slot == 53 && e.getCurrentItem().getType().equals(Material.getMaterial(plugin.getConfig().getInt("stafflist.inStaffModeMenu.nextPage.id")))) {
+                                int newPage = page + 1;
 
-                        if(slot == 53 && e.getCurrentItem().getType().equals(Material.getMaterial(plugin.getConfig().getInt("stafflist.staffPlaying.nextPage.id")))) {
-                            int newPage = page + 1;
+                                plugin.getMenuManager().getStaffListSmMenu().open(p, newPage);
+                            }
 
-                            plugin.getMenuManager().getStaffListPlayingMenu().open(p, newPage);
-                        }
+                            if (slot == 45 && e.getCurrentItem().getType().equals(Material.getMaterial(plugin.getConfig().getInt("stafflist.inStaffModeMenu.previousPage.id")))) {
+                                int newPage = page - 1;
 
-                        if(slot == 45 && e.getCurrentItem().getType().equals(Material.getMaterial(plugin.getConfig().getInt("stafflist.staffPlaying.previousPage.id")))) {
-                            int newPage = page - 1;
+                                plugin.getMenuManager().getStaffListSmMenu().open(p, newPage);
+                            }
 
-                            plugin.getMenuManager().getStaffListPlayingMenu().open(p, newPage);
-                        }
-
-                        if(e.getCurrentItem().getType().equals(Material.getMaterial(397))) {
-                            if(p.hasPermission("kstaffmode.menus.playing.teleport")) {
-                                ItemStack i = e.getCurrentItem();
-                                SkullMeta m = (SkullMeta) i.getItemMeta();
-                                p.teleport(Bukkit.getPlayer(m.getOwner()));
+                            if (e.getCurrentItem().getType().equals(Material.getMaterial(397))) {
+                                if (p.hasPermission("kstaffmode.menus.instaffmode.teleport")) {
+                                    ItemStack i = e.getCurrentItem();
+                                    SkullMeta m = (SkullMeta) i.getItemMeta();
+                                    p.teleport(Bukkit.getPlayer(m.getOwner()));
+                                }
                             }
                         }
                     }
                 }
+
             }
 
+            //////////////////STAFFPLAYING MENU////////////////////////
+            if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("stafflist.staffPlaying.title"))).equals(ChatColor.stripColor(invName))) {
+
+                if (checks(e)) {
+                    e.setCancelled(true);
+                } else {
+                    Player p = (Player) e.getWhoClicked();
+                    e.setCancelled(true);
+                    if (e.getClickedInventory().equals(p.getOpenInventory().getTopInventory())) {
+                        PlayerInventory playerInventory = plugin.getMenuManager().getPlayerInventory(p.getName());
+
+                        if (playerInventory != null) {
+                            int page = playerInventory.getPage();
+                            int slot = e.getSlot();
+
+                            if (slot == 53 && e.getCurrentItem().getType().equals(Material.getMaterial(plugin.getConfig().getInt("stafflist.staffPlaying.nextPage.id")))) {
+                                int newPage = page + 1;
+
+                                plugin.getMenuManager().getStaffListPlayingMenu().open(p, newPage);
+                            }
+
+                            if (slot == 45 && e.getCurrentItem().getType().equals(Material.getMaterial(plugin.getConfig().getInt("stafflist.staffPlaying.previousPage.id")))) {
+                                int newPage = page - 1;
+
+                                plugin.getMenuManager().getStaffListPlayingMenu().open(p, newPage);
+                            }
+
+                            if (e.getCurrentItem().getType().equals(Material.getMaterial(397))) {
+                                if (p.hasPermission("kstaffmode.menus.playing.teleport")) {
+                                    ItemStack i = e.getCurrentItem();
+                                    SkullMeta m = (SkullMeta) i.getItemMeta();
+                                    p.teleport(Bukkit.getPlayer(m.getOwner()));
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            //////////////////INVSEE MENU////////////////////////
+            if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("inspect.title"))).equals(ChatColor.stripColor(invName))) {
+                e.setCancelled(true);
+            }
         }
     }
 

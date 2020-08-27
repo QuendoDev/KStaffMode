@@ -91,6 +91,59 @@ staffItems:
     name: "&4Random &aTeleport"
     lore:
       - "Teleport to a random player"
+inspect:
+  title: "&bInspect Menu"
+  contents: true
+  armor: true
+  info:
+    enabled: true
+    id: 260
+    amount: 1
+    #If your item doesn't have data, set this to "0"
+    data: 0
+    name: "&cInfo"
+    lore:
+      - "&4Health: <health>"
+      - "&aFood: <food>"
+      - "&bXp: <xp>"
+  gamemode:
+    enabled: true
+    id: 276
+    amount: 1
+    #If your item doesn't have data, set this to "0"
+    data: 0
+    name: "&cGamemode: <gm>"
+    lore:
+      - "&4The gamemode!"
+  fly:
+    enabled: true
+    id: 288
+    amount: 1
+    #If your item doesn't have data, set this to "0"
+    data: 0
+    name: "&bFlying: <fly>"
+    lore:
+      - "&cGet if flying!"
+  effects:
+    enabled: true
+    id: 374
+    amount: 1
+    #If your item doesn't have data, set this to "0"
+    data: 0
+    name: "&ePotion effects"
+    format: "&a<name> <level>: &7<duration>"
+    #To this field, the plugin will add all potion effects, one line per effect
+    lore:
+      - "&bEffects:"
+  decoration:
+    enabled: true
+    id: 160
+    amount: 1
+    #If your item doesn't have data, set this to "0"
+    data: 7
+    name: ""
+    lore:
+      - ""
 stafflist:
   main:
     title: "&aStaff List &eMenu"

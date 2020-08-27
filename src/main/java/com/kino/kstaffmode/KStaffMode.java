@@ -77,6 +77,7 @@ public class KStaffMode extends JavaPlugin {
         getCommand("fly").setExecutor(new FlyCommand(this));
         getCommand("staffchat").setExecutor(new StaffChatCommand(this));
         getCommand("s").setExecutor(new SCommand(this));
+        getCommand("invsee").setExecutor(new InvSeeCommand(this));
     }
 
     private void registerClasses(){

@@ -78,8 +78,10 @@ public class StaffModeBasicListener implements Listener {
         if(e.getWhoClicked() instanceof Player){
             Player p = (Player) e.getWhoClicked();
             if (plugin.getStaffModeManager().getInStaffMode().contains(p.getUniqueId())) {
-                if(e.getClickedInventory().equals(p.getInventory())){
-                    e.setCancelled(true);
+                if(e.getClickedInventory() !=null) {
+                    if (e.getClickedInventory().equals(p.getInventory())) {
+                        e.setCancelled(true);
+                    }
                 }
             }
         }
