@@ -6,4 +6,6 @@ import org.bukkit.inventory.ItemStack;
 public abstract class AbstractUtils {
 
     public abstract ItemStack getItemInHand (Player p);
+
+    public abstract double getTPS();
 }
