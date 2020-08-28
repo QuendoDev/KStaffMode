@@ -23,8 +23,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class KStaffMode extends JavaPlugin {
 
-
-
     private StaffModeManager staffModeManager;
     private MenuManager menuManager;
     private DataManager dataManager;

@@ -15,8 +15,6 @@ public class GameModeExecutor extends ArgumentExecutor {
         addArgument(new SurvivalArgument(plugin));
         addArgument(new CreativeArgument(plugin));
         addArgument(new AdventureArgument(plugin));
-        if(BukkitUtils.isMore1_7()){
-            addArgument(new SpectatorArgument(plugin));
-        }
+        addArgument(new SpectatorArgument(plugin));
     }
 }
