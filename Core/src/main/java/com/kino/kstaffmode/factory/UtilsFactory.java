@@ -3,6 +3,8 @@ package com.kino.kstaffmode.factory;
 import com.kino.kstaffmode.api.utils.AbstractUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.InvocationTargetException;
@@ -21,12 +23,12 @@ public class UtilsFactory {
         }
     }
 
-    public static ItemStack getItemInHand (Player p) {
+    public static ItemStack getItemInHand (PlayerEvent e) {
         try {
             AbstractUtils utils = (AbstractUtils) UTILSCLASS.getConstructor().newInstance();
-            return utils.getItemInHand(p);
-        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-            throw new RuntimeException(e);
+            return utils.getItemInHand(e);
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException ex) {
+            throw new RuntimeException(ex);
         }
     }
 }

@@ -33,7 +33,7 @@ public class ItemsInteractListener implements Listener {
             if (plugin.getStaffModeManager().getInStaffMode().contains(p.getUniqueId())) {
                 if (p.hasPermission("kstaffmode.useitems")) {
                     ////////////******INSPECT******/////////////
-                    if (UtilsFactory.getItemInHand(p).getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.inspect.id")) && p.hasPermission("kstaffmode.items.inspect")) {
+                    if (UtilsFactory.getItemInHand(e).getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.inspect.id")) && p.hasPermission("kstaffmode.items.inspect")) {
 
                         if (!clicked.hasPermission("kstaffmode.bypass.inspect")) {
                             plugin.getServer().getPluginManager().callEvent(new InspectInteractEvent(p, clicked));
@@ -42,7 +42,7 @@ public class ItemsInteractListener implements Listener {
                         }
                     }
                     ////////////******FREEZE******/////////////
-                    if (UtilsFactory.getItemInHand(p).getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.freeze.id")) && p.hasPermission("kstaffmode.items.freeze")) {
+                    if (UtilsFactory.getItemInHand(e).getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.freeze.id")) && p.hasPermission("kstaffmode.items.freeze")) {
                         if (!clicked.hasPermission("kstaffmode.bypass.freeze")) {
                             plugin.getServer().getPluginManager().callEvent(new FreezeInteractEvent(p, clicked));
                         } else {
@@ -63,7 +63,7 @@ public class ItemsInteractListener implements Listener {
             if(p.hasPermission("kstaffmode.useitems")) {
 
                 ////////////******NAVIGATOR******/////////////
-                if (UtilsFactory.getItemInHand(p).getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.navigator.id")) && p.hasPermission("kstaffmode.items.navigator")) {
+                if (UtilsFactory.getItemInHand(e).getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.navigator.id")) && p.hasPermission("kstaffmode.items.navigator")) {
                     if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
                         plugin.getServer().getPluginManager().callEvent(new NavigatorInteractEvent(p, ActionType.LEFT_CLICK, p.getLocation()));
                     }
@@ -81,7 +81,7 @@ public class ItemsInteractListener implements Listener {
                 }
 
                 ////////////******STAFFLIST******/////////////
-                if (UtilsFactory.getItemInHand(p).getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.staffList.id"))
+                if (UtilsFactory.getItemInHand(e).getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.staffList.id"))
                         && p.hasPermission("kstaffmode.items.stafflist")) {
                     if(e.getAction() !=null ) {
                         plugin.getServer().getPluginManager().callEvent(new StaffListInteractEvent(p));
@@ -90,8 +90,8 @@ public class ItemsInteractListener implements Listener {
                 }
 
                 ////////////******VANISH******/////////////
-                if (UtilsFactory.getItemInHand(p).getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.vanish.visible.id"))
-                        || UtilsFactory.getItemInHand(p).getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.vanish.vanished.id"))
+                if (UtilsFactory.getItemInHand(e).getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.vanish.visible.id"))
+                        || UtilsFactory.getItemInHand(e).getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.vanish.vanished.id"))
                         && p.hasPermission("kstaffmode.items.vanish")) {
                     if(e.getAction() !=null ) {
                         plugin.getServer().getPluginManager().callEvent(new VanishInteractEvent(p));
@@ -100,7 +100,7 @@ public class ItemsInteractListener implements Listener {
                 }
 
                 ////////////******FLY******/////////////
-                if (UtilsFactory.getItemInHand(p).getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.fly.id")) && p.hasPermission("kstaffmode.items.fly")) {
+                if (UtilsFactory.getItemInHand(e).getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.fly.id")) && p.hasPermission("kstaffmode.items.fly")) {
                     if(e.getAction() !=null ) {
                         plugin.getServer().getPluginManager().callEvent(new FlyInteractEvent(p));
                     }
@@ -108,7 +108,7 @@ public class ItemsInteractListener implements Listener {
                 }
 
                 ////////////******RANDOMTP******/////////////
-                if(UtilsFactory.getItemInHand(p).getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.randomtp.id")) && p.hasPermission("kstaffmode.items.randomtp")) {
+                if(UtilsFactory.getItemInHand(e).getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.randomtp.id")) && p.hasPermission("kstaffmode.items.randomtp")) {
                     if(e.getAction() !=null ) {
                         plugin.getServer().getPluginManager().callEvent(new RandomTpInteractEvent(p));
                     }
