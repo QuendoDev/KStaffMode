@@ -6,7 +6,7 @@
 
     <groupId>com.kino</groupId>
     <artifactId>KStaffMode</artifactId>
-    <version>2.1-BETA</version>
+    <version>${core.version}</version>
     <modules>
         <module>Core</module>
         <module>Versions</module>
@@ -14,5 +14,7 @@
     </modules>
     <packaging>pom</packaging>
 
-    
+    <properties>
+        <core.version>2.1-BETA</core.version>
+    </properties>
 </project>

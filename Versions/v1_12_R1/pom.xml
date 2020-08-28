@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>kstaffmode-versions-v1_12_R1</artifactId>
+    <version>${core.version}</version>
 
     <build>
         <plugins>
