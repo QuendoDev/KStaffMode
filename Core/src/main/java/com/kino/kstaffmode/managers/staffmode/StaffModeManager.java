@@ -1,4 +1,4 @@
-package com.kino.kstaffmode.managers.sm;
+package com.kino.kstaffmode.managers.staffmode;
 
 import com.kino.kore.utils.items.ItemBuilder;
 import com.kino.kore.utils.messages.MessageUtils;

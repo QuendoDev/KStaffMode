@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class Utilsv1_8_R3 extends AbstractUtils {
+public class Utilsv1_8_R3 implements AbstractUtils {
 
 
     @Override

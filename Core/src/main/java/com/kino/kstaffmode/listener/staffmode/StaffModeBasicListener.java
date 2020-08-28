@@ -1,4 +1,4 @@
-package com.kino.kstaffmode.listener.sm;
+package com.kino.kstaffmode.listener.staffmode;
 
 import com.kino.kstaffmode.KStaffMode;
 import org.bukkit.entity.Player;

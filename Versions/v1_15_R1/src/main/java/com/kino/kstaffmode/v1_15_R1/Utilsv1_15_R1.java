@@ -1,7 +1,7 @@
-package com.kino.kstaffmode.v1_9_R2;
+package com.kino.kstaffmode.v1_15_R1;
 
 import com.kino.kstaffmode.api.utils.AbstractUtils;
-import net.minecraft.server.v1_9_R2.MinecraftServer;
+import net.minecraft.server.v1_15_R1.MinecraftServer;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -10,7 +10,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 @SuppressWarnings("deprecation")
-public class Utilsv1_9_R2 implements AbstractUtils {
+public class Utilsv1_15_R1 implements AbstractUtils {
 
     @Override
     public ItemStack getItemInHand(PlayerEvent e) {

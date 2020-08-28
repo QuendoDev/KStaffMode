@@ -5,11 +5,12 @@
     <parent>
         <artifactId>KStaffMode</artifactId>
         <groupId>com.kino</groupId>
-        <version>2.1-BETA</version>
+        <version>0.0.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>kstaffmode-core</artifactId>
+    <version>${core.version}</version>
 
     <build>
         <plugins>
@@ -113,6 +114,30 @@
         <dependency>
             <groupId>com.kino</groupId>
             <artifactId>kstaffmode-versions-v1_12_R1</artifactId>
+            <version>${core.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.kino</groupId>
+            <artifactId>kstaffmode-versions-v1_13_R2</artifactId>
+            <version>${core.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.kino</groupId>
+            <artifactId>kstaffmode-versions-v1_14_R1</artifactId>
+            <version>${core.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.kino</groupId>
+            <artifactId>kstaffmode-versions-v1_15_R1</artifactId>
+            <version>${core.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.kino</groupId>
+            <artifactId>kstaffmode-versions-v1_16_R2</artifactId>
             <version>${core.version}</version>
             <scope>compile</scope>
         </dependency>

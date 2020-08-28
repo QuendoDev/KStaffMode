@@ -10,7 +10,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 @SuppressWarnings("deprecation")
-public class Utilsv1_11_R1 extends AbstractUtils {
+public class Utilsv1_11_R1 implements AbstractUtils {
 
     @Override
     public ItemStack getItemInHand(PlayerEvent e) {

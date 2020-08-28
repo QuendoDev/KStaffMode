@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>kstaffmode-versions-v1_10_R1</artifactId>
+    <artifactId>kstaffmode-versions-v1_16_R2</artifactId>
     <version>${core.version}</version>
 
     <build>
@@ -36,8 +36,11 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.10.2-R0.1-SNAPSHOT</version>
+            <version>1.16.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
+
+
 </project>
