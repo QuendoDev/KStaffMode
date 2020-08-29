@@ -8,7 +8,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.UUID;
 
-@SuppressWarnings("deprecation")
 public class JoinListener implements Listener {
 
     private KStaffMode plugin;
@@ -18,10 +17,10 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e){
-        if(e.getPlayer().hasPermission("kstaffmode.staffmode.join")){
+        if(e.getPlayer().hasPermission("kstaffmode.data.read")){
             plugin.getPlayerDataManager().readData(e.getPlayer());
         }
-        if(!e.getPlayer().hasPermission("kstaffmode.bypassvanish")) {
+        if(!e.getPlayer().hasPermission("kstaffmode.bypass.vanish")) {
             for (UUID uuid : plugin.getStaffModeManager().getVanished()) {
                 e.getPlayer().hidePlayer(Bukkit.getPlayer(uuid));
             }

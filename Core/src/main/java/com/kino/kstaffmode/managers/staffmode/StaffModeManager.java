@@ -89,7 +89,7 @@ public class StaffModeManager {
                 this.inStaffMode.add(p.getUniqueId());
                 this.vanished.add(p.getUniqueId());
                 for(Player player : Bukkit.getOnlinePlayers()){
-                    if(player.hasPermission("kstaffmode.bypassvanish")){
+                    if(player.hasPermission("kstaffmode.bypass.vanish")){
                         player.showPlayer(p);
                     }else{
                         player.hidePlayer(p);
@@ -151,7 +151,7 @@ public class StaffModeManager {
                     p.getInventory().setItem(plugin.getConfig().getInt("staffItems.vanish.slot"), vanishedItem);
                 }
                 for(Player player : Bukkit.getOnlinePlayers()){
-                    if(player.hasPermission("kstaffmode.bypassvanish")){
+                    if(player.hasPermission("kstaffmode.bypass.vanish")){
                         player.showPlayer(p);
                     }else{
                         player.hidePlayer(p);

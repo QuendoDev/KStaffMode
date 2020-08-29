@@ -27,14 +27,14 @@ public class LeaveListener implements Listener {
             plugin.getStaffModeManager().getFrozen().remove(e.getPlayer().getUniqueId());
             plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), plugin.getConfig().getString("frozenDisconnect").replace("<player>", e.getPlayer().getName()));
         }
-        if(e.getPlayer().hasPermission("kstaffmode.staffmode")){
+        if(e.getPlayer().hasPermission("kstaffmode.data.save")){
             plugin.getPlayerDataManager().savePlayerData(e.getPlayer());
         }
     }
 
     @EventHandler
     public void onKick(PlayerKickEvent e){
-        if(e.getPlayer().hasPermission("kstaffmode.staffmode")){
+        if(e.getPlayer().hasPermission("kstaffmode.data.save")){
             plugin.getPlayerDataManager().savePlayerData(e.getPlayer());
         }
 
