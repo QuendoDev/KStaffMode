@@ -1,9 +1,10 @@
 package com.kino.kstaffmode.listener;
 
 import com.kino.kore.utils.messages.MessageUtils;
-import com.kino.kstaffmode.KStaffMode;
 import com.kino.kstaffmode.managers.files.PlayerDataManager;
 import com.kino.kstaffmode.managers.staffmode.StaffModeManager;
+import fr.minuskube.netherboard.Netherboard;
+import fr.minuskube.netherboard.bukkit.BPlayerBoard;
 import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -32,6 +33,11 @@ public class LeaveListener implements Listener {
             staffModeManager.getFrozen().remove(e.getPlayer().getUniqueId());
             Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), config.getString("frozenDisconnect").replace("<player>", e.getPlayer().getName()));
         }
+        BPlayerBoard board = Netherboard.instance().getBoard(e.getPlayer());
+        if(board !=null && board.equals(staffModeManager.getBoard())) {
+            board.delete();
+            board = null;
+        }
         if(e.getPlayer().hasPermission("kstaffmode.data.save")){
             playerDataManager.savePlayerData(e.getPlayer());
         }
@@ -39,6 +45,11 @@ public class LeaveListener implements Listener {
 
     @EventHandler
     public void onKick(PlayerKickEvent e){
+        BPlayerBoard board = Netherboard.instance().getBoard(e.getPlayer());
+        if(board !=null && board.equals(staffModeManager.getBoard())) {
+            board.delete();
+            board = null;
+        }
         if(e.getPlayer().hasPermission("kstaffmode.data.save")){
             playerDataManager.savePlayerData(e.getPlayer());
         }
