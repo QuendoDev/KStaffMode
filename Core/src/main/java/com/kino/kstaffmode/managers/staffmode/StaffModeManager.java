@@ -2,8 +2,13 @@ package com.kino.kstaffmode.managers.staffmode;
 
 import com.kino.kore.utils.items.ItemBuilder;
 import com.kino.kore.utils.messages.MessageUtils;
-import com.kino.kstaffmode.KStaffMode;
+import com.kino.kstaffmode.factory.UtilsFactory;
+import fr.minuskube.netherboard.Netherboard;
+import fr.minuskube.netherboard.bukkit.BPlayerBoard;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -11,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
+@SuppressWarnings("deprecation")
 public class StaffModeManager {
 
     private List<UUID> inStaffMode;
@@ -26,10 +32,13 @@ public class StaffModeManager {
 
     private FileConfiguration messages;
     private FileConfiguration config;
+    private FileConfiguration scoreboardFile;
+
     
-    public StaffModeManager(FileConfiguration config, FileConfiguration messages){
+    public StaffModeManager(FileConfiguration config, FileConfiguration messages,FileConfiguration scoreboardFile){
         this.config = config;
         this.messages = messages;
+        this.scoreboardFile = scoreboardFile;
         this.inStaffMode = new ArrayList<>();
         this.vanished = new ArrayList<>();
         this.inStaffChat = new ArrayList<>();
@@ -102,6 +111,7 @@ public class StaffModeManager {
                 p.setAllowFlight(true);
                 p.setFlying(true);
                 this.giveStaffItems(p);
+                createScoreboard(p);
                 MessageUtils.sendMessage(p, messages.getString("enabledStaffMode"));
             }else{
                 this.inStaffMode.remove(p.getUniqueId());
@@ -113,6 +123,8 @@ public class StaffModeManager {
                 p.setAllowFlight(false);
                 p.setFlying(false);
                 this.givePlayerItems(p);
+                board.delete();
+                board = null;
                 MessageUtils.sendMessage(p, messages.getString("disabledStaffMode"));
             }
         }
@@ -127,7 +139,9 @@ public class StaffModeManager {
                 inStaffChat.remove(p.getUniqueId());
                 MessageUtils.sendMessage(p, messages.getString("disabledStaffChat"));
             }
+            setStaffChatScore(p);
         }
+
     }
 
     public void toogleFly(Player p){
@@ -171,6 +185,7 @@ public class StaffModeManager {
                 }
                 MessageUtils.sendMessage(p, messages.getString("disabledVanish"));
             }
+            setVanishScore(p);
         }
     }
 
@@ -352,6 +367,119 @@ public class StaffModeManager {
 
         if(config.getBoolean("staffItems.vanish.enabled")) {
             staffModeItems.put(vanishedItem, config.getInt("staffItems.vanish.slot"));
+        }
+    }
+
+    @Getter
+    @Setter
+    private BPlayerBoard board;
+
+    public void createScoreboard(Player p){
+        if(scoreboardFile.getBoolean("scoreboard.enabled")) {
+            board = Netherboard.instance().createBoard(p, ChatColor.translateAlternateColorCodes('&', scoreboardFile.getString("scoreboard.title")));
+            if (scoreboardFile.getBoolean("scoreboard.header.enabled")) {
+                setHeader();
+            }
+
+            if (scoreboardFile.getBoolean("scoreboard.staffmode.enabled")) {
+                setStaffModeScore();
+            }
+
+            if (scoreboardFile.getBoolean("scoreboard.vanish.enabled")) {
+                setStaffChatScore(p);
+            }
+
+            if (scoreboardFile.getBoolean("scoreboard.staffchat.enabled")) {
+                setVanishScore(p);
+            }
+
+            if (scoreboardFile.getBoolean("scoreboard.online.enabled")) {
+                setOnline();
+            }
+
+            if (scoreboardFile.getBoolean("scoreboard.tps.enabled")) {
+                setTPS();
+            }
+
+            if (scoreboardFile.getBoolean("scoreboard.footer.enabled")) {
+                setFooter();
+            }
+        }
+
+    }
+
+    public void setHeader () {
+        if(board !=null) {
+            board.set(ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', scoreboardFile.getString("scoreboard.header.line")), 14);
+        }
+    }
+
+    public void setStaffModeScore () {
+        if(board !=null) {
+            board.set(ChatColor.translateAlternateColorCodes('&', scoreboardFile.getString("scoreboard.staffmode.line")), 13);
+        }
+    }
+
+    public void setVanishScore (Player p) {
+        if(board !=null) {
+            boolean b = isVanished(p);
+            if (b) {
+                board.set(ChatColor.translateAlternateColorCodes('&', scoreboardFile.getString("scoreboard.vanish.line").replace(
+                        "<vanished>", "Vanished"
+                ).replace("<color>", getColor("vanish", true))), 12);
+            } else {
+                board.set(ChatColor.translateAlternateColorCodes('&', scoreboardFile.getString("scoreboard.vanish.line").replace(
+                        "<vanished>", "Visible"
+                ).replace("<color>", getColor("vanish", false))), 12);
+            }
+        }
+    }
+
+    public void setStaffChatScore (Player p) {
+        if(board !=null) {
+            boolean b = isInStaffChat(p);
+            if (b) {
+                board.set(ChatColor.translateAlternateColorCodes('&', scoreboardFile.getString("scoreboard.staffchat.line").replace(
+                        "<staffchat>", "StaffChat"
+                ).replace("<color>", getColor("staffchat", true))), 11);
+            } else {
+                board.set(ChatColor.translateAlternateColorCodes('&', scoreboardFile.getString("scoreboard.staffchat.line").replace(
+                        "<staffchat>", "Global"
+                ).replace("<color>", getColor("staffchat", false))), 11);
+            }
+        }
+    }
+
+    public void setOnline () {
+        if(board !=null) {
+            board.set(ChatColor.translateAlternateColorCodes('&', scoreboardFile.getString("scoreboard.online.line").replace(
+                    "<online>", Bukkit.getServer().getOnlinePlayers().size() + ""
+            )), 10);
+        }
+    }
+
+    public void setTPS() {
+        if(board !=null) {
+            board.set(ChatColor.translateAlternateColorCodes('&', scoreboardFile.getString("scoreboard.tps.line").replace(
+                    "<tps>", UtilsFactory.getTPS() + ""
+            )), 9);
+        }
+    }
+
+    public void setFooter () {
+        board.set(ChatColor.translateAlternateColorCodes('&', scoreboardFile.getString("scoreboard.footer.line")), 8);
+    }
+
+
+
+    private String getColor(String key, boolean enabled){
+        String lettere = scoreboardFile.getString("scoreboard." + key + ".enabled-color");
+        String letterd = scoreboardFile.getString("scoreboard." + key + ".disabled-color");
+
+        if(enabled){
+            return "&" + lettere;
+        }else{
+            return "&" + letterd;
         }
     }
 }
