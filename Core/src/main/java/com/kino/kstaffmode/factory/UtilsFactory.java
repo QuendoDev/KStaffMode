@@ -31,4 +31,16 @@ public class UtilsFactory {
             throw new RuntimeException(ex);
         }
     }
+
+    public static double getTPS () {
+        try {
+            AbstractUtils utils = (AbstractUtils) UTILSCLASS.getConstructor().newInstance();
+
+            System.out.println(Math.round(utils.getTPS() * 100) / 100.0);
+
+            return Math.max((Math.round(utils.getTPS() * 100) / 100.0), 20);
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 }
