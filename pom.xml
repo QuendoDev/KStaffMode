@@ -15,6 +15,6 @@
     <packaging>pom</packaging>
 
     <properties>
-        <core.version>2.2-SNAPSHOT</core.version>
+        <core.version>2.3-SNAPSHOT</core.version>
     </properties>
 </project>

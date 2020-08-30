@@ -32,8 +32,6 @@ public final class KStaffMode extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
-
         this.registerClasses();
         new TaskLoader(this, staffModeManager).load();
         this.registerListeners();
