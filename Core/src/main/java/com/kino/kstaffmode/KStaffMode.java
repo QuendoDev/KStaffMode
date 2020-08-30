@@ -1,8 +1,6 @@
 package com.kino.kstaffmode;
 
 import com.kino.kore.utils.PluginUtils;
-import com.kino.kore.utils.files.BasicFilesManager;
-import com.kino.kore.utils.files.YMLFile;
 import com.kino.kstaffmode.commands.*;
 import com.kino.kstaffmode.commands.gamemode.GameModeExecutor;
 import com.kino.kstaffmode.listener.ChatListener;
@@ -18,9 +16,7 @@ import com.kino.kstaffmode.managers.files.FilesManager;
 import com.kino.kstaffmode.managers.files.PlayerDataManager;
 import com.kino.kstaffmode.managers.menus.MenuManager;
 import com.kino.kstaffmode.managers.staffmode.StaffModeManager;
-import lombok.Getter;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -33,17 +29,13 @@ public final class KStaffMode extends JavaPlugin {
     private PlayerDataManager playerDataManager;
     private FilesManager filesManager;
 
-    /*private BasicFilesManager basicFilesManager;
-    private YMLFile data;*/
 
     @Override
     public void onEnable() {
-        /*basicFilesManager = new BasicFilesManager(this);
-        basicFilesManager.registerConfig();
-        basicFilesManager.registerMessages();
-        data = new YMLFile(this, "data");*/
+
 
         this.registerClasses();
+        new TaskLoader(this, staffModeManager).load();
         this.registerListeners();
         this.registerCommands();
         PluginUtils.sendEnableMessages(this);
@@ -54,6 +46,7 @@ public final class KStaffMode extends JavaPlugin {
         this.dataManager.saveData();
         PluginUtils.sendDisableMessages(this);
     }
+
 
 
     private void registerListeners(){
@@ -82,7 +75,7 @@ public final class KStaffMode extends JavaPlugin {
     private void registerClasses(){
         this.filesManager = new FilesManager(this);
         filesManager.start();
-        this.staffModeManager = new StaffModeManager(getConfig(), filesManager.getMessages());
+        this.staffModeManager = new StaffModeManager(getConfig(), filesManager.getMessages(), filesManager.getScoreboard());
         this.menuManager = new MenuManager(getConfig(), staffModeManager, menuManager);
         this.dataManager = new DataManager(filesManager, getConfig(), staffModeManager);
         dataManager.startManager();
