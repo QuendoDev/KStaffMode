@@ -1,0 +1,31 @@
+#################################################################################################################
+scoreboard:
+  enabled: true
+  #The title of the scoreboard
+  title: "&eKStaffMode Network"
+  header:
+    enabled: true
+    line: "&7&m------------------------"
+  footer:
+    enabled: true
+    line: "&7&m------------------------"
+  staffmode:
+    enabled: true
+    line: "&6&lStaff Mode:"
+  staffchat:
+    enabled: true
+    enabled-color: "a"
+    disabled-color: "c"
+    line: "&e»&aStaffChat: <color><staffchat>"
+  vanish:
+    enabled: true
+    enabled-color: "a"
+    disabled-color: "c"
+    line: "&e»&aVanish: <color><vanished>"
+  tps:
+    enabled: true
+    line: "&e»&aTPS: &a<tps>"
+  online:
+    enabled: true
+    line: "&e»&aOnline: &d<online>"
+#################################################################################################################
