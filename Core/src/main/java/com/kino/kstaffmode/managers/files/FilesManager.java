@@ -12,6 +12,7 @@ public class FilesManager {
 
     private BasicFilesManager basicFilesManager;
     private YMLFile data;
+    private YMLFile scoreboard;
     private KStaffMode plugin;
 
 
@@ -19,6 +20,7 @@ public class FilesManager {
         this.plugin = plugin;
         this.basicFilesManager = new BasicFilesManager(plugin);
         this.data = new YMLFile(plugin, "data");
+        this.scoreboard = new YMLFile(plugin, "scoreboard");
     }
 
     public void start () {
@@ -37,5 +39,9 @@ public class FilesManager {
 
     public void reloadConfig () {
         plugin.reloadConfig();
+    }
+
+    public void saveScoreboard() {
+        scoreboard.save();
     }
 }
