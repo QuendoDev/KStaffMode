@@ -1,6 +1,5 @@
 package com.kino.kstaffmode.listener;
 
-import com.kino.kstaffmode.KStaffMode;
 import com.kino.kstaffmode.managers.files.PlayerDataManager;
 import com.kino.kstaffmode.managers.staffmode.StaffModeManager;
 import lombok.AllArgsConstructor;
@@ -28,5 +27,6 @@ public class JoinListener implements Listener {
                 e.getPlayer().hidePlayer(Bukkit.getPlayer(uuid));
             }
         }
+        staffModeManager.setOnline();
     }
 }
