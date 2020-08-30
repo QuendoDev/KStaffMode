@@ -7,17 +7,18 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-@SuppressWarnings("deprecation")
 public class AdventureArgument extends CommandArgument {
 
-    private KStaffMode plugin;
-    public AdventureArgument(KStaffMode plugin) {
+    private FileConfiguration messages;
+
+    public AdventureArgument(FileConfiguration messages) {
         super("adventure", "kstaffmode.commands.gamemode.adventure",
                 "Use this argument to change your gamemode to adventure.",
-                new String[]{"2, a, ad, aventura"});
-        this.plugin = plugin;
+                "2, a, ad, aventura");
+        this.messages = messages;
     }
 
     @Override
@@ -30,11 +31,11 @@ public class AdventureArgument extends CommandArgument {
                     Player p = (Player) sender;
                     if(!pl.getName().equals(p.getName())){
                         pl.setGameMode(GameMode.ADVENTURE);
-                        MessageUtils.sendMessage(p, plugin.getMessages().getString("gm-adventure-other").replace("<player>", pl.getName()));
-                        MessageUtils.sendMessage(pl, plugin.getMessages().getString("gm-adventure-other1").replace("<player>", p.getName()));
+                        MessageUtils.sendMessage(p, messages.getString("gm-adventure-other").replace("<player>", pl.getName()));
+                        MessageUtils.sendMessage(pl, messages.getString("gm-adventure-other1").replace("<player>", p.getName()));
                         for(Player player : Bukkit.getServer().getOnlinePlayers()){
                             if(player.hasPermission(getPermission())){
-                                MessageUtils.sendMessage(player, plugin.getMessages().getString("gm-adventure-other-all").replace(
+                                MessageUtils.sendMessage(player, messages.getString("gm-adventure-other-all").replace(
                                         "<sender>", p.getName()
                                 ).replace("<player>", pl.getName()));
                             }
@@ -46,11 +47,11 @@ public class AdventureArgument extends CommandArgument {
                     }
                 }else{
                     pl.setGameMode(GameMode.ADVENTURE);
-                    MessageUtils.sendMessage(sender, plugin.getMessages().getString("gm-adventure-other").replace("<player>", pl.getName()));
-                    MessageUtils.sendMessage(pl, plugin.getMessages().getString("gm-adventure-other1").replace("<player>", sender.getName()));
+                    MessageUtils.sendMessage(sender, messages.getString("gm-adventure-other").replace("<player>", pl.getName()));
+                    MessageUtils.sendMessage(pl, messages.getString("gm-adventure-other1").replace("<player>", sender.getName()));
                     for(Player player : Bukkit.getServer().getOnlinePlayers()){
                         if(player.hasPermission(getPermission())){
-                            MessageUtils.sendMessage(player, plugin.getMessages().getString("gm-adventure-other-all").replace(
+                            MessageUtils.sendMessage(player, messages.getString("gm-adventure-other-all").replace(
                                     "<sender>", sender.getName()
                             ).replace("<player>", pl.getName()));
                         }
@@ -58,7 +59,7 @@ public class AdventureArgument extends CommandArgument {
                     return true;
                 }
             }else{
-                MessageUtils.sendMessage(sender, plugin.getMessages().getString("playerNotOnline"));
+                MessageUtils.sendMessage(sender, messages.getString("playerNotOnline"));
                 return false;
             }
         }
@@ -66,10 +67,10 @@ public class AdventureArgument extends CommandArgument {
             if(sender instanceof Player) {
                 Player p = (Player) sender;
                 p.setGameMode(GameMode.ADVENTURE);
-                MessageUtils.sendMessage(p, plugin.getMessages().getString("gm-adventure"));
+                MessageUtils.sendMessage(p, messages.getString("gm-adventure"));
                 for(Player player : Bukkit.getServer().getOnlinePlayers()){
                     if(player.hasPermission(getPermission())){
-                        MessageUtils.sendMessage(player, plugin.getMessages().getString("gm-adventure-all").replace(
+                        MessageUtils.sendMessage(player, messages.getString("gm-adventure-all").replace(
                                 "<player>", p.getName()
                         ));
                     }

@@ -2,6 +2,7 @@ package com.kino.kstaffmode.commands;
 
 import com.kino.kore.utils.messages.MessageUtils;
 import com.kino.kstaffmode.KStaffMode;
+import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,16 +10,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+@AllArgsConstructor
 public class SCommand implements CommandExecutor {
 
-    private KStaffMode plugin;
-    public SCommand(KStaffMode plugin) {
-        this.plugin = plugin;
-    }
+    private FileConfiguration messages;
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        FileConfiguration messages = plugin.getMessages();
         if (sender instanceof Player) {
 
             Player p = (Player) sender;
@@ -34,11 +32,11 @@ public class SCommand implements CommandExecutor {
                     MessageUtils.sendMessage(p,  messages.getString("teleported").replace("<player>", t.getName()));
                     return true;
                 } else {
-                    MessageUtils.sendMessage(sender, plugin.getMessages().getString("playerNotOnline"));
+                    MessageUtils.sendMessage(sender, messages.getString("playerNotOnline"));
                     return false;
                 }
             }else{
-                MessageUtils.sendMessage(p, plugin.getMessages().getString("noPerms"));
+                MessageUtils.sendMessage(p, messages.getString("noPerms"));
                 return false;
             }
 

@@ -7,17 +7,18 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-@SuppressWarnings("deprecation")
 public class SurvivalArgument extends CommandArgument {
 
-    private KStaffMode plugin;
-    public SurvivalArgument(KStaffMode plugin) {
+    private FileConfiguration messages;
+
+    public SurvivalArgument(FileConfiguration messages) {
         super("survival", "kstaffmode.commands.gamemode.survival",
                 "Use this argument to change your gamemode to survival.",
-                new String[]{"0, s, surv, supervivencia"});
-        this.plugin = plugin;
+                "0, s, surv, supervivencia");
+        this.messages = messages;
     }
 
     @Override
@@ -30,11 +31,11 @@ public class SurvivalArgument extends CommandArgument {
                     Player p = (Player) sender;
                     if(!pl.getName().equals(p.getName())){
                         pl.setGameMode(GameMode.SURVIVAL);
-                        MessageUtils.sendMessage(p, plugin.getMessages().getString("gm-survival-other").replace("<player>", pl.getName()));
-                        MessageUtils.sendMessage(pl, plugin.getMessages().getString("gm-survival-other1").replace("<player>", p.getName()));
+                        MessageUtils.sendMessage(p, messages.getString("gm-survival-other").replace("<player>", pl.getName()));
+                        MessageUtils.sendMessage(pl, messages.getString("gm-survival-other1").replace("<player>", p.getName()));
                         for(Player player : Bukkit.getServer().getOnlinePlayers()){
                             if(player.hasPermission(getPermission())){
-                                MessageUtils.sendMessage(player, plugin.getMessages().getString("gm-survival-other-all").replace(
+                                MessageUtils.sendMessage(player, messages.getString("gm-survival-other-all").replace(
                                         "<sender>", p.getName()
                                 ).replace("<player>", pl.getName()));
                             }
@@ -46,11 +47,11 @@ public class SurvivalArgument extends CommandArgument {
                     }
                 }else{
                     pl.setGameMode(GameMode.SURVIVAL);
-                    MessageUtils.sendMessage(sender, plugin.getMessages().getString("gm-survival-other").replace("<player>", pl.getName()));
-                    MessageUtils.sendMessage(pl, plugin.getMessages().getString("gm-survival-other1").replace("<player>", sender.getName()));
+                    MessageUtils.sendMessage(sender, messages.getString("gm-survival-other").replace("<player>", pl.getName()));
+                    MessageUtils.sendMessage(pl, messages.getString("gm-survival-other1").replace("<player>", sender.getName()));
                     for(Player player : Bukkit.getServer().getOnlinePlayers()){
                         if(player.hasPermission(getPermission())){
-                            MessageUtils.sendMessage(player, plugin.getMessages().getString("gm-survival-other-all").replace(
+                            MessageUtils.sendMessage(player, messages.getString("gm-survival-other-all").replace(
                                     "<sender>", sender.getName()
                             ).replace("<player>", pl.getName()));
                         }
@@ -58,7 +59,7 @@ public class SurvivalArgument extends CommandArgument {
                     return true;
                 }
             }else{
-                MessageUtils.sendMessage(sender, plugin.getMessages().getString("playerNotOnline"));
+                MessageUtils.sendMessage(sender, messages.getString("playerNotOnline"));
                 return false;
             }
         }
@@ -66,10 +67,10 @@ public class SurvivalArgument extends CommandArgument {
             if(sender instanceof Player) {
                 Player p = (Player) sender;
                 p.setGameMode(GameMode.SURVIVAL);
-                MessageUtils.sendMessage(p, plugin.getMessages().getString("gm-survival"));
+                MessageUtils.sendMessage(p, messages.getString("gm-survival"));
                 for(Player player : Bukkit.getServer().getOnlinePlayers()){
                     if(player.hasPermission(getPermission())){
-                        MessageUtils.sendMessage(player, plugin.getMessages().getString("gm-survival-all").replace(
+                        MessageUtils.sendMessage(player, messages.getString("gm-survival-all").replace(
                                 "<player>", p.getName()
                         ));
                     }

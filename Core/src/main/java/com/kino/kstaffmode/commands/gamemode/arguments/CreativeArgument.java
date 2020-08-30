@@ -7,17 +7,18 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-@SuppressWarnings("deprecation")
 public class CreativeArgument extends CommandArgument {
 
-    private KStaffMode plugin;
-    public CreativeArgument(KStaffMode plugin) {
+    private FileConfiguration messages;
+
+    public CreativeArgument(FileConfiguration messages) {
         super("creative", "kstaffmode.commands.gamemode.creative",
                 "Use this argument to change your gamemode to creative.",
-                new String[]{"1, c, cr, creativo"});
-        this.plugin = plugin;
+                "1, c, cr, creativo");
+        this.messages = messages;
     }
 
     @Override
@@ -30,11 +31,11 @@ public class CreativeArgument extends CommandArgument {
                     Player p = (Player) sender;
                     if(!pl.getName().equals(p.getName())){
                         pl.setGameMode(GameMode.CREATIVE);
-                        MessageUtils.sendMessage(p, plugin.getMessages().getString("gm-creative-other").replace("<player>", pl.getName()));
-                        MessageUtils.sendMessage(pl, plugin.getMessages().getString("gm-creative-other1").replace("<player>", p.getName()));
+                        MessageUtils.sendMessage(p, messages.getString("gm-creative-other").replace("<player>", pl.getName()));
+                        MessageUtils.sendMessage(pl, messages.getString("gm-creative-other1").replace("<player>", p.getName()));
                         for(Player player : Bukkit.getServer().getOnlinePlayers()){
                             if(player.hasPermission(getPermission())){
-                                MessageUtils.sendMessage(player, plugin.getMessages().getString("gm-creative-other-all").replace(
+                                MessageUtils.sendMessage(player, messages.getString("gm-creative-other-all").replace(
                                         "<sender>", p.getName()
                                 ).replace("<player>", pl.getName()));
                             }
@@ -46,11 +47,11 @@ public class CreativeArgument extends CommandArgument {
                     }
                 }else{
                     pl.setGameMode(GameMode.CREATIVE);
-                    MessageUtils.sendMessage(sender, plugin.getMessages().getString("gm-creative-other").replace("<player>", pl.getName()));
-                    MessageUtils.sendMessage(pl, plugin.getMessages().getString("gm-creative-other1").replace("<player>", sender.getName()));
+                    MessageUtils.sendMessage(sender, messages.getString("gm-creative-other").replace("<player>", pl.getName()));
+                    MessageUtils.sendMessage(pl, messages.getString("gm-creative-other1").replace("<player>", sender.getName()));
                     for(Player player : Bukkit.getServer().getOnlinePlayers()){
                         if(player.hasPermission(getPermission())){
-                            MessageUtils.sendMessage(player, plugin.getMessages().getString("gm-creative-other-all").replace(
+                            MessageUtils.sendMessage(player, messages.getString("gm-creative-other-all").replace(
                                     "<sender>", sender.getName()
                             ).replace("<player>", pl.getName()));
                         }
@@ -58,7 +59,7 @@ public class CreativeArgument extends CommandArgument {
                     return true;
                 }
             }else{
-                MessageUtils.sendMessage(sender, plugin.getMessages().getString("playerNotOnline"));
+                MessageUtils.sendMessage(sender, messages.getString("playerNotOnline"));
                 return false;
             }
         }
@@ -66,10 +67,10 @@ public class CreativeArgument extends CommandArgument {
             if(sender instanceof Player) {
                 Player p = (Player) sender;
                 p.setGameMode(GameMode.CREATIVE);
-                MessageUtils.sendMessage(p, plugin.getMessages().getString("gm-creative"));
+                MessageUtils.sendMessage(p, messages.getString("gm-creative"));
                 for(Player player : Bukkit.getServer().getOnlinePlayers()){
                     if(player.hasPermission(getPermission())){
-                        MessageUtils.sendMessage(player, plugin.getMessages().getString("gm-creative-all").replace(
+                        MessageUtils.sendMessage(player, messages.getString("gm-creative-all").replace(
                                 "<player>", p.getName()
                         ));
                     }

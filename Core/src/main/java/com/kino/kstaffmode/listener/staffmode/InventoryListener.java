@@ -1,10 +1,13 @@
 package com.kino.kstaffmode.listener.staffmode;
 
 import com.kino.kstaffmode.KStaffMode;
+import com.kino.kstaffmode.managers.menus.MenuManager;
 import com.kino.kstaffmode.managers.menus.PlayerInventory;
+import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,12 +17,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 @SuppressWarnings("deprecation")
+@AllArgsConstructor
 public class InventoryListener implements Listener {
 
-    private KStaffMode plugin;
-    public InventoryListener (KStaffMode plugin) {
-        this.plugin = plugin;
-    }
+    private FileConfiguration config;
+    private MenuManager menuManager;
 
     @EventHandler
     public void onClick (InventoryClickEvent e) {
@@ -27,7 +29,7 @@ public class InventoryListener implements Listener {
             String invName = e.getClickedInventory().getName();
 
             //////////////////MAIN MENU////////////////////////
-            if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("stafflist.main.title"))).equals(ChatColor.stripColor(invName))) {
+            if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', config.getString("stafflist.main.title"))).equals(ChatColor.stripColor(invName))) {
 
                 if (checks(e)) {
                     e.setCancelled(true);
@@ -36,15 +38,15 @@ public class InventoryListener implements Listener {
                     e.setCancelled(true);
                     if (e.getClickedInventory().equals(p.getOpenInventory().getTopInventory())) {
 
-                        if (e.getCurrentItem().getType().equals(Material.getMaterial(plugin.getConfig().getInt("stafflist.main.inStaffMode.id")))) {
+                        if (e.getCurrentItem().getType().equals(Material.getMaterial(config.getInt("stafflist.main.inStaffMode.id")))) {
                             if (p.hasPermission("kstaffmode.menus.main.open.instaffmode")) {
-                                plugin.getMenuManager().getStaffListSmMenu().open(p, 1);
+                                menuManager.getStaffListSmMenu().open(p, 1);
                             }
                         }
 
-                        if (e.getCurrentItem().getType().equals(Material.getMaterial(plugin.getConfig().getInt("stafflist.main.withoutStaffMode.id")))) {
+                        if (e.getCurrentItem().getType().equals(Material.getMaterial(config.getInt("stafflist.main.withoutStaffMode.id")))) {
                             if (p.hasPermission("kstaffmode.menus.main.open.playing")) {
-                                plugin.getMenuManager().getStaffListPlayingMenu().open(p, 1);
+                                menuManager.getStaffListPlayingMenu().open(p, 1);
                             }
                         }
                     }
@@ -53,7 +55,7 @@ public class InventoryListener implements Listener {
             }
 
             //////////////////STAFF MENU////////////////////////
-            if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("stafflist.inStaffModeMenu.title"))).equals(ChatColor.stripColor(invName))) {
+            if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', config.getString("stafflist.inStaffModeMenu.title"))).equals(ChatColor.stripColor(invName))) {
 
                 if (checks(e)) {
                     e.setCancelled(true);
@@ -61,22 +63,22 @@ public class InventoryListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     e.setCancelled(true);
                     if (e.getClickedInventory().equals(p.getOpenInventory().getTopInventory())) {
-                        PlayerInventory playerInventory = plugin.getMenuManager().getPlayerInventory(p.getName());
+                        PlayerInventory playerInventory = menuManager.getPlayerInventory(p.getName());
 
                         if (playerInventory != null) {
                             int page = playerInventory.getPage();
                             int slot = e.getSlot();
 
-                            if (slot == 53 && e.getCurrentItem().getType().equals(Material.getMaterial(plugin.getConfig().getInt("stafflist.inStaffModeMenu.nextPage.id")))) {
+                            if (slot == 53 && e.getCurrentItem().getType().equals(Material.getMaterial(config.getInt("stafflist.inStaffModeMenu.nextPage.id")))) {
                                 int newPage = page + 1;
 
-                                plugin.getMenuManager().getStaffListSmMenu().open(p, newPage);
+                                menuManager.getStaffListSmMenu().open(p, newPage);
                             }
 
-                            if (slot == 45 && e.getCurrentItem().getType().equals(Material.getMaterial(plugin.getConfig().getInt("stafflist.inStaffModeMenu.previousPage.id")))) {
+                            if (slot == 45 && e.getCurrentItem().getType().equals(Material.getMaterial(config.getInt("stafflist.inStaffModeMenu.previousPage.id")))) {
                                 int newPage = page - 1;
 
-                                plugin.getMenuManager().getStaffListSmMenu().open(p, newPage);
+                                menuManager.getStaffListSmMenu().open(p, newPage);
                             }
 
                             if (e.getCurrentItem().getType().equals(Material.getMaterial(397))) {
@@ -93,7 +95,7 @@ public class InventoryListener implements Listener {
             }
 
             //////////////////STAFFPLAYING MENU////////////////////////
-            if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("stafflist.staffPlaying.title"))).equals(ChatColor.stripColor(invName))) {
+            if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', config.getString("stafflist.staffPlaying.title"))).equals(ChatColor.stripColor(invName))) {
 
                 if (checks(e)) {
                     e.setCancelled(true);
@@ -101,22 +103,22 @@ public class InventoryListener implements Listener {
                     Player p = (Player) e.getWhoClicked();
                     e.setCancelled(true);
                     if (e.getClickedInventory().equals(p.getOpenInventory().getTopInventory())) {
-                        PlayerInventory playerInventory = plugin.getMenuManager().getPlayerInventory(p.getName());
+                        PlayerInventory playerInventory = menuManager.getPlayerInventory(p.getName());
 
                         if (playerInventory != null) {
                             int page = playerInventory.getPage();
                             int slot = e.getSlot();
 
-                            if (slot == 53 && e.getCurrentItem().getType().equals(Material.getMaterial(plugin.getConfig().getInt("stafflist.staffPlaying.nextPage.id")))) {
+                            if (slot == 53 && e.getCurrentItem().getType().equals(Material.getMaterial(config.getInt("stafflist.staffPlaying.nextPage.id")))) {
                                 int newPage = page + 1;
 
-                                plugin.getMenuManager().getStaffListPlayingMenu().open(p, newPage);
+                                menuManager.getStaffListPlayingMenu().open(p, newPage);
                             }
 
-                            if (slot == 45 && e.getCurrentItem().getType().equals(Material.getMaterial(plugin.getConfig().getInt("stafflist.staffPlaying.previousPage.id")))) {
+                            if (slot == 45 && e.getCurrentItem().getType().equals(Material.getMaterial(config.getInt("stafflist.staffPlaying.previousPage.id")))) {
                                 int newPage = page - 1;
 
-                                plugin.getMenuManager().getStaffListPlayingMenu().open(p, newPage);
+                                menuManager.getStaffListPlayingMenu().open(p, newPage);
                             }
 
                             if (e.getCurrentItem().getType().equals(Material.getMaterial(397))) {
@@ -133,7 +135,7 @@ public class InventoryListener implements Listener {
             }
 
             //////////////////INVSEE MENU////////////////////////
-            if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("inspect.title"))).equals(ChatColor.stripColor(invName))) {
+            if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', config.getString("inspect.title"))).equals(ChatColor.stripColor(invName))) {
                 e.setCancelled(true);
             }
         }
@@ -146,7 +148,7 @@ public class InventoryListener implements Listener {
     @EventHandler
     public void onClose (InventoryCloseEvent e) {
         Player p = (Player) e.getPlayer();
-        plugin.getMenuManager().removePlayerInventory(p.getName());
+        menuManager.removePlayerInventory(p.getName());
     }
 
 

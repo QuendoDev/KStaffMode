@@ -2,18 +2,20 @@ package com.kino.kstaffmode.commands;
 
 import com.kino.kore.utils.messages.MessageUtils;
 import com.kino.kstaffmode.KStaffMode;
+import com.kino.kstaffmode.managers.staffmode.StaffModeManager;
+import lombok.AllArgsConstructor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+@AllArgsConstructor
 public class VanishCommand implements CommandExecutor {
 
-    private KStaffMode plugin;
+    private StaffModeManager staffModeManager;
+    private FileConfiguration messages;
 
-    public VanishCommand(KStaffMode plugin) {
-        this.plugin = plugin;
-    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -22,10 +24,10 @@ public class VanishCommand implements CommandExecutor {
             Player p = (Player) sender;
 
             if (p.hasPermission("kstaffmode.vanish")) {
-                plugin.getStaffModeManager().toogleVanish(p);
+                staffModeManager.toogleVanish(p);
                 return true;
             } else {
-                MessageUtils.sendMessage(p, plugin.getMessages().getString("noPerms"));
+                MessageUtils.sendMessage(p, messages.getString("noPerms"));
                 return false;
             }
 

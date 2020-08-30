@@ -2,11 +2,13 @@ package com.kino.kstaffmode.managers.files;
 
 import com.kino.kore.utils.messages.LoggerUtils;
 import com.kino.kstaffmode.KStaffMode;
+import com.kino.kstaffmode.managers.staffmode.StaffModeManager;
+import lombok.AllArgsConstructor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
-@SuppressWarnings("unchecked")
 public class DataManager {
 
     private List<String> staffChatInConfig;
@@ -15,59 +17,67 @@ public class DataManager {
     private List<String> vanishInConfig;
     private Map<String, ItemStack[]> armorItemsInConfig;
     private Map<String, ItemStack[]> inventoryItemsInConfig;
-    private KStaffMode plugin;
 
-    public DataManager(KStaffMode plugin){
-        this.plugin = plugin;
+    private FileConfiguration data;
+    private FileConfiguration config;
+    private FilesManager filesManager;
+    private StaffModeManager staffModeManager;
+    
+    public DataManager (FilesManager filesManager, FileConfiguration config, StaffModeManager staffModeManager) {
+        this.filesManager = filesManager;
+        this.config = config;
+        this.data = filesManager.getData();
+        this.staffModeManager = staffModeManager;
     }
+
 
     public void startManager(){
         armorItemsInConfig = new HashMap<>();
-        if(plugin.getData().getConfigurationSection("armorItems") !=null){
-            for(String s : plugin.getData().getConfigurationSection("armorItems").getKeys(false)){
-                if(plugin.getConfig().get("armorItems." + s) !=null) {
-                    List<ItemStack> list = (List<ItemStack>) plugin.getConfig().get("armorItems." + s);
+        if(data.getConfigurationSection("armorItems") !=null){
+            for(String s : data.getConfigurationSection("armorItems").getKeys(false)){
+                if(config.get("armorItems." + s) !=null) {
+                    List<ItemStack> list = (List<ItemStack>) config.get("armorItems." + s);
                     armorItemsInConfig.put(s, (ItemStack[]) list.toArray());
                 }
             }
-            plugin.getData().set("armorItems", null);
+            data.set("armorItems", null);
         }
 
         inventoryItemsInConfig = new HashMap<>();
-        if(plugin.getData().getConfigurationSection("inventoryItems") !=null){
-            for(String s : plugin.getData().getConfigurationSection("inventoryItems").getKeys(false)){
-                if(plugin.getConfig().get("inventoryItems." + s) !=null) {
-                    List<ItemStack> list = (List<ItemStack>) plugin.getConfig().get("inventoryItems." + s);
+        if(data.getConfigurationSection("inventoryItems") !=null){
+            for(String s : data.getConfigurationSection("inventoryItems").getKeys(false)){
+                if(config.get("inventoryItems." + s) !=null) {
+                    List<ItemStack> list = (List<ItemStack>) config.get("inventoryItems." + s);
                     inventoryItemsInConfig.put(s, (ItemStack[]) list.toArray());
                 }
             }
-            plugin.getData().set("inventoryItems", null);
+            data.set("inventoryItems", null);
         }
 
         staffChatInConfig = new ArrayList<>();
-        if(plugin.getData().getStringList("staffchat") !=null){
-            staffChatInConfig.addAll(plugin.getData().getStringList("staffchat"));
-            plugin.getData().set("staffchat", null);
+        if(data.getStringList("staffchat") !=null){
+            staffChatInConfig.addAll(data.getStringList("staffchat"));
+            data.set("staffchat", null);
         }
 
         flyInConfig = new ArrayList<>();
-        if(plugin.getData().getStringList("fly") !=null){
-            flyInConfig.addAll(plugin.getData().getStringList("fly"));
-            plugin.getData().set("fly", null);
+        if(data.getStringList("fly") !=null){
+            flyInConfig.addAll(data.getStringList("fly"));
+            data.set("fly", null);
         }
 
         staffModeInConfig = new ArrayList<>();
-        if(plugin.getData().getStringList("staffmode") !=null){
-            staffModeInConfig.addAll(plugin.getData().getStringList("staffmode"));
-            plugin.getData().set("staffmode", null);
+        if(data.getStringList("staffmode") !=null){
+            staffModeInConfig.addAll(data.getStringList("staffmode"));
+            data.set("staffmode", null);
         }
 
         vanishInConfig = new ArrayList<>();
-        if(plugin.getData().getStringList("vanish") !=null){
-            vanishInConfig.addAll(plugin.getData().getStringList("vanish"));
-            plugin.getData().set("vanish", null);
+        if(data.getStringList("vanish") !=null){
+            vanishInConfig.addAll(data.getStringList("vanish"));
+            data.set("vanish", null);
         }
-        plugin.saveData();
+        filesManager.saveData();
     }
 
     public void saveData(){
@@ -78,65 +88,65 @@ public class DataManager {
         saveArmorItems();
         saveInventoryItems();
         saveVanish();
-        plugin.saveData();
+        filesManager.saveData();
         LoggerUtils.sendConsoleMessage("&aData saved!");
     }
 
 
     public void saveFly(){
-        for(UUID uuid : plugin.getStaffModeManager().getFly()){
+        for(UUID uuid : staffModeManager.getFly()){
             if(!flyInConfig.contains(uuid.toString())) {
                 flyInConfig.add(uuid.toString());
             }
         }
-        plugin.getData().set("fly", flyInConfig);
+        data.set("fly", flyInConfig);
     }
 
     public void saveStaffChat(){
-        for(UUID uuid : plugin.getStaffModeManager().getInStaffChat()){
+        for(UUID uuid : staffModeManager.getInStaffChat()){
             if(!staffChatInConfig.contains(uuid.toString())) {
                 staffChatInConfig.add(uuid.toString());
             }
         }
-        plugin.getData().set("staffchat", staffChatInConfig);
+        data.set("staffchat", staffChatInConfig);
     }
 
     public void saveStaffMode(){
-        for(UUID uuid : plugin.getStaffModeManager().getInStaffMode()){
+        for(UUID uuid : staffModeManager.getInStaffMode()){
             if(!staffModeInConfig.contains(uuid.toString())) {
                 staffModeInConfig.add(uuid.toString());
             }
         }
-        plugin.getData().set("staffmode", staffModeInConfig);
+        data.set("staffmode", staffModeInConfig);
     }
 
     public void saveArmorItems(){
-        for(UUID uuid : plugin.getStaffModeManager().getArmorItems().keySet()){
+        for(UUID uuid : staffModeManager.getArmorItems().keySet()){
             if(!armorItemsInConfig.containsKey(uuid.toString())){
-                armorItemsInConfig.put(uuid.toString(), plugin.getStaffModeManager().getArmorItems().get(uuid));
+                armorItemsInConfig.put(uuid.toString(), staffModeManager.getArmorItems().get(uuid));
             }
         }
-        plugin.getData().set("armorItems", armorItemsInConfig);
+        data.set("armorItems", armorItemsInConfig);
     }
 
     public void saveInventoryItems(){
-        for(UUID uuid : plugin.getStaffModeManager().getInventoryItems().keySet()){
+        for(UUID uuid : staffModeManager.getInventoryItems().keySet()){
             if(!inventoryItemsInConfig.containsKey(uuid.toString())){
-                inventoryItemsInConfig.put(uuid.toString(), plugin.getStaffModeManager().getInventoryItems().get(uuid));
+                inventoryItemsInConfig.put(uuid.toString(), staffModeManager.getInventoryItems().get(uuid));
             }
         }
-        plugin.getData().set("inventoryItems", inventoryItemsInConfig);
+        data.set("inventoryItems", inventoryItemsInConfig);
     }
 
     public void saveVanish(){
-        for(UUID uuid : plugin.getStaffModeManager().getVanished()){
-            if(!staffModeInConfig.contains(uuid.toString()) && !plugin.getStaffModeManager().getInStaffMode().contains(uuid)) {
+        for(UUID uuid : staffModeManager.getVanished()){
+            if(!staffModeInConfig.contains(uuid.toString()) && !staffModeManager.getInStaffMode().contains(uuid)) {
                 if (!vanishInConfig.contains(uuid.toString())) {
                     vanishInConfig.add(uuid.toString());
                 }
             }
         }
-        plugin.getData().set("vanish", vanishInConfig);
+        data.set("vanish", vanishInConfig);
     }
 
     public List<String> getStaffChatInConfig() {

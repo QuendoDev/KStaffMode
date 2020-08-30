@@ -2,22 +2,24 @@ package com.kino.kstaffmode.listener;
 
 import com.kino.kore.utils.messages.MessageUtils;
 import com.kino.kstaffmode.KStaffMode;
+import com.kino.kstaffmode.managers.staffmode.StaffModeManager;
+import lombok.AllArgsConstructor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+@AllArgsConstructor
 public class MoveListener implements Listener {
 
-    private KStaffMode plugin;
-    public MoveListener (KStaffMode plugin) {
-        this.plugin = plugin;
-    }
+    private final StaffModeManager manager;
+    private final FileConfiguration messages;
 
 
     @EventHandler
     public void move (PlayerMoveEvent e) {
-        if(plugin.getStaffModeManager().isFrozen(e.getPlayer())) {
-            MessageUtils.sendMessage(e.getPlayer(), plugin.getMessages().getString("moveWhileFrozen"));
+        if(manager.isFrozen(e.getPlayer())) {
+            MessageUtils.sendMessage(e.getPlayer(), messages.getString("moveWhileFrozen"));
             e.setCancelled(true);
         }
     }

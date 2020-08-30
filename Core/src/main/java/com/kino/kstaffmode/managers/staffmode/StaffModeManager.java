@@ -5,12 +5,12 @@ import com.kino.kore.utils.messages.MessageUtils;
 import com.kino.kstaffmode.KStaffMode;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
-@SuppressWarnings("deprecation")
 public class StaffModeManager {
 
     private List<UUID> inStaffMode;
@@ -23,10 +23,13 @@ public class StaffModeManager {
     private Map<ItemStack, Integer> staffModeItems;
     private ItemStack vanishedItem;
     private ItemStack notVanishedItem;
-    private KStaffMode plugin;
 
-    public StaffModeManager(KStaffMode plugin){
-        this.plugin = plugin;
+    private FileConfiguration messages;
+    private FileConfiguration config;
+    
+    public StaffModeManager(FileConfiguration config, FileConfiguration messages){
+        this.config = config;
+        this.messages = messages;
         this.inStaffMode = new ArrayList<>();
         this.vanished = new ArrayList<>();
         this.inStaffChat = new ArrayList<>();
@@ -50,7 +53,7 @@ public class StaffModeManager {
         this.saveItems(p);
         this.clearInventory(p);
         for(ItemStack item : this.staffModeItems.keySet()){
-            if(item.getType() == Material.getMaterial(plugin.getConfig().getInt("staffItems.vanish.vanished.id"))){
+            if(item.getType() == Material.getMaterial(config.getInt("staffItems.vanish.vanished.id"))){
                 if(!isVanished(p)){
                     item = notVanishedItem;
                 }
@@ -70,15 +73,15 @@ public class StaffModeManager {
     public void toogleFreeze (Player staff, Player p) {
         if(frozen.contains(p.getUniqueId())) {
             frozen.remove(p.getUniqueId());
-            MessageUtils.sendMessage(p, plugin.getMessages().getString("unfrozen").replace("<player>", staff.getName()));
-            MessageUtils.sendMessage(staff, plugin.getMessages().getString("unfreeze").replace("<player>", p.getName()));
+            MessageUtils.sendMessage(p, messages.getString("unfrozen").replace("<player>", staff.getName()));
+            MessageUtils.sendMessage(staff, messages.getString("unfreeze").replace("<player>", p.getName()));
         } else {
             if (!p.hasPermission("kstaffmode.bypass.freeze")) {
                 frozen.add(p.getUniqueId());
-                MessageUtils.sendMessage(p, plugin.getMessages().getString("frozen").replace("<player>", staff.getName()));
-                MessageUtils.sendMessage(staff, plugin.getMessages().getString("freeze").replace("<player>", p.getName()));
+                MessageUtils.sendMessage(p, messages.getString("frozen").replace("<player>", staff.getName()));
+                MessageUtils.sendMessage(staff, messages.getString("freeze").replace("<player>", p.getName()));
             } else {
-                MessageUtils.sendMessage(staff, plugin.getMessages().getString("noPerms"));
+                MessageUtils.sendMessage(staff, messages.getString("noPerms"));
             }
         }
     }
@@ -99,7 +102,7 @@ public class StaffModeManager {
                 p.setAllowFlight(true);
                 p.setFlying(true);
                 this.giveStaffItems(p);
-                MessageUtils.sendMessage(p, plugin.getMessages().getString("enabledStaffMode"));
+                MessageUtils.sendMessage(p, messages.getString("enabledStaffMode"));
             }else{
                 this.inStaffMode.remove(p.getUniqueId());
                 this.vanished.remove(p.getUniqueId());
@@ -110,7 +113,7 @@ public class StaffModeManager {
                 p.setAllowFlight(false);
                 p.setFlying(false);
                 this.givePlayerItems(p);
-                MessageUtils.sendMessage(p, plugin.getMessages().getString("disabledStaffMode"));
+                MessageUtils.sendMessage(p, messages.getString("disabledStaffMode"));
             }
         }
     }
@@ -119,10 +122,10 @@ public class StaffModeManager {
         if(p.hasPermission("kstaffmode.staffchat")){
             if(!inStaffChat.contains(p.getUniqueId())){
                 inStaffChat.add(p.getUniqueId());
-                MessageUtils.sendMessage(p, plugin.getMessages().getString("enabledStaffChat"));
+                MessageUtils.sendMessage(p, messages.getString("enabledStaffChat"));
             }else{
                 inStaffChat.remove(p.getUniqueId());
-                MessageUtils.sendMessage(p, plugin.getMessages().getString("disabledStaffChat"));
+                MessageUtils.sendMessage(p, messages.getString("disabledStaffChat"));
             }
         }
     }
@@ -133,12 +136,12 @@ public class StaffModeManager {
                 fly.add(p.getUniqueId());
                 p.setAllowFlight(true);
                 p.setFlying(true);
-                MessageUtils.sendMessage(p, plugin.getMessages().getString("enabledFly"));
+                MessageUtils.sendMessage(p, messages.getString("enabledFly"));
             }else{
                 fly.remove(p.getUniqueId());
                 p.setAllowFlight(false);
                 p.setFlying(false);
-                MessageUtils.sendMessage(p, plugin.getMessages().getString("disabledFly"));
+                MessageUtils.sendMessage(p, messages.getString("disabledFly"));
             }
         }
     }
@@ -148,7 +151,7 @@ public class StaffModeManager {
             if(!vanished.contains(p.getUniqueId())){
                 vanished.add(p.getUniqueId());
                 if(inStaffMode.contains(p.getUniqueId())) {
-                    p.getInventory().setItem(plugin.getConfig().getInt("staffItems.vanish.slot"), vanishedItem);
+                    p.getInventory().setItem(config.getInt("staffItems.vanish.slot"), vanishedItem);
                 }
                 for(Player player : Bukkit.getOnlinePlayers()){
                     if(player.hasPermission("kstaffmode.bypass.vanish")){
@@ -157,16 +160,16 @@ public class StaffModeManager {
                         player.hidePlayer(p);
                     }
                 }
-                MessageUtils.sendMessage(p, plugin.getMessages().getString("enabledVanish"));
+                MessageUtils.sendMessage(p, messages.getString("enabledVanish"));
             }else{
                 vanished.remove(p.getUniqueId());
                 if(inStaffMode.contains(p.getUniqueId())) {
-                    p.getInventory().setItem(plugin.getConfig().getInt("staffItems.vanish.slot"), notVanishedItem);
+                    p.getInventory().setItem(config.getInt("staffItems.vanish.slot"), notVanishedItem);
                 }
                 for(Player player : Bukkit.getOnlinePlayers()){
                     player.showPlayer(p);
                 }
-                MessageUtils.sendMessage(p, plugin.getMessages().getString("disabledVanish"));
+                MessageUtils.sendMessage(p, messages.getString("disabledVanish"));
             }
         }
     }
@@ -174,7 +177,7 @@ public class StaffModeManager {
     public void teleportToRandomplayer(Player p, boolean multiworld) {
         Random r = new Random();
 
-        ArrayList<Player> players = new ArrayList<>(plugin.getServer().getOnlinePlayers());
+        ArrayList<Player> players = new ArrayList<>(Bukkit.getServer().getOnlinePlayers());
         players.remove(p);
 
         if(players.size() > 0) {
@@ -182,15 +185,15 @@ public class StaffModeManager {
             Player player = players.get(index);
             if(multiworld) {
                 p.teleport(player.getLocation());
-                MessageUtils.sendMessage(p, plugin.getMessages().getString("teleportedTo").replace("<player>", player.getName()));
+                MessageUtils.sendMessage(p, messages.getString("teleportedTo").replace("<player>", player.getName()));
             } else {
                 if(player.getWorld().equals(p.getWorld())) {
                     p.teleport(player.getLocation());
-                    MessageUtils.sendMessage(p, plugin.getMessages().getString("teleportedTo").replace("<player>", player.getName()));
+                    MessageUtils.sendMessage(p, messages.getString("teleportedTo").replace("<player>", player.getName()));
                 }
             }
         } else {
-            MessageUtils.sendMessage(p, plugin.getMessages().getString("errorRandomTp"));
+            MessageUtils.sendMessage(p, messages.getString("errorRandomTp"));
         }
     }
 
@@ -254,101 +257,101 @@ public class StaffModeManager {
 
     public void registerItems(){
         staffModeItems.clear();
-        if(plugin.getConfig().getBoolean("staffItems.navigator.enabled")) {
+        if(config.getBoolean("staffItems.navigator.enabled")) {
             ItemStack item = ItemBuilder.createItem(
-                    plugin.getConfig().getInt("staffItems.navigator.id"),
-                    plugin.getConfig().getInt("staffItems.navigator.amount"),
-                    (short) plugin.getConfig().getInt("staffItems.navigator.data"),
-                    plugin.getConfig().getString("staffItems.navigator.name"),
-                    plugin.getConfig().getStringList("staffItems.navigator.lore")
+                    config.getInt("staffItems.navigator.id"),
+                    config.getInt("staffItems.navigator.amount"),
+                    (short) config.getInt("staffItems.navigator.data"),
+                    config.getString("staffItems.navigator.name"),
+                    config.getStringList("staffItems.navigator.lore")
             );
-            staffModeItems.put(item, plugin.getConfig().getInt("staffItems.navigator.slot"));
+            staffModeItems.put(item, config.getInt("staffItems.navigator.slot"));
         }
 
-        if(plugin.getConfig().getBoolean("staffItems.staffList.enabled")) {
+        if(config.getBoolean("staffItems.staffList.enabled")) {
             ItemStack item = ItemBuilder.createItem(
-                    plugin.getConfig().getInt("staffItems.staffList.id"),
-                    plugin.getConfig().getInt("staffItems.staffList.amount"),
-                    (short) plugin.getConfig().getInt("staffItems.staffList.data"),
-                    plugin.getConfig().getString("staffItems.staffList.name"),
-                    plugin.getConfig().getStringList("staffItems.staffList.lore")
+                    config.getInt("staffItems.staffList.id"),
+                    config.getInt("staffItems.staffList.amount"),
+                    (short) config.getInt("staffItems.staffList.data"),
+                    config.getString("staffItems.staffList.name"),
+                    config.getStringList("staffItems.staffList.lore")
             );
-            staffModeItems.put(item, plugin.getConfig().getInt("staffItems.staffList.slot"));
+            staffModeItems.put(item, config.getInt("staffItems.staffList.slot"));
         }
 
-        if(plugin.getConfig().getBoolean("staffItems.worldEdit.enabled")) {
+        if(config.getBoolean("staffItems.worldEdit.enabled")) {
             ItemStack item = ItemBuilder.createItem(
-                    plugin.getConfig().getInt("staffItems.worldEdit.id"),
-                    plugin.getConfig().getInt("staffItems.worldEdit.amount"),
-                    (short) plugin.getConfig().getInt("staffItems.worldEdit.data"),
-                    plugin.getConfig().getString("staffItems.worldEdit.name"),
-                    plugin.getConfig().getStringList("staffItems.worldEdit.lore")
+                    config.getInt("staffItems.worldEdit.id"),
+                    config.getInt("staffItems.worldEdit.amount"),
+                    (short) config.getInt("staffItems.worldEdit.data"),
+                    config.getString("staffItems.worldEdit.name"),
+                    config.getStringList("staffItems.worldEdit.lore")
             );
-            staffModeItems.put(item, plugin.getConfig().getInt("staffItems.worldEdit.slot"));
+            staffModeItems.put(item, config.getInt("staffItems.worldEdit.slot"));
         }
 
-        if(plugin.getConfig().getBoolean("staffItems.inspect.enabled")) {
+        if(config.getBoolean("staffItems.inspect.enabled")) {
             ItemStack item = ItemBuilder.createItem(
-                    plugin.getConfig().getInt("staffItems.inspect.id"),
-                    plugin.getConfig().getInt("staffItems.inspect.amount"),
-                    (short) plugin.getConfig().getInt("staffItems.inspect.data"),
-                    plugin.getConfig().getString("staffItems.inspect.name"),
-                    plugin.getConfig().getStringList("staffItems.inspect.lore")
+                    config.getInt("staffItems.inspect.id"),
+                    config.getInt("staffItems.inspect.amount"),
+                    (short) config.getInt("staffItems.inspect.data"),
+                    config.getString("staffItems.inspect.name"),
+                    config.getStringList("staffItems.inspect.lore")
             );
-            staffModeItems.put(item, plugin.getConfig().getInt("staffItems.inspect.slot"));
+            staffModeItems.put(item, config.getInt("staffItems.inspect.slot"));
         }
 
-        if(plugin.getConfig().getBoolean("staffItems.freeze.enabled")) {
+        if(config.getBoolean("staffItems.freeze.enabled")) {
             ItemStack item = ItemBuilder.createItem(
-                    plugin.getConfig().getInt("staffItems.freeze.id"),
-                    plugin.getConfig().getInt("staffItems.freeze.amount"),
-                    (short) plugin.getConfig().getInt("staffItems.freeze.data"),
-                    plugin.getConfig().getString("staffItems.freeze.name"),
-                    plugin.getConfig().getStringList("staffItems.freeze.lore")
+                    config.getInt("staffItems.freeze.id"),
+                    config.getInt("staffItems.freeze.amount"),
+                    (short) config.getInt("staffItems.freeze.data"),
+                    config.getString("staffItems.freeze.name"),
+                    config.getStringList("staffItems.freeze.lore")
             );
-            staffModeItems.put(item, plugin.getConfig().getInt("staffItems.freeze.slot"));
+            staffModeItems.put(item, config.getInt("staffItems.freeze.slot"));
         }
 
-        if(plugin.getConfig().getBoolean("staffItems.fly.enabled")) {
+        if(config.getBoolean("staffItems.fly.enabled")) {
             ItemStack item = ItemBuilder.createItem(
-                    plugin.getConfig().getInt("staffItems.fly.id"),
-                    plugin.getConfig().getInt("staffItems.fly.amount"),
-                    (short) plugin.getConfig().getInt("staffItems.fly.data"),
-                    plugin.getConfig().getString("staffItems.fly.name"),
-                    plugin.getConfig().getStringList("staffItems.fly.lore")
+                    config.getInt("staffItems.fly.id"),
+                    config.getInt("staffItems.fly.amount"),
+                    (short) config.getInt("staffItems.fly.data"),
+                    config.getString("staffItems.fly.name"),
+                    config.getStringList("staffItems.fly.lore")
             );
-            staffModeItems.put(item, plugin.getConfig().getInt("staffItems.fly.slot"));
+            staffModeItems.put(item, config.getInt("staffItems.fly.slot"));
         }
 
-        if(plugin.getConfig().getBoolean("staffItems.randomtp.enabled")) {
+        if(config.getBoolean("staffItems.randomtp.enabled")) {
             ItemStack item = ItemBuilder.createItem(
-                    plugin.getConfig().getInt("staffItems.randomtp.id"),
-                    plugin.getConfig().getInt("staffItems.randomtp.amount"),
-                    (short) plugin.getConfig().getInt("staffItems.randomtp.data"),
-                    plugin.getConfig().getString("staffItems.randomtp.name"),
-                    plugin.getConfig().getStringList("staffItems.randomtp.lore")
+                    config.getInt("staffItems.randomtp.id"),
+                    config.getInt("staffItems.randomtp.amount"),
+                    (short) config.getInt("staffItems.randomtp.data"),
+                    config.getString("staffItems.randomtp.name"),
+                    config.getStringList("staffItems.randomtp.lore")
             );
-            staffModeItems.put(item, plugin.getConfig().getInt("staffItems.randomtp.slot"));
+            staffModeItems.put(item, config.getInt("staffItems.randomtp.slot"));
         }
 
         this.notVanishedItem = ItemBuilder.createItem(
-                plugin.getConfig().getInt("staffItems.vanish.visible.id"),
-                plugin.getConfig().getInt("staffItems.vanish.visible.amount"),
-                (short) plugin.getConfig().getInt("staffItems.vanish.visible.data"),
-                plugin.getConfig().getString("staffItems.vanish.visible.name"),
-                plugin.getConfig().getStringList("staffItems.vanish.visible.lore")
+                config.getInt("staffItems.vanish.visible.id"),
+                config.getInt("staffItems.vanish.visible.amount"),
+                (short) config.getInt("staffItems.vanish.visible.data"),
+                config.getString("staffItems.vanish.visible.name"),
+                config.getStringList("staffItems.vanish.visible.lore")
         );
 
         this.vanishedItem = ItemBuilder.createItem(
-                plugin.getConfig().getInt("staffItems.vanish.vanished.id"),
-                plugin.getConfig().getInt("staffItems.vanish.vanished.amount"),
-                (short) plugin.getConfig().getInt("staffItems.vanish.vanished.data"),
-                plugin.getConfig().getString("staffItems.vanish.vanished.name"),
-                plugin.getConfig().getStringList("staffItems.vanish.vanished.lore")
+                config.getInt("staffItems.vanish.vanished.id"),
+                config.getInt("staffItems.vanish.vanished.amount"),
+                (short) config.getInt("staffItems.vanish.vanished.data"),
+                config.getString("staffItems.vanish.vanished.name"),
+                config.getStringList("staffItems.vanish.vanished.lore")
         );
 
-        if(plugin.getConfig().getBoolean("staffItems.vanish.enabled")) {
-            staffModeItems.put(vanishedItem, plugin.getConfig().getInt("staffItems.vanish.slot"));
+        if(config.getBoolean("staffItems.vanish.enabled")) {
+            staffModeItems.put(vanishedItem, config.getInt("staffItems.vanish.slot"));
         }
     }
 }

@@ -7,14 +7,15 @@ import com.kino.kstaffmode.commands.gamemode.arguments.SurvivalArgument;
 import com.kino.kstaffmode.KStaffMode;
 import com.kino.kstaffmode.commands.gamemode.arguments.CreativeArgument;
 import com.kino.kstaffmode.commands.gamemode.arguments.SpectatorArgument;
+import org.bukkit.configuration.file.FileConfiguration;
 
 public class GameModeExecutor extends ArgumentExecutor {
 
-    public GameModeExecutor(KStaffMode plugin) {
+    public GameModeExecutor(FileConfiguration messages) {
         super("gm");
-        addArgument(new SurvivalArgument(plugin));
-        addArgument(new CreativeArgument(plugin));
-        addArgument(new AdventureArgument(plugin));
-        addArgument(new SpectatorArgument(plugin));
+        addArgument(new SurvivalArgument(messages));
+        addArgument(new CreativeArgument(messages));
+        addArgument(new AdventureArgument(messages));
+        addArgument(new SpectatorArgument(messages));
     }
 }
