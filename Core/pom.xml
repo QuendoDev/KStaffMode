@@ -61,6 +61,7 @@
                     <include>config.yml</include>
                     <include>messages.yml</include>
                     <include>data.yml</include>
+                    <include>scoreboard.yml</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
@@ -80,6 +81,11 @@
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>fr.minuskube</groupId>
+            <artifactId>netherboard-bukkit</artifactId>
+            <version>1.2.1</version>
         </dependency>
         <dependency>
             <groupId>com.kino</groupId>
