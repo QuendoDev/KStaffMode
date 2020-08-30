@@ -1,4 +1,12 @@
 #################################################################################################################
+
+
+#FIRST OF ALL, SORRY FOR THIS MESSAGES FILES, I KNOW IT IS VERY BIG
+#BUT I WANTED TO DO IT AS CUSTOMIZABLE AS POSSIBLE.
+#IM WORKING ON A BETTER METHOD TO DO THIS.
+
+
+#################################################################################################################
 reloadMessage: "&aSuccessfully reloaded"
 playerNotOnline: "&cThat player is not online!"
 noPerms: "&cYou can't do that"
