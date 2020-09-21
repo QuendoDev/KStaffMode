@@ -50,7 +50,7 @@ public final class KStaffMode extends JavaPlugin {
     private void registerListeners(){
         Bukkit.getServer().getPluginManager().registerEvents(new LeaveListener(staffModeManager, filesManager.getMessages(), getConfig(), playerDataManager), this);
         Bukkit.getServer().getPluginManager().registerEvents(new JoinListener(staffModeManager, playerDataManager), this);
-        Bukkit.getServer().getPluginManager().registerEvents(new ChatListener(filesManager.getMessages(), staffModeManager), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new ChatListener(filesManager.getMessages(), getConfig(), staffModeManager), this);
         Bukkit.getServer().getPluginManager().registerEvents(new StaffModeBasicListener(staffModeManager), this);
         Bukkit.getServer().getPluginManager().registerEvents(new ItemsInteractListener(staffModeManager, menuManager, getConfig(), filesManager.getMessages()), this);
         Bukkit.getServer().getPluginManager().registerEvents(new InventoryListener(getConfig(), menuManager), this);
@@ -63,7 +63,7 @@ public final class KStaffMode extends JavaPlugin {
         getCommand("staff").setExecutor(new StaffModeCommand(staffModeManager, filesManager.getMessages()));
         getCommand("vanish").setExecutor(new VanishCommand(staffModeManager, filesManager.getMessages()));
         getCommand("fly").setExecutor(new FlyCommand(staffModeManager, filesManager.getMessages()));
-        getCommand("staffchat").setExecutor(new StaffChatCommand(staffModeManager, filesManager.getMessages()));
+        getCommand("staffchat").setExecutor(new StaffChatCommand(staffModeManager, filesManager.getMessages(), getConfig()));
         getCommand("s").setExecutor(new SCommand(filesManager.getMessages()));
         getCommand("invsee").setExecutor(new InvSeeCommand(filesManager.getMessages(), menuManager));
         getCommand("freeze").setExecutor(new FreezeCommand(staffModeManager, filesManager.getMessages()));

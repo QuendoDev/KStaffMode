@@ -1,5 +1,6 @@
 package com.kino.kstaffmode.listener.staffmode;
 
+import com.kino.kore.utils.items.KMaterial;
 import com.kino.kore.utils.messages.MessageUtils;
 import com.kino.kstaffmode.KStaffMode;
 import com.kino.kstaffmode.events.util.ActionType;
@@ -39,7 +40,7 @@ public class ItemsInteractListener implements Listener {
             if (staffModeManager.getInStaffMode().contains(p.getUniqueId())) {
                 if (p.hasPermission("kstaffmode.useitems")) {
                     ////////////******INSPECT******/////////////
-                    if (UtilsFactory.getItemInHand(e).getType() == Material.getMaterial(config.getInt("staffItems.inspect.id")) && p.hasPermission("kstaffmode.items.inspect")) {
+                    if (UtilsFactory.getItemInHand(e).getType() == KMaterial.getMaterial(config.getString("staffItems.inspect.id")) && p.hasPermission("kstaffmode.items.inspect")) {
 
                         if (!clicked.hasPermission("kstaffmode.bypass.inspect")) {
                             Bukkit.getServer().getPluginManager().callEvent(new InspectInteractEvent(p, clicked));
@@ -48,7 +49,7 @@ public class ItemsInteractListener implements Listener {
                         }
                     }
                     ////////////******FREEZE******/////////////
-                    if (UtilsFactory.getItemInHand(e).getType() == Material.getMaterial(config.getInt("staffItems.freeze.id")) && p.hasPermission("kstaffmode.items.freeze")) {
+                    if (UtilsFactory.getItemInHand(e).getType() == KMaterial.getMaterial(config.getString("staffItems.freeze.id")) && p.hasPermission("kstaffmode.items.freeze")) {
                         if (!clicked.hasPermission("kstaffmode.bypass.freeze")) {
                             Bukkit.getServer().getPluginManager().callEvent(new FreezeInteractEvent(p, clicked));
                         } else {
@@ -69,7 +70,7 @@ public class ItemsInteractListener implements Listener {
             if(p.hasPermission("kstaffmode.useitems")) {
 
                 ////////////******NAVIGATOR******/////////////
-                if (UtilsFactory.getItemInHand(e).getType() == Material.getMaterial(config.getInt("staffItems.navigator.id")) && p.hasPermission("kstaffmode.items.navigator")) {
+                if (UtilsFactory.getItemInHand(e).getType() == KMaterial.getMaterial(config.getString("staffItems.navigator.id")) && p.hasPermission("kstaffmode.items.navigator")) {
                     if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
                         Bukkit.getServer().getPluginManager().callEvent(new NavigatorInteractEvent(p, ActionType.LEFT_CLICK, p.getLocation()));
                     }
@@ -87,7 +88,7 @@ public class ItemsInteractListener implements Listener {
                 }
 
                 ////////////******STAFFLIST******/////////////
-                if (UtilsFactory.getItemInHand(e).getType() == Material.getMaterial(config.getInt("staffItems.staffList.id"))
+                if (UtilsFactory.getItemInHand(e).getType() == KMaterial.getMaterial(config.getString("staffItems.staffList.id"))
                         && p.hasPermission("kstaffmode.items.stafflist")) {
                     if(e.getAction() !=null ) {
                         Bukkit.getServer().getPluginManager().callEvent(new StaffListInteractEvent(p));
@@ -96,8 +97,8 @@ public class ItemsInteractListener implements Listener {
                 }
 
                 ////////////******VANISH******/////////////
-                if (UtilsFactory.getItemInHand(e).getType() == Material.getMaterial(config.getInt("staffItems.vanish.visible.id"))
-                        || UtilsFactory.getItemInHand(e).getType() == Material.getMaterial(config.getInt("staffItems.vanish.vanished.id"))
+                if (UtilsFactory.getItemInHand(e).getType() == KMaterial.getMaterial(config.getString("staffItems.vanish.visible.id"))
+                        || UtilsFactory.getItemInHand(e).getType() == KMaterial.getMaterial(config.getString("staffItems.vanish.vanished.id"))
                         && p.hasPermission("kstaffmode.items.vanish")) {
                     if(e.getAction() !=null ) {
                         Bukkit.getServer().getPluginManager().callEvent(new VanishInteractEvent(p));
@@ -106,7 +107,7 @@ public class ItemsInteractListener implements Listener {
                 }
 
                 ////////////******FLY******/////////////
-                if (UtilsFactory.getItemInHand(e).getType() == Material.getMaterial(config.getInt("staffItems.fly.id")) && p.hasPermission("kstaffmode.items.fly")) {
+                if (UtilsFactory.getItemInHand(e).getType() == KMaterial.getMaterial(config.getString("staffItems.fly.id")) && p.hasPermission("kstaffmode.items.fly")) {
                     if(e.getAction() !=null ) {
                         Bukkit.getServer().getPluginManager().callEvent(new FlyInteractEvent(p));
                     }
@@ -114,7 +115,7 @@ public class ItemsInteractListener implements Listener {
                 }
 
                 ////////////******RANDOMTP******/////////////
-                if(UtilsFactory.getItemInHand(e).getType() == Material.getMaterial(config.getInt("staffItems.randomtp.id")) && p.hasPermission("kstaffmode.items.randomtp")) {
+                if(UtilsFactory.getItemInHand(e).getType() == KMaterial.getMaterial(config.getString("staffItems.randomtp.id")) && p.hasPermission("kstaffmode.items.randomtp")) {
                     if(e.getAction() !=null ) {
                         Bukkit.getServer().getPluginManager().callEvent(new RandomTpInteractEvent(p));
                     }

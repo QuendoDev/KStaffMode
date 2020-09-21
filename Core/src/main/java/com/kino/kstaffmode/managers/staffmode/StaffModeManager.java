@@ -1,6 +1,7 @@
 package com.kino.kstaffmode.managers.staffmode;
 
-import com.kino.kore.utils.items.ItemBuilder;
+import com.kino.kore.utils.items.KMaterial;
+import com.kino.kore.utils.items.builder.ItemBuilder;
 import com.kino.kore.utils.messages.MessageUtils;
 import com.kino.kstaffmode.factory.UtilsFactory;
 import fr.minuskube.netherboard.Netherboard;
@@ -273,97 +274,43 @@ public class StaffModeManager {
     public void registerItems(){
         staffModeItems.clear();
         if(config.getBoolean("staffItems.navigator.enabled")) {
-            ItemStack item = ItemBuilder.createItem(
-                    config.getInt("staffItems.navigator.id"),
-                    config.getInt("staffItems.navigator.amount"),
-                    (short) config.getInt("staffItems.navigator.data"),
-                    config.getString("staffItems.navigator.name"),
-                    config.getStringList("staffItems.navigator.lore")
-            );
+            ItemStack item = buildItem("navigator");
             staffModeItems.put(item, config.getInt("staffItems.navigator.slot"));
         }
 
         if(config.getBoolean("staffItems.staffList.enabled")) {
-            ItemStack item = ItemBuilder.createItem(
-                    config.getInt("staffItems.staffList.id"),
-                    config.getInt("staffItems.staffList.amount"),
-                    (short) config.getInt("staffItems.staffList.data"),
-                    config.getString("staffItems.staffList.name"),
-                    config.getStringList("staffItems.staffList.lore")
-            );
+            ItemStack item = buildItem("staffList");
             staffModeItems.put(item, config.getInt("staffItems.staffList.slot"));
         }
 
         if(config.getBoolean("staffItems.worldEdit.enabled")) {
-            ItemStack item = ItemBuilder.createItem(
-                    config.getInt("staffItems.worldEdit.id"),
-                    config.getInt("staffItems.worldEdit.amount"),
-                    (short) config.getInt("staffItems.worldEdit.data"),
-                    config.getString("staffItems.worldEdit.name"),
-                    config.getStringList("staffItems.worldEdit.lore")
-            );
+            ItemStack item = buildItem("worldEdit");
             staffModeItems.put(item, config.getInt("staffItems.worldEdit.slot"));
         }
 
         if(config.getBoolean("staffItems.inspect.enabled")) {
-            ItemStack item = ItemBuilder.createItem(
-                    config.getInt("staffItems.inspect.id"),
-                    config.getInt("staffItems.inspect.amount"),
-                    (short) config.getInt("staffItems.inspect.data"),
-                    config.getString("staffItems.inspect.name"),
-                    config.getStringList("staffItems.inspect.lore")
-            );
+            ItemStack item = buildItem("inspect");
             staffModeItems.put(item, config.getInt("staffItems.inspect.slot"));
         }
 
         if(config.getBoolean("staffItems.freeze.enabled")) {
-            ItemStack item = ItemBuilder.createItem(
-                    config.getInt("staffItems.freeze.id"),
-                    config.getInt("staffItems.freeze.amount"),
-                    (short) config.getInt("staffItems.freeze.data"),
-                    config.getString("staffItems.freeze.name"),
-                    config.getStringList("staffItems.freeze.lore")
-            );
+            ItemStack item = buildItem("freeze");
             staffModeItems.put(item, config.getInt("staffItems.freeze.slot"));
         }
 
         if(config.getBoolean("staffItems.fly.enabled")) {
-            ItemStack item = ItemBuilder.createItem(
-                    config.getInt("staffItems.fly.id"),
-                    config.getInt("staffItems.fly.amount"),
-                    (short) config.getInt("staffItems.fly.data"),
-                    config.getString("staffItems.fly.name"),
-                    config.getStringList("staffItems.fly.lore")
-            );
+            ItemStack item = buildItem("fly");
             staffModeItems.put(item, config.getInt("staffItems.fly.slot"));
         }
 
         if(config.getBoolean("staffItems.randomtp.enabled")) {
-            ItemStack item = ItemBuilder.createItem(
-                    config.getInt("staffItems.randomtp.id"),
-                    config.getInt("staffItems.randomtp.amount"),
-                    (short) config.getInt("staffItems.randomtp.data"),
-                    config.getString("staffItems.randomtp.name"),
-                    config.getStringList("staffItems.randomtp.lore")
-            );
+            ItemStack item = buildItem("randomtp");
             staffModeItems.put(item, config.getInt("staffItems.randomtp.slot"));
         }
 
-        this.notVanishedItem = ItemBuilder.createItem(
-                config.getInt("staffItems.vanish.visible.id"),
-                config.getInt("staffItems.vanish.visible.amount"),
-                (short) config.getInt("staffItems.vanish.visible.data"),
-                config.getString("staffItems.vanish.visible.name"),
-                config.getStringList("staffItems.vanish.visible.lore")
-        );
+        this.notVanishedItem = buildItem("vanish.visible");
 
-        this.vanishedItem = ItemBuilder.createItem(
-                config.getInt("staffItems.vanish.vanished.id"),
-                config.getInt("staffItems.vanish.vanished.amount"),
-                (short) config.getInt("staffItems.vanish.vanished.data"),
-                config.getString("staffItems.vanish.vanished.name"),
-                config.getStringList("staffItems.vanish.vanished.lore")
-        );
+        this.vanishedItem = buildItem("vanish.vanished");
 
         if(config.getBoolean("staffItems.vanish.enabled")) {
             staffModeItems.put(vanishedItem, config.getInt("staffItems.vanish.slot"));
@@ -476,10 +423,25 @@ public class StaffModeManager {
         String lettere = scoreboardFile.getString("scoreboard." + key + ".enabled-color");
         String letterd = scoreboardFile.getString("scoreboard." + key + ".disabled-color");
 
-        if(enabled){
-            return "&" + lettere;
-        }else{
-            return "&" + letterd;
-        }
+        return enabled ? "&" + lettere : "&" + letterd;
+    }
+
+    private ItemStack buildItem (String key) {
+        return config.getString("staffItems." + key + ".skull.type").equalsIgnoreCase("OWNER") ?
+                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.name(), config.getInt("staffItems." + key + ".amount"))
+                        .owner(config.getString("staffItems." + key + ".skull.owner"))
+                        .name(config.getString("staffItems." + key + ".name"))
+                        .lore(config.getStringList("staffItems." + key + ".lore")).build()
+                : config.getString("staffItems." + key + ".skull.type").equalsIgnoreCase("URL") ?
+
+                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.name(), config.getInt("staffItems." + key + ".amount"))
+                        .url(config.getString("staffItems." + key + ".skull.owner"))
+                        .name(config.getString("staffItems." + key + ".name"))
+                        .lore(config.getStringList("staffItems." + key + ".lore")).build()
+
+                : ItemBuilder.newBuilder(config.getString("staffItems." + key + ".id"), config.getInt("staffItems." + key + ".amount"))
+                .name(config.getString("staffItems." + key + ".name"))
+                .lore(config.getStringList("staffItems." + key + ".lore"))
+                .build();
     }
 }

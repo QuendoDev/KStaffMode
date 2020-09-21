@@ -3,53 +3,73 @@ navigatorImpulse: 3
 randomTpMultiworld: true
 #THIS IS A COMMAND WITHOUT THE "/" THAT WILL BE EXECUTED WHEN A PLAYER DISCONNECTS WHILE FROZEN
 frozenDisconnect: "say <player> disconnected frozen!"
+staffChatEnabled: true
+#ID FORMAT: "MATERIAL:DATA" OR "MATERIAL". Example: "STAINED_GLASS_PANE:1" or "ORANGE_STAINED_GLASS_PANE"
+#https://helpch.at/docs/1.8/org/bukkit/Material.html -- 1.8
+#https://helpch.at/docs/1.12.2/index.html?org/bukkit/Material.html -- 1.12.2
+#https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html -- 1.16.2
 staffItems:
   navigator:
     enabled: true
-    id: 345
+    skull:
+      #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+      type: "NULL"
+      owner: "Rusheer"
+      url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+    id: "COMPASS"
     amount: 1
-    #If your item doesn't have data, set this to "0"
-    data: 0
     name: "&aNavigator"
     lore:
       - "Teleport to the block you are looking at"
     slot: 0
   staffList:
     enabled: true
-    id: 397
+    skull:
+      #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+      type: "NULL"
+      owner: "Rusheer"
+      url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+    id: "SKULL_ITEM"
     amount: 1
-    #If your item doesn't have data, set this to "0"
-    data: 0
     name: "&2StaffList"
     lore:
       - "List of all staff online"
     slot: 1
   worldEdit:
     enabled: true
-    id: 271
+    skull:
+      #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+      type: "NULL"
+      owner: "Rusheer"
+      url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+    id: "WOOD_AXE"
     amount: 1
-    #If your item doesn't have data, set this to "0"
-    data: 0
     name: "&aWorldEdit &cWand"
     lore:
       - "The WorldEdit Wand"
     slot: 2
   inspect:
     enabled: true
-    id: 54
+    skull:
+      #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+      type: "NULL"
+      owner: "Rusheer"
+      url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+    id: "CHEST"
     amount: 1
-    #If your item doesn't have data, set this to "0"
-    data: 0
     name: "&aInspect &bItem"
     lore:
       - "Inspect player's inventory"
     slot: 3
   freeze:
     enabled: true
-    id: 79
+    skull:
+      #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+      type: "NULL"
+      owner: "Rusheer"
+      url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+    id: "ICE"
     amount: 1
-    #If your item doesn't have data, set this to "0"
-    data: 0
     name: "&bFreeze"
     lore:
       - "Freeze a player"
@@ -58,38 +78,50 @@ staffItems:
     enabled: true
     slot: 6
     vanished:
-      id: 351
+      skull:
+        #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+        type: "NULL"
+        owner: "Rusheer"
+        url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+      id: "INK_SACK:8"
       amount: 1
-      #If your item doesn't have data, set this to "0"
-      data: 8
       name: "&2Unvanish"
       lore:
         - "Show to other players"
     visible:
-      id: 351
+      skull:
+        #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+        type: "NULL"
+        owner: "Rusheer"
+        url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+      id: "INK_SACK:10"
       amount: 1
-      #If your item doesn't have data, set this to "0"
-      data: 10
       name: "&2Vanish"
       lore:
         - "Hide to other players"
   fly:
     slot: 7
     enabled: true
-    id: 288
+    skull:
+      #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+      type: "NULL"
+      owner: "Rusheer"
+      url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+    id: "FEATHER"
     amount: 1
-    #If your item doesn't have data, set this to "0"
-    data: 0
     name: "&eFly"
     lore:
       - "&aToggle fly"
   randomtp:
     slot: 8
     enabled: true
-    id: 381
+    skull:
+      #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+      type: "NULL"
+      owner: "Rusheer"
+      url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+    id: "EYE_OF_ENDER"
     amount: 1
-    #If your item doesn't have data, set this to "0"
-    data: 0
     name: "&4Random &aTeleport"
     lore:
       - "Teleport to a random player"
@@ -99,10 +131,13 @@ inspect:
   armor: true
   info:
     enabled: true
-    id: 260
+    skull:
+      #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+      type: "NULL"
+      owner: "Rusheer"
+      url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+    id: "APPLE"
     amount: 1
-    #If your item doesn't have data, set this to "0"
-    data: 0
     name: "&cInfo"
     lore:
       - "&4Health: <health>"
@@ -110,28 +145,37 @@ inspect:
       - "&bXp: <xp>"
   gamemode:
     enabled: true
-    id: 276
+    skull:
+      #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+      type: "NULL"
+      owner: "Rusheer"
+      url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+    id: "DIAMOND_SWORD"
     amount: 1
-    #If your item doesn't have data, set this to "0"
-    data: 0
     name: "&cGamemode: <gm>"
     lore:
       - "&4The gamemode!"
   fly:
     enabled: true
-    id: 288
+    skull:
+      #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+      type: "NULL"
+      owner: "Rusheer"
+      url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+    id: "FEATHER"
     amount: 1
-    #If your item doesn't have data, set this to "0"
-    data: 0
     name: "&bFlying: <fly>"
     lore:
       - "&cGet if flying!"
   effects:
     enabled: true
-    id: 374
+    skull:
+      #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+      type: "NULL"
+      owner: "Rusheer"
+      url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+    id: "GLASS_BOTTLE"
     amount: 1
-    #If your item doesn't have data, set this to "0"
-    data: 0
     name: "&ePotion effects"
     format: "&a<name> <level>: &7<duration>"
     #To this field, the plugin will add all potion effects, one line per effect
@@ -139,10 +183,13 @@ inspect:
       - "&bEffects:"
   decoration:
     enabled: true
-    id: 160
+    skull:
+      #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+      type: "NULL"
+      owner: "Rusheer"
+      url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+    id: "STAINED_GLASS_PANE:7"
     amount: 1
-    #If your item doesn't have data, set this to "0"
-    data: 7
     name: ""
     lore:
       - ""
@@ -152,29 +199,38 @@ stafflist:
     size: 27
     inStaffMode:
       enabled: true
-      id: 271
+      skull:
+        #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+        type: "NULL"
+        owner: "Rusheer"
+        url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+      id: "WOOD_AXE"
       amount: 1
-      #If your item doesn't have data, set this to "0"
-      data: 0
       name: "&cAvailable Staff"
       lore:
         - "&eAll players in staff mode"
       slot: 11
     decoration:
       enabled: true
-      id: 160
+      skull:
+        #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+        type: "NULL"
+        owner: "Rusheer"
+        url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+      id: "STAINED_GLASS_PANE:7"
       amount: 1
-      #If your item doesn't have data, set this to "0"
-      data: 7
       name: ""
       lore:
         - ""
     withoutStaffMode:
       enabled: true
-      id: 152
+      skull:
+        #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+        type: "NULL"
+        owner: "Rusheer"
+        url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+      id: "REDSTONE_BLOCK"
       amount: 1
-      #If your item doesn't have data, set this to "0"
-      data: 0
       name: "&cStaff Playing"
       lore:
         - "&eAll players without staff mode"
@@ -183,33 +239,45 @@ stafflist:
     title: "&aAvailable Staff &eMenu"
     decoration:
       enabled: true
-      id: 160
+      skull:
+        #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+        type: "NULL"
+        owner: "Rusheer"
+        url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+      id: "STAINED_GLASS_PANE:7"
       amount: 1
-      #If your item doesn't have data, set this to "0"
-      data: 7
       name: ""
       lore:
         - ""
     pageItem:
-      id: 347
-      #If your item doesn't have data, set this to "0"
-      data: 0
+      skull:
+        #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+        type: "NULL"
+        owner: "Rusheer"
+        url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+      id: "WATCH"
       name: "&4Page: <page>"
       lore:
         - ""
     nextPage:
-      id: 262
+      skull:
+        #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+        type: "NULL"
+        owner: "Rusheer"
+        url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+      id: "ARROW"
       amount: 1
-      #If your item doesn't have data, set this to "0"
-      data: 0
       name: "&7Next page"
       lore:
         - ""
     previousPage:
-      id: 262
+      skull:
+        #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+        type: "NULL"
+        owner: "Rusheer"
+        url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+      id: "ARROW"
       amount: 1
-      #If your item doesn't have data, set this to "0"
-      data: 0
       name: "&7Previous page"
       lore:
         - ""
@@ -222,33 +290,44 @@ stafflist:
     title: "&aStaff Playing &eMenu"
     decoration:
       enabled: true
-      id: 160
+      skull:
+        #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+        type: "NULL"
+        owner: "Rusheer"
+        url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+      id: "STAINED_GLASS_PANE:7"
       amount: 1
-      #If your item doesn't have data, set this to "0"
-      data: 7
       name: ""
       lore:
         - ""
     pageItem:
-      id: 347
-      #If your item doesn't have data, set this to "0"
-      data: 0
+      skull:
+        #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+        type: "NULL"
+        owner: "Rusheer"
+        url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+      id: "WATCH"
       name: "&4Page: <page>"
       lore:
         - ""
     nextPage:
-      id: 262
-      amount: 1
-      #If your item doesn't have data, set this to "0"
-      data: 0
+      skull:
+        #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+        type: "NULL"
+        owner: "Rusheer"
+        url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+      id: "ARROW"
       name: "&7Next page"
       lore:
         - ""
     previousPage:
-      id: 262
+      skull:
+        #TYPES: "NULL (not skull)", "OWNER (name of a player)", "URL (net.minecraft textures)"
+        type: "NULL"
+        owner: "Rusheer"
+        url: "a7fcf1ddf4c218adbdac828394a114cb83b1a8982f22a2c3038e0685492d8056"
+      id: "ARROW"
       amount: 1
-      #If your item doesn't have data, set this to "0"
-      data: 0
       name: "&7Previous page"
       lore:
         - ""

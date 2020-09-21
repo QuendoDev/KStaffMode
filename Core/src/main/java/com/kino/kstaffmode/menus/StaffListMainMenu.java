@@ -1,9 +1,7 @@
 package com.kino.kstaffmode.menus;
 
-import com.kino.kore.utils.items.ItemBuilder;
-import com.kino.kstaffmode.KStaffMode;
-import com.kino.kstaffmode.managers.menus.MenuManager;
-import com.kino.kstaffmode.managers.staffmode.StaffModeManager;
+import com.kino.kore.utils.items.KMaterial;
+import com.kino.kore.utils.items.builder.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -26,11 +24,7 @@ public class StaffListMainMenu {
         if(p.hasPermission("kstaffmode.useitems") && p.hasPermission("kstaffmode.items.stafflist.main"))  {
 
             if (config.getBoolean("stafflist.main.decoration.enabled")) {
-                ItemStack decoration = ItemBuilder.createItem(config.getInt("stafflist.main.decoration.id"),
-                        config.getInt("stafflist.main.decoration.amount"),
-                        (short) config.getInt("stafflist.main.decoration.data"),
-                        config.getString("stafflist.main.decoration.name"),
-                        config.getStringList("stafflist.main.decoration.lore"));
+                ItemStack decoration = buildItem("decoration");
                 for (int i = 0; i < (config.getInt("stafflist.main.size")) ; i++) {
                     stafflistmain.setItem(i, decoration);
                 }
@@ -38,25 +32,35 @@ public class StaffListMainMenu {
             }
 
             if(config.getBoolean("stafflist.main.inStaffMode.enabled")) {
-                ItemStack staffMode = ItemBuilder.createItem(config.getInt("stafflist.main.inStaffMode.id"),
-                        config.getInt("stafflist.main.inStaffMode.amount"),
-                        (short) config.getInt("stafflist.main.inStaffMode.data"),
-                        config.getString("stafflist.main.inStaffMode.name"),
-                        config.getStringList("stafflist.main.inStaffMode.lore"));
+                ItemStack staffMode = buildItem("inStaffMode");
                 this.stafflistmain.setItem(config.getInt("stafflist.main.inStaffMode.slot"), staffMode);
             }
 
             if(config.getBoolean("stafflist.main.withoutStaffMode.enabled")) {
-                ItemStack staffPlaying = ItemBuilder.createItem(config.getInt("stafflist.main.withoutStaffMode.id"),
-                        config.getInt("stafflist.main.withoutStaffMode.amount"),
-                        (short) config.getInt("stafflist.main.withoutStaffMode.data"),
-                        config.getString("stafflist.main.inStaffMode.name"),
-                        config.getStringList("stafflist.main.withoutStaffMode.lore"));
+                ItemStack staffPlaying = buildItem("withoutStaffMode");
                 this.stafflistmain.setItem(config.getInt("stafflist.main.withoutStaffMode.slot"), staffPlaying);
             }
 
             p.openInventory(this.stafflistmain);
         }
+    }
+
+    private ItemStack buildItem (String key) {
+        return config.getString("stafflist.main." + key + ".skull.type").equalsIgnoreCase("OWNER") ?
+                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.name(), config.getInt("stafflist.main." + key + ".amount"))
+                        .owner(config.getString("stafflist.main." + key + ".skull.owner"))
+                        .name(config.getString("stafflist.main." + key + ".name"))
+                        .lore(config.getStringList("stafflist.main." + key + ".lore")).build()
+                : config.getString("stafflist.main." + key + ".skull.type").equalsIgnoreCase("URL") ?
+
+                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.name(), config.getInt("stafflist.main." + key + ".amount"))
+                        .url(config.getString("stafflist.main." + key + ".skull.owner"))
+                        .name(config.getString("stafflist.main." + key + ".name"))
+                        .lore(config.getStringList("stafflist.main." + key + ".lore")).build()
+
+                : ItemBuilder.newBuilder(config.getString("stafflist.main." + key + ".id"), config.getInt("stafflist.main." + key + ".amount"))
+                .name(config.getString("stafflist.main." + key + ".name"))
+                .lore(config.getStringList("stafflist.main." + key + ".lore")).build();
     }
 
 

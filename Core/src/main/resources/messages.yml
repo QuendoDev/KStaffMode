@@ -22,6 +22,7 @@ disabledStaffChat: "&cYou are now talking in public chat!"
 #When you execute /s <player> and player is online, you get this message
 teleported: "&b<player> has been teleported to your position."
 #################################################################################################################
+staffChatDisabledByDefault: "&cThe staffchat is not enabled!"
 staffchat:
   prefix: "&c[&bS&eC&c]&a "
   separator: " &b>>&6 "

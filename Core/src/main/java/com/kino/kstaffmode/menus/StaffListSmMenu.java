@@ -1,8 +1,8 @@
 package com.kino.kstaffmode.menus;
 
 import com.kino.kore.utils.JavaUtils;
-import com.kino.kore.utils.items.ItemBuilder;
-import com.kino.kstaffmode.KStaffMode;
+import com.kino.kore.utils.items.KMaterial;
+import com.kino.kore.utils.items.builder.ItemBuilder;
 import com.kino.kstaffmode.managers.menus.MenuManager;
 import com.kino.kstaffmode.managers.menus.PlayerInventory;
 import com.kino.kstaffmode.managers.staffmode.StaffModeManager;
@@ -47,11 +47,7 @@ public class StaffListSmMenu {
             }
 
             if (config.getBoolean("stafflist.inStaffModeMenu.decoration.enabled")) {
-                ItemStack decoration = ItemBuilder.createItem(config.getInt("stafflist.inStaffModeMenu.decoration.id"),
-                        config.getInt("stafflist.inStaffModeMenu.decoration.amount"),
-                        (short) config.getInt("stafflist.inStaffModeMenu.decoration.data"),
-                        config.getString("stafflist.inStaffModeMenu.decoration.name"),
-                        config.getStringList("stafflist.inStaffModeMenu.decoration.lore"));
+                ItemStack decoration = buildItem("decoration", config.getString("stafflist.inStaffModeMenu.decoration.name"), config.getInt("stafflist.inStaffModeMenu.decoration.amount"));
 
                 for(int i = 45;i<54;i++) {
                     this.stafflistsm.setItem(i, decoration);
@@ -62,11 +58,14 @@ public class StaffListSmMenu {
             int slot = 0;
 
             for (int i = 45 * (page - 1 ); i < staff.size(); i++) {
-                ItemStack head = ItemBuilder.createSkull(config.getInt("stafflist.inStaffModeMenu.heads.amount"),
-                        config.getString("stafflist.inStaffModeMenu.heads.name").replace("<player>", Bukkit.getPlayer(staff.get(i)).getName()),
-                        JavaUtils.replaceAll(config.getStringList("stafflist.inStaffModeMenu.heads.lore"), "<player>", Bukkit.getPlayer(staff.get(i)).getName()),
-                        Bukkit.getPlayer(staff.get(i)).getName()
-                        );
+                int finalI = i;
+                List<String> lore = config.getStringList("stafflist.inStaffModeMenu.heads.lore");
+                lore.replaceAll(
+                        line -> line.replace("<player>", Bukkit.getPlayer(staff.get(finalI)).getName()));
+                ItemStack head = ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.name(), config.getInt("stafflist.inStaffModeMenu.heads.amount"))
+                        .owner(Bukkit.getPlayer(staff.get(i)).getName())
+                        .name(config.getString("stafflist.inStaffModeMenu.heads.name").replace("<player>", Bukkit.getPlayer(staff.get(i)).getName()))
+                        .lore(lore).build();
                 stafflistsm.setItem(slot, head);
 
                 slot++;
@@ -77,28 +76,16 @@ public class StaffListSmMenu {
             }
 
             if(pages > page) {
-                ItemStack next = ItemBuilder.createItem(config.getInt("stafflist.inStaffModeMenu.nextPage.id"),
-                        config.getInt("stafflist.inStaffModeMenu.nextPage.amount"),
-                        (short) config.getInt("stafflist.inStaffModeMenu.nextPage.data"),
-                        config.getString("stafflist.inStaffModeMenu.nextPage.name"),
-                        config.getStringList("stafflist.inStaffModeMenu.nextPage.lore"));
+                ItemStack next = buildItem("nextPage" ,config.getString("stafflist.inStaffModeMenu.nextPage.name"), config.getInt("stafflist.inStaffModeMenu.nextPage.amount"));
                 stafflistsm.setItem(53, next);
             }
 
             if (page > 1) {
-                ItemStack prev = ItemBuilder.createItem(config.getInt("stafflist.inStaffModeMenu.previousPage.id"),
-                        config.getInt("stafflist.inStaffModeMenu.previousPage.amount"),
-                        (short) config.getInt("stafflist.inStaffModeMenu.previousPage.data"),
-                        config.getString("stafflist.inStaffModeMenu.previousPage.name"),
-                        config.getStringList("stafflist.inStaffModeMenu.previousPage.lore"));
+                ItemStack prev = buildItem("previousPage", config.getString("stafflist.inStaffModeMenu.previousPage.name"), config.getInt("stafflist.inStaffModeMenu.previousPage.amount"));
                 stafflistsm.setItem(45, prev);
             }
 
-            ItemStack pageItem = ItemBuilder.createItem(config.getInt("stafflist.inStaffModeMenu.pageItem.id"),
-                    page,
-                    (short) config.getInt("stafflist.inStaffModeMenu.pageItem.data"),
-                    config.getString("stafflist.inStaffModeMenu.pageItem.name").replace("<page>", page + ""),
-                    config.getStringList("stafflist.inStaffModeMenu.pageItem.lore"));
+            ItemStack pageItem = buildItem("pageItem", config.getString("stafflist.inStaffModeMenu.pageItem.name").replace("<page>", page + ""), page);
             stafflistsm.setItem(49, pageItem);
 
             p.openInventory(stafflistsm);
@@ -109,5 +96,23 @@ public class StaffListSmMenu {
 
     public int totalPages() {
         return this.staff.size() % 45 == 0 ? (staff.size()/45) : (staff.size()/45) + 1;
+    }
+
+    private ItemStack buildItem (String key, String name, int amount) {
+        return config.getString("stafflist.inStaffModeMenu." + key + ".skull.type").equalsIgnoreCase("OWNER") ?
+                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.name(), amount)
+                        .owner(config.getString("stafflist.inStaffModeMenu." + key + ".skull.owner"))
+                        .name(name)
+                        .lore(config.getStringList("stafflist.inStaffModeMenu" + key + ".lore")).build()
+                : config.getString("stafflist.inStaffModeMenu." + key + ".skull.type").equalsIgnoreCase("URL") ?
+
+                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.name(), amount)
+                        .url(config.getString("stafflist.inStaffModeMenu." + key + ".skull.owner"))
+                        .name(name)
+                        .lore(config.getStringList("stafflist.inStaffModeMenu." + key + ".lore")).build()
+
+                : ItemBuilder.newBuilder(config.getString("stafflist.inStaffModeMenu." + key + ".id"), amount)
+                .name(name)
+                .lore(config.getStringList("stafflist.inStaffModeMenu." + key + ".lore")).build();
     }
 }

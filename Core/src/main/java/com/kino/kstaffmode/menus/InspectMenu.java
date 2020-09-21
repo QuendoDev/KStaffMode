@@ -1,6 +1,7 @@
 package com.kino.kstaffmode.menus;
 
-import com.kino.kore.utils.items.ItemBuilder;
+import com.kino.kore.utils.items.KMaterial;
+import com.kino.kore.utils.items.builder.ItemBuilder;
 import com.kino.kstaffmode.KStaffMode;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -38,11 +39,7 @@ public class InspectMenu {
         }
 
         if(config.getBoolean("inspect.decoration.enabled")) {
-            ItemStack item = ItemBuilder.createItem(config.getInt("inspect.decoration.id"),
-                    config.getInt("inspect.decoration.amount"),
-                    (short) config.getInt("inspect.decoration.data"),
-                    config.getString("inspect.decoration.name"),
-                    config.getStringList("inspect.decoration.lore"));
+            ItemStack item = buildItem("decoration", config.getStringList("inspect.decoration.lore"));
             for(int i = 36; i < 45; i++) {
                 inspect.setItem(i, item);
             }
@@ -58,33 +55,21 @@ public class InspectMenu {
                     ).replace(
                     "<xp>", interacted.getExpToLevel() + ""
                     ).replace("<health>", Math.round(interacted.getHealth() * 100) / 100.0 + ""));
-            inspect.setItem(50, ItemBuilder.createItem(config.getInt("inspect.info.id"),
-                    config.getInt("inspect.info.amount"),
-                    (short) config.getInt("inspect.info.data"),
-                    config.getString("inspect.info.name"), lore
-                    ));
+            inspect.setItem(50, buildItem("info", lore));
         }
 
         if(config.getBoolean("inspect.gamemode.enabled")) {
             List<String> lore = config.getStringList("inspect.gamemode.lore");
             lore.replaceAll(line -> line.replace(
                     "<gm>", interacted.getGameMode() + ""));
-            inspect.setItem(51, ItemBuilder.createItem(config.getInt("inspect.gamemode.id"),
-                    config.getInt("inspect.gamemode.amount"),
-                    (short) config.getInt("inspect.gamemode.data"),
-                    config.getString("inspect.gamemode.name").replace("<gm>", interacted.getGameMode() + ""), lore
-            ));
+            inspect.setItem(51, buildItem("gamemode", lore, config.getString("inspect.gamemode.name").replace("<gm>", interacted.getGameMode() + "")));
         }
 
         if(config.getBoolean("inspect.fly.enabled")) {
             List<String> lore = config.getStringList("inspect.fly.lore");
             lore.replaceAll(line -> line.replace(
                     "<fly>", interacted.isFlying() + ""));
-            inspect.setItem(52, ItemBuilder.createItem(config.getInt("inspect.fly.id"),
-                    config.getInt("inspect.fly.amount"),
-                    (short) config.getInt("inspect.fly.data"),
-                    config.getString("inspect.fly.name").replace("<fly>", interacted.isFlying() + ""), lore
-            ));
+            inspect.setItem(52, buildItem("fly", lore, config.getString("inspect.fly.name").replace("<fly>", interacted.isFlying() + "")));
         }
 
         if(config.getBoolean("inspect.effects.enabled")) {
@@ -93,11 +78,7 @@ public class InspectMenu {
             for(PotionEffect e : interacted.getActivePotionEffects()) {
                 lore.add(format.replace("<name>", e.getType().getName()).replace("<level>", e.getAmplifier() + 1 + "").replace("<duration>", duration(e.getDuration())));
             }
-            inspect.setItem(53, ItemBuilder.createItem(config.getInt("inspect.effects.id"),
-                    config.getInt("inspect.effects.amount"),
-                    (short) config.getInt("inspect.effects.data"),
-                    config.getString("inspect.effects.name"), lore
-            ));
+            inspect.setItem(53, buildItem("effects", lore));
         }
         p.openInventory(inspect);
     }
@@ -110,5 +91,27 @@ public class InspectMenu {
         int secondsLeft = seconds % 60;
 
         return minutes + ":" + secondsLeft;
+    }
+
+    private ItemStack buildItem (String key, List<String> lore) {
+        return buildItem(key, lore, config.getString("inspect." + key + ".name"));
+    }
+
+    private ItemStack buildItem (String key, List<String> lore, String name) {
+        return config.getString("inspect." + key + ".skull.type").equalsIgnoreCase("OWNER") ?
+                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.name(), config.getInt("inspect." + key + ".amount"))
+                        .owner(config.getString("inspect." + key + ".skull.owner"))
+                        .name(name)
+                        .lore(lore).build()
+                : config.getString("inspect." + key + ".skull.type").equalsIgnoreCase("URL") ?
+
+                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.name(), config.getInt("inspect." + key + ".amount"))
+                        .url(config.getString("inspect." + key + ".skull.owner"))
+                        .name(name)
+                        .lore(lore).build()
+
+                : ItemBuilder.newBuilder(config.getString("inspect." + key + ".id"), config.getInt("inspect." + key + ".amount"))
+                .name(name)
+                .lore(lore).build();
     }
 }

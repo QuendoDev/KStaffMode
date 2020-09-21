@@ -17,7 +17,7 @@ public class CreativeArgument extends CommandArgument {
     public CreativeArgument(FileConfiguration messages) {
         super("creative", "kstaffmode.commands.gamemode.creative",
                 "Use this argument to change your gamemode to creative.",
-                "1, c, cr, creativo");
+                "1", "c", "cr", "creativo");
         this.messages = messages;
     }
 

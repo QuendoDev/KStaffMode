@@ -22,7 +22,7 @@ public class StaffModeBasicListener implements Listener {
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent e){
         if(e.getEntity() !=null) {
-            if(e.getEntity() instanceof Player) {
+            if(e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
                 if (staffModeManager.getInStaffMode().contains(e.getDamager().getUniqueId()) || staffModeManager.isFrozen((Player) e.getDamager())) {
                     e.setCancelled(true);
                 }

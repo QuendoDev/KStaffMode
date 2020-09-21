@@ -1,5 +1,6 @@
 package com.kino.kstaffmode.listener.staffmode;
 
+import com.kino.kore.utils.items.KMaterial;
 import com.kino.kstaffmode.KStaffMode;
 import com.kino.kstaffmode.managers.menus.MenuManager;
 import com.kino.kstaffmode.managers.menus.PlayerInventory;
@@ -38,13 +39,13 @@ public class InventoryListener implements Listener {
                     e.setCancelled(true);
                     if (e.getClickedInventory().equals(p.getOpenInventory().getTopInventory())) {
 
-                        if (e.getCurrentItem().getType().equals(Material.getMaterial(config.getInt("stafflist.main.inStaffMode.id")))) {
+                        if (e.getCurrentItem().getType().equals(KMaterial.getMaterial(config.getString("stafflist.main.inStaffMode.id")))) {
                             if (p.hasPermission("kstaffmode.menus.main.open.instaffmode")) {
                                 menuManager.getStaffListSmMenu().open(p, 1);
                             }
                         }
 
-                        if (e.getCurrentItem().getType().equals(Material.getMaterial(config.getInt("stafflist.main.withoutStaffMode.id")))) {
+                        if (e.getCurrentItem().getType().equals(KMaterial.getMaterial(config.getString("stafflist.main.withoutStaffMode.id")))) {
                             if (p.hasPermission("kstaffmode.menus.main.open.playing")) {
                                 menuManager.getStaffListPlayingMenu().open(p, 1);
                             }
@@ -69,13 +70,13 @@ public class InventoryListener implements Listener {
                             int page = playerInventory.getPage();
                             int slot = e.getSlot();
 
-                            if (slot == 53 && e.getCurrentItem().getType().equals(Material.getMaterial(config.getInt("stafflist.inStaffModeMenu.nextPage.id")))) {
+                            if (slot == 53 && e.getCurrentItem().getType().equals(KMaterial.getMaterial(config.getString("stafflist.inStaffModeMenu.nextPage.id")))) {
                                 int newPage = page + 1;
 
                                 menuManager.getStaffListSmMenu().open(p, newPage);
                             }
 
-                            if (slot == 45 && e.getCurrentItem().getType().equals(Material.getMaterial(config.getInt("stafflist.inStaffModeMenu.previousPage.id")))) {
+                            if (slot == 45 && e.getCurrentItem().getType().equals(KMaterial.getMaterial(config.getString("stafflist.inStaffModeMenu.previousPage.id")))) {
                                 int newPage = page - 1;
 
                                 menuManager.getStaffListSmMenu().open(p, newPage);
@@ -109,13 +110,13 @@ public class InventoryListener implements Listener {
                             int page = playerInventory.getPage();
                             int slot = e.getSlot();
 
-                            if (slot == 53 && e.getCurrentItem().getType().equals(Material.getMaterial(config.getInt("stafflist.staffPlaying.nextPage.id")))) {
+                            if (slot == 53 && e.getCurrentItem().getType().equals(KMaterial.getMaterial(config.getString("stafflist.staffPlaying.nextPage.id")))) {
                                 int newPage = page + 1;
 
                                 menuManager.getStaffListPlayingMenu().open(p, newPage);
                             }
 
-                            if (slot == 45 && e.getCurrentItem().getType().equals(Material.getMaterial(config.getInt("stafflist.staffPlaying.previousPage.id")))) {
+                            if (slot == 45 && e.getCurrentItem().getType().equals(KMaterial.getMaterial(config.getString("stafflist.staffPlaying.previousPage.id")))) {
                                 int newPage = page - 1;
 
                                 menuManager.getStaffListPlayingMenu().open(p, newPage);

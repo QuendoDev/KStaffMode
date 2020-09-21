@@ -17,7 +17,7 @@ public class SurvivalArgument extends CommandArgument {
     public SurvivalArgument(FileConfiguration messages) {
         super("survival", "kstaffmode.commands.gamemode.survival",
                 "Use this argument to change your gamemode to survival.",
-                "0, s, surv, supervivencia");
+                "0", "s", "surv", "supervivencia");
         this.messages = messages;
     }
 

@@ -15,7 +15,7 @@ public class InfoArgument extends CommandArgument {
     public InfoArgument(KStaffMode plugin) {
         super("info", "kstaffmode.commands.info",
                 "Use this argument to get the info of this plugin.",
-                "inf, version, author");
+                "inf", "version", "author");
         this.plugin = plugin;
     }
 

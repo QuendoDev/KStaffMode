@@ -15,7 +15,7 @@ public class ReloadArgument extends CommandArgument {
 
     public ReloadArgument(FilesManager filesManager, StaffModeManager staffModeManager){
         super("reload", "kstaffmode.commands.reload",
-                "Reload all configurations of the plugin.", "rl, rel, restart");
+                "Reload all configurations of the plugin.", "rl", "rel", "restart");
         this.filesManager = filesManager;
         this.staffModeManager = staffModeManager;
     }

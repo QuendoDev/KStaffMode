@@ -17,7 +17,7 @@ public class SpectatorArgument extends CommandArgument {
     public SpectatorArgument(FileConfiguration messages) {
         super("spectator", "kstaffmode.commands.gamemode.spectator",
                 "Use this argument to change your gamemode to spectator.",
-                "3, sp, spec, espectador");
+                "3", "sp", "spec", "espectador");
         this.messages = messages;
     }
 

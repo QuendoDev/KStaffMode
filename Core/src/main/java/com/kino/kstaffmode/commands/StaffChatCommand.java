@@ -15,23 +15,30 @@ public class StaffChatCommand implements CommandExecutor {
 
     private StaffModeManager staffModeManager;
     private FileConfiguration messages;
+    private FileConfiguration config;
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
-        if (sender instanceof Player) {
-            Player p = (Player) sender;
+        if(config.getBoolean ("staffChatEnabled")) {
+            if (sender instanceof Player) {
+                Player p = (Player) sender;
 
-            if (p.hasPermission("kstaffmode.staffchat.talk")) {
-                staffModeManager.toogleStaffChat(p);
-                return true;
+
+                if (p.hasPermission("kstaffmode.staffchat.talk")) {
+                    staffModeManager.toogleStaffChat(p);
+                    return true;
+                } else {
+                    MessageUtils.sendMessage(p, messages.getString("noPerms"));
+                    return false;
+                }
+
             } else {
-                MessageUtils.sendMessage(p, messages.getString("noPerms"));
+                MessageUtils.sendMessage(sender, "&cThis command is only for players!");
                 return false;
             }
-
         } else {
-            MessageUtils.sendMessage(sender, "&cThis command is only for players!");
+            MessageUtils.sendMessage(sender, messages.getString("staffChatDisabledByDefault"));
             return false;
         }
     }

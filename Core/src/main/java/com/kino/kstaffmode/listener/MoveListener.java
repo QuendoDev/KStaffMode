@@ -20,7 +20,7 @@ public class MoveListener implements Listener {
     public void move (PlayerMoveEvent e) {
         if(manager.isFrozen(e.getPlayer())) {
             MessageUtils.sendMessage(e.getPlayer(), messages.getString("moveWhileFrozen"));
-            e.setCancelled(true);
+            e.getPlayer().teleport(e.getFrom());
         }
     }
 

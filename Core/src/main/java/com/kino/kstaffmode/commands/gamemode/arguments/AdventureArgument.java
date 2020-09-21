@@ -17,7 +17,7 @@ public class AdventureArgument extends CommandArgument {
     public AdventureArgument(FileConfiguration messages) {
         super("adventure", "kstaffmode.commands.gamemode.adventure",
                 "Use this argument to change your gamemode to adventure.",
-                "2, a, ad, aventura");
+                "2", "a", "ad", "aventura");
         this.messages = messages;
     }
 
