@@ -47,14 +47,14 @@ public class StaffListMainMenu {
 
     private ItemStack buildItem (String key) {
         return config.getString("stafflist.main." + key + ".skull.type").equalsIgnoreCase("OWNER") ?
-                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.name(), config.getInt("stafflist.main." + key + ".amount"))
+                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.parseMaterial(true), config.getInt("stafflist.main." + key + ".amount"), (byte) 3)
                         .owner(config.getString("stafflist.main." + key + ".skull.owner"))
                         .name(config.getString("stafflist.main." + key + ".name"))
                         .lore(config.getStringList("stafflist.main." + key + ".lore")).build()
                 : config.getString("stafflist.main." + key + ".skull.type").equalsIgnoreCase("URL") ?
 
-                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.name(), config.getInt("stafflist.main." + key + ".amount"))
-                        .url(config.getString("stafflist.main." + key + ".skull.owner"))
+                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.parseMaterial(true), config.getInt("stafflist.main." + key + ".amount"), (byte) 3)
+                        .url(config.getString("stafflist.main." + key + ".skull.url"))
                         .name(config.getString("stafflist.main." + key + ".name"))
                         .lore(config.getStringList("stafflist.main." + key + ".lore")).build()
 

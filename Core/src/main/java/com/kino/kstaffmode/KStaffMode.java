@@ -74,7 +74,7 @@ public final class KStaffMode extends JavaPlugin {
         this.filesManager = new FilesManager(this);
         filesManager.start();
         this.staffModeManager = new StaffModeManager(getConfig(), filesManager.getMessages(), filesManager.getScoreboard());
-        this.menuManager = new MenuManager(getConfig(), staffModeManager, menuManager);
+        this.menuManager = new MenuManager(getConfig(), staffModeManager);
         this.dataManager = new DataManager(filesManager, getConfig(), staffModeManager);
         dataManager.startManager();
         this.playerDataManager = new PlayerDataManager(dataManager, staffModeManager);

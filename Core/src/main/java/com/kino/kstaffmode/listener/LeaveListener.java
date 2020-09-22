@@ -36,7 +36,7 @@ public class LeaveListener implements Listener {
         BPlayerBoard board = Netherboard.instance().getBoard(e.getPlayer());
         if(board !=null && board.equals(staffModeManager.getBoard())) {
             board.delete();
-            board = null;
+            staffModeManager.resetScoreboard(e.getPlayer());
         }
         if(e.getPlayer().hasPermission("kstaffmode.data.save")){
             playerDataManager.savePlayerData(e.getPlayer());
@@ -48,7 +48,7 @@ public class LeaveListener implements Listener {
         BPlayerBoard board = Netherboard.instance().getBoard(e.getPlayer());
         if(board !=null && board.equals(staffModeManager.getBoard())) {
             board.delete();
-            board = null;
+            staffModeManager.resetScoreboard(e.getPlayer());
         }
         if(e.getPlayer().hasPermission("kstaffmode.data.save")){
             playerDataManager.savePlayerData(e.getPlayer());

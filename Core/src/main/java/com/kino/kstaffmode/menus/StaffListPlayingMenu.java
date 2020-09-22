@@ -59,7 +59,7 @@ public class StaffListPlayingMenu {
                 List<String> lore = config.getStringList("stafflist.staffPlaying.heads.lore");
                 lore.replaceAll(
                         line -> line.replace("<player>", Bukkit.getPlayer(playing.get(finalI)).getName()));
-                ItemStack head = ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.name(), config.getInt("stafflist.staffPlaying.heads.amount"))
+                ItemStack head = ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.parseMaterial(true), config.getInt("stafflist.staffPlaying.heads.amount"), (byte) 3)
                         .owner(Bukkit.getPlayer(playing.get(i)).getName())
                         .name(config.getString("stafflist.staffPlaying.heads.name").replace("<player>", Bukkit.getPlayer(playing.get(i)).getName()))
                         .lore(lore).build();
@@ -98,14 +98,14 @@ public class StaffListPlayingMenu {
 
     private ItemStack buildItem (String key, String name, int amount) {
         return config.getString("stafflist.staffPlaying." + key + ".skull.type").equalsIgnoreCase("OWNER") ?
-                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.name(), amount)
+                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.parseMaterial(true), amount, (byte) 3)
                         .owner(config.getString("stafflist.staffPlaying." + key + ".skull.owner"))
                         .name(name)
                         .lore(config.getStringList("stafflist.staffPlaying" + key + ".lore")).build()
                 : config.getString("stafflist.staffPlaying." + key + ".skull.type").equalsIgnoreCase("URL") ?
 
-                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.name(), amount)
-                        .url(config.getString("stafflist.staffPlaying." + key + ".skull.owner"))
+                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.parseMaterial(true), amount, (byte) 3)
+                        .url(config.getString("stafflist.staffPlaying." + key + ".skull.url"))
                         .name(name)
                         .lore(config.getStringList("stafflist.staffPlaying." + key + ".lore")).build()
 

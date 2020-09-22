@@ -62,7 +62,7 @@ public class StaffListSmMenu {
                 List<String> lore = config.getStringList("stafflist.inStaffModeMenu.heads.lore");
                 lore.replaceAll(
                         line -> line.replace("<player>", Bukkit.getPlayer(staff.get(finalI)).getName()));
-                ItemStack head = ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.name(), config.getInt("stafflist.inStaffModeMenu.heads.amount"))
+                ItemStack head = ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.parseMaterial(true), config.getInt("stafflist.inStaffModeMenu.heads.amount"), (byte) 3)
                         .owner(Bukkit.getPlayer(staff.get(i)).getName())
                         .name(config.getString("stafflist.inStaffModeMenu.heads.name").replace("<player>", Bukkit.getPlayer(staff.get(i)).getName()))
                         .lore(lore).build();
@@ -100,14 +100,14 @@ public class StaffListSmMenu {
 
     private ItemStack buildItem (String key, String name, int amount) {
         return config.getString("stafflist.inStaffModeMenu." + key + ".skull.type").equalsIgnoreCase("OWNER") ?
-                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.name(), amount)
+                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.parseMaterial(true), amount, (byte) 3)
                         .owner(config.getString("stafflist.inStaffModeMenu." + key + ".skull.owner"))
                         .name(name)
                         .lore(config.getStringList("stafflist.inStaffModeMenu" + key + ".lore")).build()
                 : config.getString("stafflist.inStaffModeMenu." + key + ".skull.type").equalsIgnoreCase("URL") ?
 
-                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.name(), amount)
-                        .url(config.getString("stafflist.inStaffModeMenu." + key + ".skull.owner"))
+                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.parseMaterial(true), amount, (byte) 3)
+                        .url(config.getString("stafflist.inStaffModeMenu." + key + ".skull.url"))
                         .name(name)
                         .lore(config.getStringList("stafflist.inStaffModeMenu." + key + ".lore")).build()
 

@@ -99,14 +99,14 @@ public class InspectMenu {
 
     private ItemStack buildItem (String key, List<String> lore, String name) {
         return config.getString("inspect." + key + ".skull.type").equalsIgnoreCase("OWNER") ?
-                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.name(), config.getInt("inspect." + key + ".amount"))
+                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.parseMaterial(true), config.getInt("inspect." + key + ".amount"), (byte) 3)
                         .owner(config.getString("inspect." + key + ".skull.owner"))
                         .name(name)
                         .lore(lore).build()
                 : config.getString("inspect." + key + ".skull.type").equalsIgnoreCase("URL") ?
 
-                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.name(), config.getInt("inspect." + key + ".amount"))
-                        .url(config.getString("inspect." + key + ".skull.owner"))
+                ItemBuilder.newSkullBuilder(KMaterial.PLAYER_HEAD.parseMaterial(true), config.getInt("inspect." + key + ".amount"), (byte) 3)
+                        .url(config.getString("inspect." + key + ".skull.url"))
                         .name(name)
                         .lore(lore).build()
 

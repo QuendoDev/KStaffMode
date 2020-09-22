@@ -22,12 +22,12 @@ public class MenuManager {
 
     private List<PlayerInventory> playerInventories;
 
-    public MenuManager (FileConfiguration config, StaffModeManager staffModeManager, MenuManager menuManager) {
+    public MenuManager (FileConfiguration config, StaffModeManager staffModeManager) {
 
         this.playerInventories = new ArrayList<>();
         this.staffListMainMenu = new StaffListMainMenu(config);
-        this.staffListPlayingMenu = new StaffListPlayingMenu(config, staffModeManager, menuManager);
-        this.staffListSmMenu = new StaffListSmMenu(config, staffModeManager, menuManager);
+        this.staffListPlayingMenu = new StaffListPlayingMenu(config, staffModeManager, this);
+        this.staffListSmMenu = new StaffListSmMenu(config, staffModeManager, this);
         this.inspectMenu = new InspectMenu(config);
     }
 

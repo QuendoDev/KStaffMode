@@ -27,6 +27,7 @@ public class ReloadArgument extends CommandArgument {
             filesManager.reloadConfig();
             filesManager.getBasicFilesManager().reloadMessages();
             staffModeManager.registerItems();
+            staffModeManager.getScoreboards().clear();
             MessageUtils.sendMessage(sender, filesManager.getBasicFilesManager().getMessages().getString("reloadMessage"));
             return true;
         }else{

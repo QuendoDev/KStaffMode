@@ -10,6 +10,7 @@ import com.kino.kstaffmode.managers.menus.MenuManager;
 import com.kino.kstaffmode.managers.staffmode.StaffModeManager;
 import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -70,7 +71,10 @@ public class ItemsInteractListener implements Listener {
             if(p.hasPermission("kstaffmode.useitems")) {
 
                 ////////////******NAVIGATOR******/////////////
-                if (UtilsFactory.getItemInHand(e).getType() == KMaterial.getMaterial(config.getString("staffItems.navigator.id")) && p.hasPermission("kstaffmode.items.navigator")) {
+                if (UtilsFactory.getItemInHand(e).hasItemMeta() && ChatColor.translateAlternateColorCodes('&',
+                        UtilsFactory.getItemInHand(e).getItemMeta().getDisplayName()).equals(ChatColor.translateAlternateColorCodes('&',
+                                config.getString("staffItems.navigator.name"))) &&
+                        UtilsFactory.getItemInHand(e).getType() == KMaterial.getMaterial(config.getString("staffItems.navigator.id")) && p.hasPermission("kstaffmode.items.navigator")) {
                     if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
                         Bukkit.getServer().getPluginManager().callEvent(new NavigatorInteractEvent(p, ActionType.LEFT_CLICK, p.getLocation()));
                     }
@@ -88,7 +92,10 @@ public class ItemsInteractListener implements Listener {
                 }
 
                 ////////////******STAFFLIST******/////////////
-                if (UtilsFactory.getItemInHand(e).getType() == KMaterial.getMaterial(config.getString("staffItems.staffList.id"))
+                if (UtilsFactory.getItemInHand(e).hasItemMeta() && ChatColor.translateAlternateColorCodes('&',
+                        UtilsFactory.getItemInHand(e).getItemMeta().getDisplayName()).equals(ChatColor.translateAlternateColorCodes('&',
+                        config.getString("staffItems.staffList.name"))) &&
+                        UtilsFactory.getItemInHand(e).getType() == KMaterial.getMaterial(config.getString("staffItems.staffList.id"))
                         && p.hasPermission("kstaffmode.items.stafflist")) {
                     if(e.getAction() !=null ) {
                         Bukkit.getServer().getPluginManager().callEvent(new StaffListInteractEvent(p));
@@ -97,8 +104,14 @@ public class ItemsInteractListener implements Listener {
                 }
 
                 ////////////******VANISH******/////////////
-                if (UtilsFactory.getItemInHand(e).getType() == KMaterial.getMaterial(config.getString("staffItems.vanish.visible.id"))
-                        || UtilsFactory.getItemInHand(e).getType() == KMaterial.getMaterial(config.getString("staffItems.vanish.vanished.id"))
+                if (UtilsFactory.getItemInHand(e).hasItemMeta() && ChatColor.translateAlternateColorCodes('&',
+                        UtilsFactory.getItemInHand(e).getItemMeta().getDisplayName()).equals(ChatColor.translateAlternateColorCodes('&',
+                                config.getString("staffItems.vanish.visible.name"))) &&
+                        UtilsFactory.getItemInHand(e).getType() == KMaterial.getMaterial(config.getString("staffItems.vanish.visible.id"))
+                        || UtilsFactory.getItemInHand(e).hasItemMeta() && ChatColor.translateAlternateColorCodes('&',
+                        UtilsFactory.getItemInHand(e).getItemMeta().getDisplayName()).equals(ChatColor.translateAlternateColorCodes('&',
+                        config.getString("staffItems.vanish.vanished.name"))) &&
+                        UtilsFactory.getItemInHand(e).getType() == KMaterial.getMaterial(config.getString("staffItems.vanish.vanished.id"))
                         && p.hasPermission("kstaffmode.items.vanish")) {
                     if(e.getAction() !=null ) {
                         Bukkit.getServer().getPluginManager().callEvent(new VanishInteractEvent(p));
@@ -107,7 +120,10 @@ public class ItemsInteractListener implements Listener {
                 }
 
                 ////////////******FLY******/////////////
-                if (UtilsFactory.getItemInHand(e).getType() == KMaterial.getMaterial(config.getString("staffItems.fly.id")) && p.hasPermission("kstaffmode.items.fly")) {
+                if (UtilsFactory.getItemInHand(e).hasItemMeta() && ChatColor.translateAlternateColorCodes('&',
+                        UtilsFactory.getItemInHand(e).getItemMeta().getDisplayName()).equals(ChatColor.translateAlternateColorCodes('&',
+                        config.getString("staffItems.fly.name"))) &&
+                        UtilsFactory.getItemInHand(e).getType() == KMaterial.getMaterial(config.getString("staffItems.fly.id")) && p.hasPermission("kstaffmode.items.fly")) {
                     if(e.getAction() !=null ) {
                         Bukkit.getServer().getPluginManager().callEvent(new FlyInteractEvent(p));
                     }
@@ -115,7 +131,10 @@ public class ItemsInteractListener implements Listener {
                 }
 
                 ////////////******RANDOMTP******/////////////
-                if(UtilsFactory.getItemInHand(e).getType() == KMaterial.getMaterial(config.getString("staffItems.randomtp.id")) && p.hasPermission("kstaffmode.items.randomtp")) {
+                if(UtilsFactory.getItemInHand(e).hasItemMeta() && ChatColor.translateAlternateColorCodes('&',
+                        UtilsFactory.getItemInHand(e).getItemMeta().getDisplayName()).equals(ChatColor.translateAlternateColorCodes('&',
+                        config.getString("staffItems.randomtp.name"))) &&
+                        UtilsFactory.getItemInHand(e).getType() == KMaterial.getMaterial(config.getString("staffItems.randomtp.id")) && p.hasPermission("kstaffmode.items.randomtp")) {
                     if(e.getAction() !=null ) {
                         Bukkit.getServer().getPluginManager().callEvent(new RandomTpInteractEvent(p));
                     }
