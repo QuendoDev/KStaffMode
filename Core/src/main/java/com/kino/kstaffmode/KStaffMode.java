@@ -16,6 +16,9 @@ import com.kino.kstaffmode.managers.files.FilesManager;
 import com.kino.kstaffmode.managers.files.PlayerDataManager;
 import com.kino.kstaffmode.managers.menus.MenuManager;
 import com.kino.kstaffmode.managers.staffmode.StaffModeManager;
+import me.fixeddev.ebcm.bukkit.BukkitCommandManager;
+import me.fixeddev.ebcm.parametric.ParametricCommandBuilder;
+import me.fixeddev.ebcm.parametric.ReflectionParametricCommandBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,6 +32,9 @@ public final class KStaffMode extends JavaPlugin {
     private PlayerDataManager playerDataManager;
     private FilesManager filesManager;
 
+    private final ParametricCommandBuilder builder = new ReflectionParametricCommandBuilder();
+
+    private final BukkitCommandManager commandManager = new BukkitCommandManager("KStaffMode");
 
     @Override
     public void onEnable() {
@@ -63,10 +69,13 @@ public final class KStaffMode extends JavaPlugin {
         getCommand("staff").setExecutor(new StaffModeCommand(staffModeManager, filesManager.getMessages()));
         getCommand("vanish").setExecutor(new VanishCommand(staffModeManager, filesManager.getMessages()));
         getCommand("fly").setExecutor(new FlyCommand(staffModeManager, filesManager.getMessages()));
-        getCommand("staffchat").setExecutor(new StaffChatCommand(staffModeManager, filesManager.getMessages(), getConfig()));
         getCommand("s").setExecutor(new SCommand(filesManager.getMessages()));
         getCommand("invsee").setExecutor(new InvSeeCommand(filesManager.getMessages(), menuManager));
         getCommand("freeze").setExecutor(new FreezeCommand(staffModeManager, filesManager.getMessages()));
+
+        if (!getConfig().getBoolean("bungee")) {
+            commandManager.registerCommands(builder.fromClass(new StaffChatCommand(staffModeManager, filesManager.getMessages(), getConfig())));
+        }
     }
 
 

@@ -11,10 +11,18 @@
         <module>Core</module>
         <module>Versions</module>
         <module>API</module>
+        <module>Bungee</module>
     </modules>
     <packaging>pom</packaging>
 
     <properties>
-        <core.version>2.4-SNAPSHOT</core.version>
+        <core.version>2.5-SNAPSHOT</core.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>unnamed-releases</id>
+            <url>https://repo.unnamed.team/repository/unnamed-releases/</url>
+        </repository>
+    </repositories>
 </project>

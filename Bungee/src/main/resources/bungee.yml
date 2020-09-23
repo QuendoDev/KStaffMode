@@ -1,0 +1,4 @@
+name: KStaffMode
+main: com.kino.kstaffmode.bungee.KStaffModeBungee
+version: ${project.version}
+author: Kino

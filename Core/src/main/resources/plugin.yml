@@ -19,9 +19,6 @@ commands:
   fly:
     description: Enable / disable fly.
     aliases: [volar, vuelo]
-  staffchat:
-    description: Enable / disable staffchat.
-    aliases: [sc, privatechat, modchat, adminchat]
   s:
     description: Teleports someone to your position.
   invsee:

@@ -1,3 +1,4 @@
+bungee: false
 navigatorImpulse: 3
 #THIS WILL LET A PLAYER USE THE RANDOMTP ITEM, AND TELEPORT TO A PLAYER THAT IS IN ANOTHER WORLD.
 randomTpMultiworld: true

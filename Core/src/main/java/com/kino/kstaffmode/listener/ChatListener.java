@@ -26,7 +26,7 @@ public class ChatListener implements Listener {
         Player p = e.getPlayer();
 
         if(p !=null){
-            if(config.getBoolean ("staffChatEnabled")) {
+            if(config.getBoolean ("staffChatEnabled") && !config.getBoolean ("bungee")) {
 
                 String prefix = ChatColor.translateAlternateColorCodes('&', messages.getString("staffchat.prefix"));
                 String separator = ChatColor.translateAlternateColorCodes('&', messages.getString("staffchat.separator"));
