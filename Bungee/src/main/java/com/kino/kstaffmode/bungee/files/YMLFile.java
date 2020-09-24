@@ -53,6 +53,9 @@ public class YMLFile {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public YMLFile load(String archive, boolean silent) {
+        if (!plugin.getDataFolder().exists()) {
+            plugin.getDataFolder().mkdir();
+        }
         if (this.file == null) {
             this.file = new File(this.plugin.getDataFolder(), this.outputFile);
         }

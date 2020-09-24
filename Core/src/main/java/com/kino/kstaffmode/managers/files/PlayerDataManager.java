@@ -3,6 +3,7 @@ package com.kino.kstaffmode.managers.files;
 import com.kino.kstaffmode.KStaffMode;
 import com.kino.kstaffmode.managers.staffmode.StaffModeManager;
 import lombok.AllArgsConstructor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 @AllArgsConstructor
@@ -11,6 +12,8 @@ public class PlayerDataManager {
     
     private DataManager dataManager;
     private StaffModeManager staffModeManager;
+
+    private FileConfiguration config;
 
     
 
@@ -22,10 +25,12 @@ public class PlayerDataManager {
             }
         }
 
-        if(dataManager.getStaffChatInConfig().contains(p.getUniqueId().toString())){
-            if(!staffModeManager.getInStaffChat().contains(p.getUniqueId())) {
-                staffModeManager.toogleStaffChat(p);
-                dataManager.getStaffChatInConfig().remove(p.getUniqueId().toString());
+        if (!config.getBoolean("bungee") && config.getBoolean("staffChatEnabled")) {
+            if (dataManager.getStaffChatInConfig().contains(p.getUniqueId().toString())) {
+                if (!staffModeManager.getInStaffChat().contains(p.getUniqueId())) {
+                    staffModeManager.toogleStaffChat(p);
+                    dataManager.getStaffChatInConfig().remove(p.getUniqueId().toString());
+                }
             }
         }
 
@@ -65,7 +70,9 @@ public class PlayerDataManager {
 
     public void savePlayerData(Player p){
         saveFly(p);
-        saveStaffChat(p);
+        if (!config.getBoolean("bungee") && config.getBoolean("staffChatEnabled")) {
+            saveStaffChat(p);
+        }
         saveStaffMode(p);
         saveArmorItems(p);
         saveInventoryItems(p);

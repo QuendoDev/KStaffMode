@@ -7,6 +7,7 @@ import com.kino.kstaffmode.listener.ChatListener;
 import com.kino.kstaffmode.listener.JoinListener;
 import com.kino.kstaffmode.listener.LeaveListener;
 import com.kino.kstaffmode.listener.MoveListener;
+import com.kino.kstaffmode.listener.bungee.PluginMessagesListener;
 import com.kino.kstaffmode.listener.staffmode.InventoryListener;
 import com.kino.kstaffmode.commands.kstaffmode.KStaffModeExecutor;
 import com.kino.kstaffmode.listener.staffmode.ItemsInteractListener;
@@ -42,6 +43,10 @@ public final class KStaffMode extends JavaPlugin {
         new TaskLoader(this, staffModeManager).load();
         this.registerListeners();
         this.registerCommands();
+        if(getConfig().getBoolean("bungee")) {
+            getServer().getMessenger().registerIncomingPluginChannel(this, "kino:kstaffmode", new PluginMessagesListener(staffModeManager));
+            getServer().getMessenger().registerOutgoingPluginChannel(this, "kino:kstaffmode");
+        }
         PluginUtils.sendEnableMessages(this);
     }
 
@@ -82,11 +87,11 @@ public final class KStaffMode extends JavaPlugin {
     private void registerClasses(){
         this.filesManager = new FilesManager(this);
         filesManager.start();
-        this.staffModeManager = new StaffModeManager(getConfig(), filesManager.getMessages(), filesManager.getScoreboard());
+        this.staffModeManager = new StaffModeManager(this, getConfig(), filesManager.getMessages(), filesManager.getScoreboard());
         this.menuManager = new MenuManager(getConfig(), staffModeManager);
         this.dataManager = new DataManager(filesManager, getConfig(), staffModeManager);
         dataManager.startManager();
-        this.playerDataManager = new PlayerDataManager(dataManager, staffModeManager);
+        this.playerDataManager = new PlayerDataManager(dataManager, staffModeManager, getConfig());
     }
 
 }

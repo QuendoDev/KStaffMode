@@ -1,3 +1,5 @@
 staffchat:
   prefix: "&c[&bS&eC&c]&a "
   separator: " &b>>&6 "
+enabledStaffChat: "&bYou are now talking in private chat!"
+disabledStaffChat: "&cYou are now talking in public chat!"

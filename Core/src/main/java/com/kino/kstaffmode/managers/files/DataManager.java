@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
+@SuppressWarnings("unchecked")
 public class DataManager {
 
     private List<String> staffChatInConfig;
@@ -55,9 +56,11 @@ public class DataManager {
         }
 
         staffChatInConfig = new ArrayList<>();
-        if(data.getStringList("staffchat") !=null){
-            staffChatInConfig.addAll(data.getStringList("staffchat"));
-            data.set("staffchat", null);
+        if (!config.getBoolean("bungee") && config.getBoolean("staffChatEnabled")) {
+            if (data.getStringList("staffchat") != null) {
+                staffChatInConfig.addAll(data.getStringList("staffchat"));
+                data.set("staffchat", null);
+            }
         }
 
         flyInConfig = new ArrayList<>();
@@ -82,7 +85,9 @@ public class DataManager {
 
     public void saveData(){
         LoggerUtils.sendConsoleMessage("&aSaving data...");
-        saveStaffChat();
+        if (!config.getBoolean("bungee") && config.getBoolean("staffChatEnabled")) {
+            saveStaffChat();
+        }
         saveFly();
         saveStaffMode();
         saveArmorItems();

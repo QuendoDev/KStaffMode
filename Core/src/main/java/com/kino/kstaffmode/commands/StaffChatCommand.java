@@ -30,15 +30,10 @@ public class StaffChatCommand implements CommandClass {
         Player p = (Player) sender;
 
         if(config.getBoolean ("staffChatEnabled")) {
-            if (p.hasPermission("kstaffmode.staffchat.talk")) {
                 staffModeManager.toogleStaffChat(p);
-            } else {
-                MessageUtils.sendMessage(p, messages.getString("noPerms"));
-            }
-            return true;
         } else {
             MessageUtils.sendMessage(sender, messages.getString("staffChatDisabledByDefault"));
-            return true;
         }
+        return true;
     }
 }

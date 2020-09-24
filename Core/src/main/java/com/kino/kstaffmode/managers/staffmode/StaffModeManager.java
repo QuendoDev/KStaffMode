@@ -1,8 +1,11 @@
 package com.kino.kstaffmode.managers.staffmode;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import com.kino.kore.utils.items.KMaterial;
 import com.kino.kore.utils.items.builder.ItemBuilder;
 import com.kino.kore.utils.messages.MessageUtils;
+import com.kino.kstaffmode.KStaffMode;
 import com.kino.kstaffmode.factory.UtilsFactory;
 import fr.minuskube.netherboard.Netherboard;
 import fr.minuskube.netherboard.bukkit.BPlayerBoard;
@@ -38,8 +41,11 @@ public class StaffModeManager {
     private FileConfiguration config;
     private FileConfiguration scoreboardFile;
 
+    private KStaffMode plugin;
+
     
-    public StaffModeManager(FileConfiguration config, FileConfiguration messages,FileConfiguration scoreboardFile){
+    public StaffModeManager(KStaffMode plugin, FileConfiguration config, FileConfiguration messages,FileConfiguration scoreboardFile){
+        this.plugin = plugin;
         this.config = config;
         this.messages = messages;
         this.scoreboardFile = scoreboardFile;
@@ -349,6 +355,18 @@ public class StaffModeManager {
         resetScoreboard(p);
     }
 
+    @SuppressWarnings("UnstableApiUsage")
+    private void sendCheckPluginMessage (Player p) {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF( "checkIfInStaffchat" ); // the channel could be whatever you want
+        out.writeUTF(p.getUniqueId() + ""); // this data could be whatever you want
+
+        // we send the data to the server
+        // using ServerInfo the packet is being queued if there are no players in the server
+        // using only the server to send data the packet will be lost if no players are in it
+        p.sendPluginMessage(plugin, "kino:kstaffmode", out.toByteArray());
+    }
+
     public void createScoreboard(Player p){
         if(scoreboardFile.getBoolean("scoreboard.enabled")) {
             addScoreboard(p);
@@ -361,11 +379,15 @@ public class StaffModeManager {
                 setStaffModeScore();
             }
 
-            if (scoreboardFile.getBoolean("scoreboard.vanish.enabled")) {
-                setStaffChatScore(p);
+            if (scoreboardFile.getBoolean("scoreboard.staffchat.enabled")) {
+                if (!config.getBoolean("bungee")) {
+                    setStaffChatScore(p);
+                } else {
+                    sendCheckPluginMessage(p);
+                }
             }
 
-            if (scoreboardFile.getBoolean("scoreboard.staffchat.enabled")) {
+            if (scoreboardFile.getBoolean("scoreboard.vanish.enabled")) {
                 setVanishScore(p);
             }
 
@@ -424,6 +446,23 @@ public class StaffModeManager {
         }
     }
 
+    public void setStaffChatScoreBungee (boolean b) {
+        if(board !=null) {
+            try {
+                if (b) {
+                    board.set(ChatColor.translateAlternateColorCodes('&', scoreboardFile.getString("scoreboard.staffchat.line").replace(
+                            "<staffchat>", "StaffChat"
+                    ).replace("<color>", getColor("staffchat", true))), 11);
+                } else {
+                    board.set(ChatColor.translateAlternateColorCodes('&', scoreboardFile.getString("scoreboard.staffchat.line").replace(
+                            "<staffchat>", "Global"
+                    ).replace("<color>", getColor("staffchat", false))), 11);
+                }
+            } catch (IllegalStateException ignored) {
+
+            }
+        }
+    }
     public void setStaffChatScore (Player p) {
         if(board !=null) {
             try {
