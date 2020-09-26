@@ -29,14 +29,16 @@ public class ChatListener implements Listener {
             String separator = ChatColor.translateAlternateColorCodes('&', config.get().getString("staffchat.separator"));
             String msg = e.getMessage();
 
-            if (staffChatManager.isInStaffChat(proxiedPlayer)) {
-                for (ProxiedPlayer staff : ProxyServer.getInstance().getPlayers()) {
-                    if (staff.hasPermission("kstaffmode.staffchat.read")) {
-                        staff.sendMessage(new TextComponent(prefix + staff.getDisplayName() + separator + msg));
+            if (!e.isCommand()) {
+                if (staffChatManager.isInStaffChat(proxiedPlayer)) {
+                    for (ProxiedPlayer staff : ProxyServer.getInstance().getPlayers()) {
+                        if (staff.hasPermission("kstaffmode.staffchat.read")) {
+                            staff.sendMessage(new TextComponent(prefix + proxiedPlayer.getDisplayName() + separator + msg));
+                        }
                     }
+                    e.setMessage(null);
+                    e.setCancelled(true);
                 }
-                e.setMessage(null);
-                e.setCancelled(true);
             }
         }
     }

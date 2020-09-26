@@ -45,12 +45,29 @@ public class StaffChatManager {
     }
 
     public void saveData () {
-        config.get().set("inStaffChat", inStaffChat);
+        List<String> list = new ArrayList<>();
+        for (UUID uuid : inStaffChat) {
+            list.add(uuid.toString());
+        }
+        config.get().set("inStaffChat", list);
+        config.save();
     }
 
     public void loadData () {
         if (config.get().contains("inStaffChat")) {
-            inStaffChat.addAll((List<UUID>) config.get().get("inStaffChat"));
+            for (String uuid :  config.get().getStringList("inStaffChat")) {
+                inStaffChat.add(UUID.fromString(uuid));
+            }
+            config.get().set("inStaffChat", null);
+            config.save();
+        }
+    }
+
+    public void addStaffChat (ProxiedPlayer p) {
+        if(p.hasPermission("kstaffmode.staffchat")){
+            if(inStaffChat.contains(p.getUniqueId())){
+                p.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', config.get().getString("enabledStaffChat"))));
+            }
         }
     }
 

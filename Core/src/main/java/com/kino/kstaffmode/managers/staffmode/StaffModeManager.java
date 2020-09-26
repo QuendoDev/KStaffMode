@@ -359,7 +359,7 @@ public class StaffModeManager {
     private void sendCheckPluginMessage (Player p) {
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF( "checkIfInStaffchat" ); // the channel could be whatever you want
-        out.writeUTF(p.getUniqueId() + ""); // this data could be whatever you want
+        out.writeUTF(p.getUniqueId().toString()); // this data could be whatever you want
 
         // we send the data to the server
         // using ServerInfo the packet is being queued if there are no players in the server
