@@ -20,6 +20,10 @@ public class PluginMessageListener implements Listener {
     @EventHandler
     public void on(PluginMessageEvent event)
     {
+        if (event.isCancelled()) {
+            return;
+        }
+        
         if ( !event.getTag().equalsIgnoreCase( "kino:kstaffmode" ) )
         {
             return;
