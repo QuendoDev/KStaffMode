@@ -5,10 +5,12 @@ import net.minecraft.server.v1_12_R1.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 @SuppressWarnings("deprecation")
@@ -33,5 +35,10 @@ public class Utilsv1_12_R1 implements AbstractUtils {
     @Override
     public double getTPS() {
         return MinecraftServer.getServer().recentTps[0];
+    }
+
+    @Override
+    public String getInventoryName(InventoryClickEvent inventoryClickEvent) {
+        return inventoryClickEvent.getView().getTitle();
     }
 }

@@ -3,6 +3,7 @@ package com.kino.kstaffmode.factory;
 import com.kino.kstaffmode.api.utils.AbstractUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
@@ -37,6 +38,16 @@ public class UtilsFactory {
             AbstractUtils utils = (AbstractUtils) UTILSCLASS.getConstructor().newInstance();
 
             return Math.max((Math.round(utils.getTPS() * 100) / 100.0), 20);
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static String getInventoryName (InventoryClickEvent inventoryClickEvent) {
+        try {
+            AbstractUtils utils = (AbstractUtils) UTILSCLASS.getConstructor().newInstance();
+
+            return utils.getInventoryName(inventoryClickEvent);
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException ex) {
             throw new RuntimeException(ex);
         }

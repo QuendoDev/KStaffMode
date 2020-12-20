@@ -3,6 +3,7 @@ package com.kino.kstaffmode.v1_16_R2;
 import com.kino.kstaffmode.api.utils.AbstractUtils;
 import net.minecraft.server.v1_16_R2.MinecraftServer;
 import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -31,5 +32,10 @@ public class Utilsv1_16_R2 implements AbstractUtils {
     @Override
     public double getTPS() {
         return MinecraftServer.getServer().recentTps[0];
+    }
+
+    @Override
+    public String getInventoryName(InventoryClickEvent inventoryClickEvent) {
+        return inventoryClickEvent.getView().getTitle();
     }
 }
