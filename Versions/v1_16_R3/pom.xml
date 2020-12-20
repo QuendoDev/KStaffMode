@@ -3,37 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>KStaffMode</artifactId>
+        <artifactId>kstaffmode-versions</artifactId>
         <groupId>com.kino</groupId>
         <version>0.0.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>kstaffmode-versions</artifactId>
-    <version>0.0.1</version>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>v1_8_R3</module>
-        <module>v1_9_R2</module>
-        <module>v1_10_R1</module>
-        <module>v1_11_R1</module>
-        <module>v1_12_R1</module>
-        <module>v1_13_R2</module>
-        <module>v1_14_R1</module>
-        <module>v1_15_R1</module>
-        <module>v1_16_R2</module>
-        <module>v1_16_R3</module>
-    </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.kino</groupId>
-            <artifactId>kstaffmode-api</artifactId>
-            <version>${core.version}</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
+    <artifactId>kstaffmode-versions-v1_16_R3</artifactId>
+    <version>${core.version}</version>
 
     <build>
         <plugins>
@@ -48,6 +25,21 @@
             </plugin>
         </plugins>
     </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.kino</groupId>
+            <artifactId>Kore</artifactId>
+            <version>1.3-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.16.4-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
 
 </project>
