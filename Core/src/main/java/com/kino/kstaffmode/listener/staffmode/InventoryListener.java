@@ -2,6 +2,7 @@ package com.kino.kstaffmode.listener.staffmode;
 
 import com.kino.kore.utils.items.KMaterial;
 import com.kino.kstaffmode.KStaffMode;
+import com.kino.kstaffmode.factory.UtilsFactory;
 import com.kino.kstaffmode.managers.menus.MenuManager;
 import com.kino.kstaffmode.managers.menus.PlayerInventory;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,7 @@ public class InventoryListener implements Listener {
     @EventHandler
     public void onClick (InventoryClickEvent e) {
         if(e.getClickedInventory() !=null) {
-            String invName = e.getClickedInventory().getName();
+            String invName = UtilsFactory.getInventoryName(e);
 
             //////////////////MAIN MENU////////////////////////
             if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', config.getString("stafflist.main.title"))).equals(ChatColor.stripColor(invName))) {
