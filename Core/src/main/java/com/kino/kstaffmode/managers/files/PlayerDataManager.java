@@ -25,15 +25,6 @@ public class PlayerDataManager {
             }
         }
 
-        if (!config.getBoolean("bungee") && config.getBoolean("staffChatEnabled")) {
-            if (dataManager.getStaffChatInConfig().contains(p.getUniqueId().toString())) {
-                if (!staffModeManager.getInStaffChat().contains(p.getUniqueId())) {
-                    staffModeManager.toogleStaffChat(p);
-                    dataManager.getStaffChatInConfig().remove(p.getUniqueId().toString());
-                }
-            }
-        }
-
         if(dataManager.getStaffModeInConfig().contains(p.getUniqueId().toString())){
             if(!staffModeManager.getInStaffMode().contains(p.getUniqueId())) {
                 staffModeManager.toogleStaffMode(p);
@@ -66,11 +57,19 @@ public class PlayerDataManager {
             }
         }
 
+        if (!KStaffMode.isBungeeMode() && config.getBoolean("staffChatEnabled")) {
+            if (dataManager.getStaffChatInConfig().contains(p.getUniqueId().toString())) {
+                if (!staffModeManager.getInStaffChat().contains(p.getUniqueId())) {
+                    staffModeManager.toogleStaffChat(p);
+                    dataManager.getStaffChatInConfig().remove(p.getUniqueId().toString());
+                }
+            }
+        }
     }
 
     public void savePlayerData(Player p){
         saveFly(p);
-        if (!config.getBoolean("bungee") && config.getBoolean("staffChatEnabled")) {
+        if (!KStaffMode.isBungeeMode() && config.getBoolean("staffChatEnabled")) {
             saveStaffChat(p);
         }
         saveStaffMode(p);

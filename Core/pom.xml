@@ -159,5 +159,11 @@
             <version>${core.version}</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.kino</groupId>
+            <artifactId>kstaffmode-versions-v1_16_R3</artifactId>
+            <version>${core.version}</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

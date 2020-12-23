@@ -37,13 +37,15 @@ public final class KStaffMode extends JavaPlugin {
 
     private final BukkitCommandManager commandManager = new BukkitCommandManager("KStaffMode");
 
+    private static boolean bungeeMode = false;
+
     @Override
     public void onEnable() {
         this.registerClasses();
         new TaskLoader(this, staffModeManager).load();
         this.registerListeners();
         this.registerCommands();
-        if(getConfig().getBoolean("bungee")) {
+        if(isBungeeMode()) {
             getServer().getMessenger().registerIncomingPluginChannel(this, "kino:kstaffmode", new PluginMessagesListener(staffModeManager));
             getServer().getMessenger().registerOutgoingPluginChannel(this, "kino:kstaffmode");
         }
@@ -78,7 +80,7 @@ public final class KStaffMode extends JavaPlugin {
         getCommand("invsee").setExecutor(new InvSeeCommand(filesManager.getMessages(), menuManager));
         getCommand("freeze").setExecutor(new FreezeCommand(staffModeManager, filesManager.getMessages()));
 
-        if (!getConfig().getBoolean("bungee")) {
+        if (!isBungeeMode()) {
             commandManager.registerCommands(builder.fromClass(new StaffChatCommand(staffModeManager, filesManager.getMessages(), getConfig())));
         }
     }
@@ -87,11 +89,18 @@ public final class KStaffMode extends JavaPlugin {
     private void registerClasses(){
         this.filesManager = new FilesManager(this);
         filesManager.start();
+        if (getConfig().getBoolean("bungee")) {
+            bungeeMode = true;
+        }
         this.staffModeManager = new StaffModeManager(this, getConfig(), filesManager.getMessages(), filesManager.getScoreboard());
         this.menuManager = new MenuManager(getConfig(), staffModeManager);
         this.dataManager = new DataManager(filesManager, getConfig(), staffModeManager);
         dataManager.startManager();
         this.playerDataManager = new PlayerDataManager(dataManager, staffModeManager, getConfig());
+    }
+
+    public static boolean isBungeeMode () {
+        return bungeeMode;
     }
 
 }

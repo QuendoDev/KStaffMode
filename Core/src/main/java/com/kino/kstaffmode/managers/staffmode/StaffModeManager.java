@@ -380,7 +380,7 @@ public class StaffModeManager {
             }
 
             if (scoreboardFile.getBoolean("scoreboard.staffchat.enabled")) {
-                if (!config.getBoolean("bungee")) {
+                if (!KStaffMode.isBungeeMode()) {
                     setStaffChatScore(p);
                 } else {
                     sendCheckPluginMessage(p);

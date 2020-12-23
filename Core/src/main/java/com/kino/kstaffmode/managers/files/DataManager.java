@@ -56,7 +56,7 @@ public class DataManager {
         }
 
         staffChatInConfig = new ArrayList<>();
-        if (!config.getBoolean("bungee") && config.getBoolean("staffChatEnabled")) {
+        if (!KStaffMode.isBungeeMode() && config.getBoolean("staffChatEnabled")) {
             if (data.getStringList("staffchat") != null) {
                 staffChatInConfig.addAll(data.getStringList("staffchat"));
                 data.set("staffchat", null);
@@ -85,7 +85,7 @@ public class DataManager {
 
     public void saveData(){
         LoggerUtils.sendConsoleMessage("&aSaving data...");
-        if (!config.getBoolean("bungee") && config.getBoolean("staffChatEnabled")) {
+        if (!KStaffMode.isBungeeMode() && config.getBoolean("staffChatEnabled")) {
             saveStaffChat();
         }
         saveFly();
