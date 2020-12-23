@@ -3,29 +3,42 @@ scoreboard:
   enabled: true
   #The title of the scoreboard
   title: "&eKStaffMode Network"
-  header:
-    enabled: true
-    line: "&7&m------------------------"
+  #THE SCORE HAS TO BE FROM 8 (THE LINE OF THE BOTTOM) TO 14 (THE HIGHEST LINE)
+  #IF YOU BUG THE PLUGIN BECAUSE OF NOT USING NUMBERS FROM 8 TO 14, I'M NOT GOING TO
+  #HELP YOU TO FIX IT.
   footer:
     enabled: true
     line: "&7&m------------------------"
-  staffmode:
+    score: 8
+  tps:
     enabled: true
-    line: "&6&lStaff Mode:"
+    line: "&e»&aTPS: &a<tps>"
+    score: 9
+  online:
+    enabled: true
+    line: "&e»&aOnline: &d<online>"
+    score: 10
   staffchat:
     enabled: true
     enabled-color: "a"
     disabled-color: "c"
     line: "&e»&aStaffChat: <color><staffchat>"
+    score: 11
   vanish:
     enabled: true
     enabled-color: "a"
     disabled-color: "c"
     line: "&e»&aVanish: <color><vanished>"
-  tps:
+    score: 12
+  staffmode:
     enabled: true
-    line: "&e»&aTPS: &a<tps>"
-  online:
+    line: "&6&lStaff Mode:"
+    score: 13
+  header:
     enabled: true
-    line: "&e»&aOnline: &d<online>"
+    line: "&7&m------------------------"
+    score: 14
+
+
+
 #################################################################################################################
