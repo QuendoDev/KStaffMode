@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -137,6 +138,7 @@ public class StaffModeManager {
                 p.setAllowFlight(true);
                 p.setFlying(true);
                 this.giveStaffItems(p);
+                p.setGameMode(GameMode.CREATIVE);
                 createScoreboard(p);
                 MessageUtils.sendMessage(p, messages.getString("enabledStaffMode"));
             }else{
@@ -146,8 +148,13 @@ public class StaffModeManager {
                     player.showPlayer(p);
                 }
                 this.fly.remove(p.getUniqueId());
-                p.setAllowFlight(false);
-                p.setFlying(false);
+                if (p.hasPermission("kstaffmode.staffmode.keepflying") && config.getBoolean("keepFlyingWhenDisableStaffMode")) {
+                    p.setAllowFlight(true);
+                    p.setFlying(true);
+                } else {
+                    p.setAllowFlight(false);
+                    p.setFlying(false);
+                }
                 this.givePlayerItems(p);
                 destroyScoreboard(p);
                 MessageUtils.sendMessage(p, messages.getString("disabledStaffMode"));

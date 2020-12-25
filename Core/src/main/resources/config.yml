@@ -5,6 +5,7 @@ randomTpMultiworld: true
 #THIS IS A COMMAND WITHOUT THE "/" THAT WILL BE EXECUTED WHEN A PLAYER DISCONNECTS WHILE FROZEN
 frozenDisconnect: "say <player> disconnected frozen!"
 staffChatEnabled: true
+keepFlyingWhenDisableStaffMode: true
 #ID FORMAT: "MATERIAL:DATA" OR "MATERIAL". Example: "STAINED_GLASS_PANE:1" or "ORANGE_STAINED_GLASS_PANE"
 #https://helpch.at/docs/1.8/org/bukkit/Material.html -- 1.8
 #https://helpch.at/docs/1.12.2/index.html?org/bukkit/Material.html -- 1.12.2
