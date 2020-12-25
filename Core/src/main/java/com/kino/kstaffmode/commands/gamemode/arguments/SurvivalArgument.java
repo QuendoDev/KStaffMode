@@ -68,11 +68,13 @@ public class SurvivalArgument extends CommandArgument {
                 Player p = (Player) sender;
                 p.setGameMode(GameMode.SURVIVAL);
                 MessageUtils.sendMessage(p, messages.getString("gm-survival"));
-                for(Player player : Bukkit.getServer().getOnlinePlayers()){
-                    if(player.hasPermission(getPermission())){
-                        MessageUtils.sendMessage(player, messages.getString("gm-survival-all").replace(
-                                "<player>", p.getName()
-                        ));
+                for(Player player : Bukkit.getServer().getOnlinePlayers()) {
+                    if (!player.getName().equals(p.getName())) {
+                        if (player.hasPermission(getPermission())) {
+                            MessageUtils.sendMessage(player, messages.getString("gm-survival-all").replace(
+                                    "<player>", p.getName()
+                            ));
+                        }
                     }
                 }
                 return true;

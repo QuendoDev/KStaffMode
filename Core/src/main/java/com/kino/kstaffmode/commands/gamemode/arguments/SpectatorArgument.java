@@ -69,10 +69,12 @@ public class SpectatorArgument extends CommandArgument {
                 p.setGameMode(GameMode.valueOf("SPECTATOR"));
                 MessageUtils.sendMessage(p, messages.getString("gm-spectator"));
                 for(Player player : Bukkit.getServer().getOnlinePlayers()){
-                    if(player.hasPermission(getPermission())){
-                        MessageUtils.sendMessage(player, messages.getString("gm-spectator-all").replace(
-                                "<player>", p.getName()
-                        ));
+                    if(!player.getName().equals(p.getName())) {
+                        if (player.hasPermission(getPermission())) {
+                            MessageUtils.sendMessage(player, messages.getString("gm-spectator-all").replace(
+                                    "<player>", p.getName()
+                            ));
+                        }
                     }
                 }
                 return true;

@@ -69,10 +69,12 @@ public class AdventureArgument extends CommandArgument {
                 p.setGameMode(GameMode.ADVENTURE);
                 MessageUtils.sendMessage(p, messages.getString("gm-adventure"));
                 for(Player player : Bukkit.getServer().getOnlinePlayers()){
-                    if(player.hasPermission(getPermission())){
-                        MessageUtils.sendMessage(player, messages.getString("gm-adventure-all").replace(
-                                "<player>", p.getName()
-                        ));
+                    if(!player.getName().equals(p.getName())) {
+                        if (player.hasPermission(getPermission())) {
+                            MessageUtils.sendMessage(player, messages.getString("gm-adventure-all").replace(
+                                    "<player>", p.getName()
+                            ));
+                        }
                     }
                 }
                 return true;
