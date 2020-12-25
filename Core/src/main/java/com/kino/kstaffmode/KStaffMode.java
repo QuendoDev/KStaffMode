@@ -63,7 +63,7 @@ public final class KStaffMode extends JavaPlugin {
     private void registerListeners(){
         Bukkit.getServer().getPluginManager().registerEvents(new LeaveListener(staffModeManager, filesManager.getMessages(), getConfig(), playerDataManager), this);
         Bukkit.getServer().getPluginManager().registerEvents(new JoinListener(staffModeManager, playerDataManager), this);
-        Bukkit.getServer().getPluginManager().registerEvents(new ChatListener(filesManager.getMessages(), getConfig(), staffModeManager), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new ChatListener(getConfig(), filesManager.getMessages(), staffModeManager), this);
         Bukkit.getServer().getPluginManager().registerEvents(new StaffModeBasicListener(staffModeManager), this);
         Bukkit.getServer().getPluginManager().registerEvents(new ItemsInteractListener(staffModeManager, menuManager, getConfig(), filesManager.getMessages()), this);
         Bukkit.getServer().getPluginManager().registerEvents(new InventoryListener(getConfig(), menuManager), this);
