@@ -5,8 +5,6 @@ import com.google.common.io.ByteStreams;
 import com.kino.kstaffmode.managers.staffmode.StaffModeManager;
 import lombok.AllArgsConstructor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
 @AllArgsConstructor
@@ -26,7 +24,6 @@ public class PluginMessagesListener implements PluginMessageListener
         String subChannel = in.readUTF();
         if ( subChannel.equalsIgnoreCase( "staffchatScore" ) )
         {
-            String name = in.readUTF();
             boolean inStaffChat = in.readBoolean();
 
             staffModeManager.setStaffChatScoreBungee(inStaffChat);

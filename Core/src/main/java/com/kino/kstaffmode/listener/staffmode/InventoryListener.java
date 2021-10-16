@@ -1,7 +1,6 @@
 package com.kino.kstaffmode.listener.staffmode;
 
 import com.kino.kore.utils.items.KMaterial;
-import com.kino.kstaffmode.KStaffMode;
 import com.kino.kstaffmode.factory.UtilsFactory;
 import com.kino.kstaffmode.managers.menus.MenuManager;
 import com.kino.kstaffmode.managers.menus.PlayerInventory;

@@ -3,7 +3,6 @@ package com.kino.kstaffmode.managers.files;
 import com.kino.kore.utils.files.BasicFilesManager;
 import com.kino.kore.utils.files.YMLFile;
 import com.kino.kstaffmode.KStaffMode;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.bukkit.configuration.file.FileConfiguration;
 

@@ -2,7 +2,6 @@ package com.kino.kstaffmode.listener.staffmode;
 
 import com.kino.kore.utils.items.KMaterial;
 import com.kino.kore.utils.messages.MessageUtils;
-import com.kino.kstaffmode.KStaffMode;
 import com.kino.kstaffmode.events.util.ActionType;
 import com.kino.kstaffmode.events.items.*;
 import com.kino.kstaffmode.factory.UtilsFactory;

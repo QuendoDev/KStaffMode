@@ -73,13 +73,14 @@ public class StaffModeManager {
     public void giveStaffItems(Player p){
         this.saveItems(p);
         this.clearInventory(p);
-        for(ItemStack item : this.staffModeItems.keySet()){
+        for (Map.Entry<ItemStack, Integer> entry : this.staffModeItems.entrySet()) {
+            ItemStack item = entry.getKey();
             if(item.getType() == Material.getMaterial(config.getInt("staffItems.vanish.vanished.id"))){
                 if(!isVanished(p)){
                     item = notVanishedItem;
                 }
             }
-            p.getInventory().setItem(this.staffModeItems.get(item), item);
+            p.getInventory().setItem(entry.getValue(), item);
         }
     }
 
@@ -227,7 +228,7 @@ public class StaffModeManager {
         ArrayList<Player> players = new ArrayList<>(Bukkit.getServer().getOnlinePlayers());
         players.remove(p);
 
-        if(players.size() > 0) {
+        if(!players.isEmpty()) {
             int index = r.nextInt(players.size());
             Player player = players.get(index);
             if(multiworld) {

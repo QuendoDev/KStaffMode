@@ -1,14 +1,11 @@
 package com.kino.kstaffmode.commands;
 
 import com.kino.kore.utils.messages.MessageUtils;
-import com.kino.kstaffmode.KStaffMode;
 import com.kino.kstaffmode.managers.staffmode.StaffModeManager;
 import lombok.AllArgsConstructor;
 import me.fixeddev.ebcm.parametric.CommandClass;
 import me.fixeddev.ebcm.parametric.annotation.ACommand;
 import me.fixeddev.ebcm.parametric.annotation.Injected;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;

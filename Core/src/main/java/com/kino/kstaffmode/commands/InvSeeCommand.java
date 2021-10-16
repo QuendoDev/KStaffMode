@@ -1,7 +1,6 @@
 package com.kino.kstaffmode.commands;
 
 import com.kino.kore.utils.messages.MessageUtils;
-import com.kino.kstaffmode.KStaffMode;
 import com.kino.kstaffmode.managers.menus.MenuManager;
 import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;

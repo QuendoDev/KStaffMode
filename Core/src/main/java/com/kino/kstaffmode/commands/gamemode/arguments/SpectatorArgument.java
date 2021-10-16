@@ -2,7 +2,6 @@ package com.kino.kstaffmode.commands.gamemode.arguments;
 
 import com.kino.kore.utils.command.CommandArgument;
 import com.kino.kore.utils.messages.MessageUtils;
-import com.kino.kstaffmode.KStaffMode;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;

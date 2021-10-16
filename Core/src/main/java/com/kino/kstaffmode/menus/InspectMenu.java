@@ -2,7 +2,6 @@ package com.kino.kstaffmode.menus;
 
 import com.kino.kore.utils.items.KMaterial;
 import com.kino.kore.utils.items.builder.ItemBuilder;
-import com.kino.kstaffmode.KStaffMode;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;

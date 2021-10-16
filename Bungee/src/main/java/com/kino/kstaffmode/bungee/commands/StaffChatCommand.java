@@ -1,6 +1,5 @@
 package com.kino.kstaffmode.bungee.commands;
 
-import com.kino.kstaffmode.bungee.files.YMLFile;
 import com.kino.kstaffmode.bungee.managers.StaffChatManager;
 import lombok.AllArgsConstructor;
 import me.fixeddev.ebcm.parametric.CommandClass;

@@ -1,6 +1,5 @@
 package com.kino.kstaffmode.listener.staffmode;
 
-import com.kino.kstaffmode.KStaffMode;
 import com.kino.kstaffmode.managers.staffmode.StaffModeManager;
 import lombok.AllArgsConstructor;
 import org.bukkit.entity.Player;

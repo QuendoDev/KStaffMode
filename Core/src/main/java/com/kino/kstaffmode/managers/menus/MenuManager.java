@@ -1,6 +1,5 @@
 package com.kino.kstaffmode.managers.menus;
 
-import com.kino.kstaffmode.KStaffMode;
 import com.kino.kstaffmode.managers.staffmode.StaffModeManager;
 import com.kino.kstaffmode.menus.InspectMenu;
 import com.kino.kstaffmode.menus.StaffListMainMenu;
